@@ -1,0 +1,7 @@
+obj
+bin
+*.vbproj.user
+*.suo
+*.cache
+*~
+*.swp

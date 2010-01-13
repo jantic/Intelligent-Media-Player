@@ -27,7 +27,7 @@ Public Class MainInterface
 
         For index As Integer = 0 To count - 1 Step 1
             Dim media As IWMPMedia = player.currentPlaylist.Item(index)
-            Dim trackName As String = media.getItemInfo("Author") + " - " + media.name
+            Dim trackName As String = media.getItemInfo("Author") + " - " + media.getItemInfo("Album") + ": " + media.name
             PlaylistBox.Items.Add(trackName)
         Next
     End Sub
@@ -42,7 +42,7 @@ Public Class MainInterface
         End Try
     End Sub
 
-    Private Sub FilterPlayList(ByRef artistList As Artist())
+    Private Sub GeneratePlayList(ByRef artistList As Artist())
         player.Ctlcontrols.stop()
         player.currentPlaylist.clear()
         'leaving shuffle on during this process slows things down big time.  
@@ -57,12 +57,13 @@ Public Class MainInterface
             Next
         Next
 
+        FilterCurrentPlayList()
         ToggleShuffle()
         FillPlaylistBox()
     End Sub
 
 
-    Private Sub FilterPlayList(ByRef trackList As Track())
+    Private Sub GeneratePlayList(ByRef trackList As Track())
         player.Ctlcontrols.stop()
         player.currentPlaylist.clear()
         'leaving shuffle on during this process slows things down big time.  
@@ -81,6 +82,30 @@ Public Class MainInterface
             Next
         Next
 
+        FilterCurrentPlayList()
+        ToggleShuffle()
+        FillPlaylistBox()
+    End Sub
+
+    Private Sub GeneratePlayList(ByRef albumList As Album())
+        player.Ctlcontrols.stop()
+        player.currentPlaylist.clear()
+        'leaving shuffle on during this process slows things down big time.  
+        player.settings.setMode("shuffle", False)
+
+        For Each item As Album In albumList
+            Dim tempPlayList As IWMPPlaylist = player.mediaCollection.getByAlbum(item.Name)
+            Dim count As Integer = tempPlayList.count()
+
+            For index As Integer = 0 To count - 1 Step 1
+                Dim currentTitle As String = tempPlayList.Item(index).getItemInfo("Album").Trim
+                If (String.Compare(currentTitle, item.Name.Trim, True) = 0) Then
+                    player.currentPlaylist.appendItem(tempPlayList.Item(index))
+                End If
+            Next
+        Next
+
+        FilterCurrentPlayList()
         ToggleShuffle()
         FillPlaylistBox()
     End Sub
@@ -125,7 +150,7 @@ Public Class MainInterface
 
         If (Not (name = "")) Then
             artistList = client.GetSimilarArtists(name)
-            FilterPlayList(artistList)
+            GeneratePlayList(artistList)
         Else
             MsgBox("Please enter an artist first!")
         End If
@@ -140,7 +165,7 @@ Public Class MainInterface
 
         If (Not (trackName = "") And Not (artistName = "")) Then
             trackList = client.GetSimilarTracks(artistName, trackName)
-            FilterPlayList(trackList)
+            GeneratePlayList(trackList)
         Else
             MsgBox("Please enter a track and artist first!")
         End If
@@ -153,7 +178,7 @@ Public Class MainInterface
 
         If (Not (name = "")) Then
             artistList = client.GetTopArtistsByTag(tag)
-            FilterPlayList(artistList)
+            GeneratePlayList(artistList)
         Else
             MsgBox("Please enter a tag first!")
         End If
@@ -166,7 +191,7 @@ Public Class MainInterface
 
         If (Not tag = "") Then
             trackList = client.GetTopTracksByTag(tag)
-            FilterPlayList(trackList)
+            GeneratePlayList(trackList)
         Else
             MsgBox("Please enter a tag first!")
         End If
@@ -179,7 +204,7 @@ Public Class MainInterface
 
         If (Not (user = "")) Then
             artistList = client.GetTopArtistsByUser(user)
-            FilterPlayList(artistList)
+            GeneratePlayList(artistList)
         Else
             MsgBox("Please enter a user first!")
         End If
@@ -192,9 +217,84 @@ Public Class MainInterface
 
         If (Not user = "") Then
             trackList = client.GetTopTracksByUser(user)
-            FilterPlayList(trackList)
+            GeneratePlayList(trackList)
         Else
             MsgBox("Please enter a user first!")
         End If
+    End Sub
+
+    Private Sub AlbumTagButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AlbumTagButton.Click
+        Dim tag As String = AlbumTagTextBox.Text
+
+        Dim albumList As Album() = Nothing
+
+        If (Not tag = "") Then
+            albumList = client.GetTopAlbumsByTag(tag)
+            GeneratePlayList(albumList)
+        Else
+            MsgBox("Please enter a tag first!")
+        End If
+    End Sub
+
+    Private Sub Initialize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub AddFilteredOutArtistButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddFilteredOutArtistButton.Click
+        Dim artistToAddToFilter As String = ArtistFilterOutTextBox.Text.Trim.ToLower
+
+        If (Not (artistToAddToFilter = "" And FilteredOutArtistsLB.FindString(artistToAddToFilter) >= 0)) Then
+            FilteredOutArtistsLB.Items.Add(artistToAddToFilter)
+            FilterCurrentPlayList()
+            PlaylistBox.Items.Clear()
+            FillPlaylistBox()
+            ArtistFilterOutTextBox.Clear()
+        End If
+    End Sub
+
+    Private Sub RemoveFilteredOutArtistButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RemoveFilteredOutArtistButton.Click
+        Dim artistToRemoveFromFilter As String = ArtistFilterOutTextBox.Text.Trim.ToLower
+
+        Dim removeIndex As Integer = FilteredOutArtistsLB.FindString(artistToRemoveFromFilter)
+
+        If (Not (artistToRemoveFromFilter = "") And removeIndex >= 0) Then
+            FilteredOutArtistsLB.Items.RemoveAt(removeIndex)
+            FilterCurrentPlayList()
+            PlaylistBox.Items.Clear()
+            FillPlaylistBox()
+            ArtistFilterOutTextBox.Clear()
+        End If
+    End Sub
+
+
+    Private Sub FilterCurrentPlayList()
+        'player.Ctlcontrols.stop()
+        'leaving shuffle on during this process slows things down big time.  
+        player.settings.setMode("shuffle", False)
+
+        Dim count As Integer = player.currentPlaylist.count
+
+        Dim removeList As ArrayList = New ArrayList
+
+        For Each filteredArtist As String In FilteredOutArtistsLB.Items
+            For index As Integer = 0 To count - 1 Step 1
+                Dim currentArtist As String = player.currentPlaylist.Item(index).getItemInfo("Artist").Trim.ToLower
+                If (String.Compare(currentArtist, filteredArtist.Trim.ToLower, True) = 0) Then
+                    removeList.Add(player.currentPlaylist.Item(index))
+                End If
+            Next
+        Next
+
+
+        For Each toRemove As WMPLib.IWMPMedia In removeList
+            player.currentPlaylist.removeItem(toRemove)
+        Next
+
+        ToggleShuffle()
+    End Sub
+
+ 
+    Private Sub FilteredOutArtistsLB_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FilteredOutArtistsLB.SelectedIndexChanged
+        ArtistFilterOutTextBox.Text = FilteredOutArtistsLB.Text
     End Sub
 End Class

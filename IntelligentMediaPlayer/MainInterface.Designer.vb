@@ -26,13 +26,6 @@ Partial Class MainInterface
         Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
         Me.PlaylistBox = New System.Windows.Forms.ListBox()
         Me.FilteredPlaylistLabel = New System.Windows.Forms.Label()
-        Me.ShuffleCheckBox = New System.Windows.Forms.CheckBox()
-        Me.TagArtistLabel = New System.Windows.Forms.Label()
-        Me.TagAlbumLabel = New System.Windows.Forms.Label()
-        Me.TagTrackLabel = New System.Windows.Forms.Label()
-        Me.ArtistTextLabel = New System.Windows.Forms.Label()
-        Me.AlbumTextLabel = New System.Windows.Forms.Label()
-        Me.TrackTextLabel = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.ArtistSimilarityButton = New System.Windows.Forms.Button()
@@ -48,15 +41,14 @@ Partial Class MainInterface
         Me.ArtistTagButton = New System.Windows.Forms.Button()
         Me.ArtistTagTextBox = New System.Windows.Forms.MaskedTextBox()
         Me.ArtistTagLabel = New System.Windows.Forms.Label()
-        Me.AlbumYearLabel = New System.Windows.Forms.Label()
-        Me.AlbumYearText = New System.Windows.Forms.Label()
-        Me.NumberOfItemsLabel = New System.Windows.Forms.Label()
-        Me.NumberOfItemsText = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TrackTagButton = New System.Windows.Forms.Button()
         Me.TrackTagTextBox = New System.Windows.Forms.MaskedTextBox()
         Me.TrackTagLabel = New System.Windows.Forms.Label()
-        Me.TrackTagButton = New System.Windows.Forms.Button()
-        Me.PlaylistGeneratorsLabel = New System.Windows.Forms.Label()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.AlbumTagButton = New System.Windows.Forms.Button()
+        Me.AlbumTagTextBox = New System.Windows.Forms.MaskedTextBox()
+        Me.AlbumTagLabel = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ArtistByUserButton = New System.Windows.Forms.Button()
         Me.ArtistByUserLabel = New System.Windows.Forms.Label()
@@ -65,13 +57,34 @@ Partial Class MainInterface
         Me.TrackByUserButton = New System.Windows.Forms.Button()
         Me.TrackByUserLabel = New System.Windows.Forms.Label()
         Me.TrackByUserTextBox = New System.Windows.Forms.MaskedTextBox()
+        Me.NumberOfItemsLabel = New System.Windows.Forms.Label()
+        Me.NumberOfItemsText = New System.Windows.Forms.Label()
+        Me.PlaylistGeneratorsLabel = New System.Windows.Forms.Label()
+        Me.NowPlayingGB = New System.Windows.Forms.GroupBox()
+        Me.AlbumYearText = New System.Windows.Forms.Label()
+        Me.AlbumYearLabel = New System.Windows.Forms.Label()
+        Me.TrackTextLabel = New System.Windows.Forms.Label()
+        Me.AlbumTextLabel = New System.Windows.Forms.Label()
+        Me.ArtistTextLabel = New System.Windows.Forms.Label()
+        Me.TagTrackLabel = New System.Windows.Forms.Label()
+        Me.TagAlbumLabel = New System.Windows.Forms.Label()
+        Me.TagArtistLabel = New System.Windows.Forms.Label()
+        Me.ShuffleCheckBox = New System.Windows.Forms.CheckBox()
+        Me.ArtistFilterGB = New System.Windows.Forms.GroupBox()
+        Me.FilteredOutArtistsLB = New System.Windows.Forms.ListBox()
+        Me.RemoveFilteredOutArtistButton = New System.Windows.Forms.Button()
+        Me.AddFilteredOutArtistButton = New System.Windows.Forms.Button()
+        Me.ArtistFilterOutTextBox = New System.Windows.Forms.MaskedTextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
+        Me.TabPage7.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        Me.NowPlayingGB.SuspendLayout()
+        Me.ArtistFilterGB.SuspendLayout()
         Me.SuspendLayout()
         '
         'AxWindowsMediaPlayer1
@@ -94,73 +107,12 @@ Partial Class MainInterface
         'FilteredPlaylistLabel
         '
         Me.FilteredPlaylistLabel.AutoSize = True
-        Me.FilteredPlaylistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FilteredPlaylistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FilteredPlaylistLabel.Location = New System.Drawing.Point(9, 9)
         Me.FilteredPlaylistLabel.Name = "FilteredPlaylistLabel"
-        Me.FilteredPlaylistLabel.Size = New System.Drawing.Size(93, 13)
+        Me.FilteredPlaylistLabel.Size = New System.Drawing.Size(76, 13)
         Me.FilteredPlaylistLabel.TabIndex = 4
         Me.FilteredPlaylistLabel.Text = "Filtered Playlist"
-        '
-        'ShuffleCheckBox
-        '
-        Me.ShuffleCheckBox.AutoSize = True
-        Me.ShuffleCheckBox.Location = New System.Drawing.Point(579, 326)
-        Me.ShuffleCheckBox.Name = "ShuffleCheckBox"
-        Me.ShuffleCheckBox.Size = New System.Drawing.Size(59, 17)
-        Me.ShuffleCheckBox.TabIndex = 7
-        Me.ShuffleCheckBox.Text = "Shuffle"
-        Me.ShuffleCheckBox.UseVisualStyleBackColor = True
-        '
-        'TagArtistLabel
-        '
-        Me.TagArtistLabel.AutoSize = True
-        Me.TagArtistLabel.Location = New System.Drawing.Point(576, 245)
-        Me.TagArtistLabel.Name = "TagArtistLabel"
-        Me.TagArtistLabel.Size = New System.Drawing.Size(36, 13)
-        Me.TagArtistLabel.TabIndex = 8
-        Me.TagArtistLabel.Text = "Artist: "
-        '
-        'TagAlbumLabel
-        '
-        Me.TagAlbumLabel.AutoSize = True
-        Me.TagAlbumLabel.Location = New System.Drawing.Point(576, 265)
-        Me.TagAlbumLabel.Name = "TagAlbumLabel"
-        Me.TagAlbumLabel.Size = New System.Drawing.Size(39, 13)
-        Me.TagAlbumLabel.TabIndex = 9
-        Me.TagAlbumLabel.Text = "Album:"
-        '
-        'TagTrackLabel
-        '
-        Me.TagTrackLabel.AutoSize = True
-        Me.TagTrackLabel.Location = New System.Drawing.Point(576, 284)
-        Me.TagTrackLabel.Name = "TagTrackLabel"
-        Me.TagTrackLabel.Size = New System.Drawing.Size(38, 13)
-        Me.TagTrackLabel.TabIndex = 10
-        Me.TagTrackLabel.Text = "Track:"
-        '
-        'ArtistTextLabel
-        '
-        Me.ArtistTextLabel.AutoSize = True
-        Me.ArtistTextLabel.Location = New System.Drawing.Point(620, 245)
-        Me.ArtistTextLabel.Name = "ArtistTextLabel"
-        Me.ArtistTextLabel.Size = New System.Drawing.Size(0, 13)
-        Me.ArtistTextLabel.TabIndex = 11
-        '
-        'AlbumTextLabel
-        '
-        Me.AlbumTextLabel.AutoSize = True
-        Me.AlbumTextLabel.Location = New System.Drawing.Point(620, 265)
-        Me.AlbumTextLabel.Name = "AlbumTextLabel"
-        Me.AlbumTextLabel.Size = New System.Drawing.Size(0, 13)
-        Me.AlbumTextLabel.TabIndex = 12
-        '
-        'TrackTextLabel
-        '
-        Me.TrackTextLabel.AutoSize = True
-        Me.TrackTextLabel.Location = New System.Drawing.Point(620, 284)
-        Me.TrackTextLabel.Name = "TrackTextLabel"
-        Me.TrackTextLabel.Size = New System.Drawing.Size(0, 13)
-        Me.TrackTextLabel.TabIndex = 13
         '
         'TabControl1
         '
@@ -168,9 +120,10 @@ Partial Class MainInterface
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage7)
         Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Controls.Add(Me.TabPage6)
-        Me.TabControl1.Location = New System.Drawing.Point(11, 293)
+        Me.TabControl1.Location = New System.Drawing.Point(11, 466)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(553, 200)
@@ -308,40 +261,6 @@ Partial Class MainInterface
         Me.ArtistTagLabel.TabIndex = 0
         Me.ArtistTagLabel.Text = "Tag"
         '
-        'AlbumYearLabel
-        '
-        Me.AlbumYearLabel.AutoSize = True
-        Me.AlbumYearLabel.Location = New System.Drawing.Point(577, 302)
-        Me.AlbumYearLabel.Name = "AlbumYearLabel"
-        Me.AlbumYearLabel.Size = New System.Drawing.Size(32, 13)
-        Me.AlbumYearLabel.TabIndex = 15
-        Me.AlbumYearLabel.Text = "Year:"
-        '
-        'AlbumYearText
-        '
-        Me.AlbumYearText.AutoSize = True
-        Me.AlbumYearText.Location = New System.Drawing.Point(620, 302)
-        Me.AlbumYearText.Name = "AlbumYearText"
-        Me.AlbumYearText.Size = New System.Drawing.Size(0, 13)
-        Me.AlbumYearText.TabIndex = 16
-        '
-        'NumberOfItemsLabel
-        '
-        Me.NumberOfItemsLabel.AutoSize = True
-        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(9, 240)
-        Me.NumberOfItemsLabel.Name = "NumberOfItemsLabel"
-        Me.NumberOfItemsLabel.Size = New System.Drawing.Size(87, 13)
-        Me.NumberOfItemsLabel.TabIndex = 17
-        Me.NumberOfItemsLabel.Text = "Number of Items:"
-        '
-        'NumberOfItemsText
-        '
-        Me.NumberOfItemsText.AutoSize = True
-        Me.NumberOfItemsText.Location = New System.Drawing.Point(102, 240)
-        Me.NumberOfItemsText.Name = "NumberOfItemsText"
-        Me.NumberOfItemsText.Size = New System.Drawing.Size(0, 13)
-        Me.NumberOfItemsText.TabIndex = 18
-        '
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.TrackTagButton)
@@ -354,6 +273,15 @@ Partial Class MainInterface
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Track Tag"
         Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'TrackTagButton
+        '
+        Me.TrackTagButton.Location = New System.Drawing.Point(21, 141)
+        Me.TrackTagButton.Name = "TrackTagButton"
+        Me.TrackTagButton.Size = New System.Drawing.Size(265, 27)
+        Me.TrackTagButton.TabIndex = 4
+        Me.TrackTagButton.Text = "Regenerate Playlist by Track Tag"
+        Me.TrackTagButton.UseVisualStyleBackColor = True
         '
         'TrackTagTextBox
         '
@@ -371,24 +299,43 @@ Partial Class MainInterface
         Me.TrackTagLabel.TabIndex = 2
         Me.TrackTagLabel.Text = "Tag"
         '
-        'TrackTagButton
+        'TabPage7
         '
-        Me.TrackTagButton.Location = New System.Drawing.Point(21, 141)
-        Me.TrackTagButton.Name = "TrackTagButton"
-        Me.TrackTagButton.Size = New System.Drawing.Size(265, 27)
-        Me.TrackTagButton.TabIndex = 4
-        Me.TrackTagButton.Text = "Regenerate Playlist by Track Tag"
-        Me.TrackTagButton.UseVisualStyleBackColor = True
+        Me.TabPage7.Controls.Add(Me.AlbumTagButton)
+        Me.TabPage7.Controls.Add(Me.AlbumTagTextBox)
+        Me.TabPage7.Controls.Add(Me.AlbumTagLabel)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage7.Size = New System.Drawing.Size(545, 174)
+        Me.TabPage7.TabIndex = 6
+        Me.TabPage7.Text = "Album Tag"
+        Me.TabPage7.UseVisualStyleBackColor = True
         '
-        'PlaylistGeneratorsLabel
+        'AlbumTagButton
         '
-        Me.PlaylistGeneratorsLabel.AutoSize = True
-        Me.PlaylistGeneratorsLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PlaylistGeneratorsLabel.Location = New System.Drawing.Point(8, 276)
-        Me.PlaylistGeneratorsLabel.Name = "PlaylistGeneratorsLabel"
-        Me.PlaylistGeneratorsLabel.Size = New System.Drawing.Size(113, 13)
-        Me.PlaylistGeneratorsLabel.TabIndex = 19
-        Me.PlaylistGeneratorsLabel.Text = "Playlist Generators"
+        Me.AlbumTagButton.Location = New System.Drawing.Point(21, 141)
+        Me.AlbumTagButton.Name = "AlbumTagButton"
+        Me.AlbumTagButton.Size = New System.Drawing.Size(265, 27)
+        Me.AlbumTagButton.TabIndex = 7
+        Me.AlbumTagButton.Text = "Regenerate Playlist by Album Tag"
+        Me.AlbumTagButton.UseVisualStyleBackColor = True
+        '
+        'AlbumTagTextBox
+        '
+        Me.AlbumTagTextBox.Location = New System.Drawing.Point(93, 14)
+        Me.AlbumTagTextBox.Name = "AlbumTagTextBox"
+        Me.AlbumTagTextBox.Size = New System.Drawing.Size(200, 20)
+        Me.AlbumTagTextBox.TabIndex = 6
+        '
+        'AlbumTagLabel
+        '
+        Me.AlbumTagLabel.AutoSize = True
+        Me.AlbumTagLabel.Location = New System.Drawing.Point(18, 17)
+        Me.AlbumTagLabel.Name = "AlbumTagLabel"
+        Me.AlbumTagLabel.Size = New System.Drawing.Size(26, 13)
+        Me.AlbumTagLabel.TabIndex = 5
+        Me.AlbumTagLabel.Text = "Tag"
         '
         'TabPage5
         '
@@ -466,24 +413,188 @@ Partial Class MainInterface
         Me.TrackByUserTextBox.Size = New System.Drawing.Size(193, 20)
         Me.TrackByUserTextBox.TabIndex = 12
         '
+        'NumberOfItemsLabel
+        '
+        Me.NumberOfItemsLabel.AutoSize = True
+        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(9, 240)
+        Me.NumberOfItemsLabel.Name = "NumberOfItemsLabel"
+        Me.NumberOfItemsLabel.Size = New System.Drawing.Size(87, 13)
+        Me.NumberOfItemsLabel.TabIndex = 17
+        Me.NumberOfItemsLabel.Text = "Number of Items:"
+        '
+        'NumberOfItemsText
+        '
+        Me.NumberOfItemsText.AutoSize = True
+        Me.NumberOfItemsText.Location = New System.Drawing.Point(102, 240)
+        Me.NumberOfItemsText.Name = "NumberOfItemsText"
+        Me.NumberOfItemsText.Size = New System.Drawing.Size(0, 13)
+        Me.NumberOfItemsText.TabIndex = 18
+        '
+        'PlaylistGeneratorsLabel
+        '
+        Me.PlaylistGeneratorsLabel.AutoSize = True
+        Me.PlaylistGeneratorsLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PlaylistGeneratorsLabel.Location = New System.Drawing.Point(8, 449)
+        Me.PlaylistGeneratorsLabel.Name = "PlaylistGeneratorsLabel"
+        Me.PlaylistGeneratorsLabel.Size = New System.Drawing.Size(94, 13)
+        Me.PlaylistGeneratorsLabel.TabIndex = 19
+        Me.PlaylistGeneratorsLabel.Text = "Playlist Generators"
+        '
+        'NowPlayingGB
+        '
+        Me.NowPlayingGB.Controls.Add(Me.AlbumYearText)
+        Me.NowPlayingGB.Controls.Add(Me.AlbumYearLabel)
+        Me.NowPlayingGB.Controls.Add(Me.TrackTextLabel)
+        Me.NowPlayingGB.Controls.Add(Me.AlbumTextLabel)
+        Me.NowPlayingGB.Controls.Add(Me.ArtistTextLabel)
+        Me.NowPlayingGB.Controls.Add(Me.TagTrackLabel)
+        Me.NowPlayingGB.Controls.Add(Me.TagAlbumLabel)
+        Me.NowPlayingGB.Controls.Add(Me.TagArtistLabel)
+        Me.NowPlayingGB.Controls.Add(Me.ShuffleCheckBox)
+        Me.NowPlayingGB.Location = New System.Drawing.Point(580, 249)
+        Me.NowPlayingGB.Name = "NowPlayingGB"
+        Me.NowPlayingGB.Size = New System.Drawing.Size(276, 130)
+        Me.NowPlayingGB.TabIndex = 20
+        Me.NowPlayingGB.TabStop = False
+        Me.NowPlayingGB.Text = "Now Playing"
+        '
+        'AlbumYearText
+        '
+        Me.AlbumYearText.AutoSize = True
+        Me.AlbumYearText.Location = New System.Drawing.Point(50, 84)
+        Me.AlbumYearText.Name = "AlbumYearText"
+        Me.AlbumYearText.Size = New System.Drawing.Size(0, 13)
+        Me.AlbumYearText.TabIndex = 25
+        '
+        'AlbumYearLabel
+        '
+        Me.AlbumYearLabel.AutoSize = True
+        Me.AlbumYearLabel.Location = New System.Drawing.Point(7, 84)
+        Me.AlbumYearLabel.Name = "AlbumYearLabel"
+        Me.AlbumYearLabel.Size = New System.Drawing.Size(32, 13)
+        Me.AlbumYearLabel.TabIndex = 24
+        Me.AlbumYearLabel.Text = "Year:"
+        '
+        'TrackTextLabel
+        '
+        Me.TrackTextLabel.AutoSize = True
+        Me.TrackTextLabel.Location = New System.Drawing.Point(50, 66)
+        Me.TrackTextLabel.Name = "TrackTextLabel"
+        Me.TrackTextLabel.Size = New System.Drawing.Size(0, 13)
+        Me.TrackTextLabel.TabIndex = 23
+        '
+        'AlbumTextLabel
+        '
+        Me.AlbumTextLabel.AutoSize = True
+        Me.AlbumTextLabel.Location = New System.Drawing.Point(50, 47)
+        Me.AlbumTextLabel.Name = "AlbumTextLabel"
+        Me.AlbumTextLabel.Size = New System.Drawing.Size(0, 13)
+        Me.AlbumTextLabel.TabIndex = 22
+        '
+        'ArtistTextLabel
+        '
+        Me.ArtistTextLabel.AutoSize = True
+        Me.ArtistTextLabel.Location = New System.Drawing.Point(50, 27)
+        Me.ArtistTextLabel.Name = "ArtistTextLabel"
+        Me.ArtistTextLabel.Size = New System.Drawing.Size(0, 13)
+        Me.ArtistTextLabel.TabIndex = 21
+        '
+        'TagTrackLabel
+        '
+        Me.TagTrackLabel.AutoSize = True
+        Me.TagTrackLabel.Location = New System.Drawing.Point(6, 66)
+        Me.TagTrackLabel.Name = "TagTrackLabel"
+        Me.TagTrackLabel.Size = New System.Drawing.Size(38, 13)
+        Me.TagTrackLabel.TabIndex = 20
+        Me.TagTrackLabel.Text = "Track:"
+        '
+        'TagAlbumLabel
+        '
+        Me.TagAlbumLabel.AutoSize = True
+        Me.TagAlbumLabel.Location = New System.Drawing.Point(6, 47)
+        Me.TagAlbumLabel.Name = "TagAlbumLabel"
+        Me.TagAlbumLabel.Size = New System.Drawing.Size(39, 13)
+        Me.TagAlbumLabel.TabIndex = 19
+        Me.TagAlbumLabel.Text = "Album:"
+        '
+        'TagArtistLabel
+        '
+        Me.TagArtistLabel.AutoSize = True
+        Me.TagArtistLabel.Location = New System.Drawing.Point(6, 27)
+        Me.TagArtistLabel.Name = "TagArtistLabel"
+        Me.TagArtistLabel.Size = New System.Drawing.Size(36, 13)
+        Me.TagArtistLabel.TabIndex = 18
+        Me.TagArtistLabel.Text = "Artist: "
+        '
+        'ShuffleCheckBox
+        '
+        Me.ShuffleCheckBox.AutoSize = True
+        Me.ShuffleCheckBox.Location = New System.Drawing.Point(9, 108)
+        Me.ShuffleCheckBox.Name = "ShuffleCheckBox"
+        Me.ShuffleCheckBox.Size = New System.Drawing.Size(59, 17)
+        Me.ShuffleCheckBox.TabIndex = 17
+        Me.ShuffleCheckBox.Text = "Shuffle"
+        Me.ShuffleCheckBox.UseVisualStyleBackColor = True
+        '
+        'ArtistFilterGB
+        '
+        Me.ArtistFilterGB.Controls.Add(Me.FilteredOutArtistsLB)
+        Me.ArtistFilterGB.Controls.Add(Me.RemoveFilteredOutArtistButton)
+        Me.ArtistFilterGB.Controls.Add(Me.AddFilteredOutArtistButton)
+        Me.ArtistFilterGB.Controls.Add(Me.ArtistFilterOutTextBox)
+        Me.ArtistFilterGB.Location = New System.Drawing.Point(12, 268)
+        Me.ArtistFilterGB.Name = "ArtistFilterGB"
+        Me.ArtistFilterGB.Size = New System.Drawing.Size(262, 166)
+        Me.ArtistFilterGB.TabIndex = 21
+        Me.ArtistFilterGB.TabStop = False
+        Me.ArtistFilterGB.Text = "Artists to Filter Out"
+        '
+        'FilteredOutArtistsLB
+        '
+        Me.FilteredOutArtistsLB.FormattingEnabled = True
+        Me.FilteredOutArtistsLB.Location = New System.Drawing.Point(10, 55)
+        Me.FilteredOutArtistsLB.Name = "FilteredOutArtistsLB"
+        Me.FilteredOutArtistsLB.Size = New System.Drawing.Size(130, 95)
+        Me.FilteredOutArtistsLB.TabIndex = 4
+        '
+        'RemoveFilteredOutArtistButton
+        '
+        Me.RemoveFilteredOutArtistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RemoveFilteredOutArtistButton.Location = New System.Drawing.Point(193, 19)
+        Me.RemoveFilteredOutArtistButton.Name = "RemoveFilteredOutArtistButton"
+        Me.RemoveFilteredOutArtistButton.Size = New System.Drawing.Size(39, 35)
+        Me.RemoveFilteredOutArtistButton.TabIndex = 3
+        Me.RemoveFilteredOutArtistButton.Text = "-"
+        Me.RemoveFilteredOutArtistButton.UseVisualStyleBackColor = True
+        '
+        'AddFilteredOutArtistButton
+        '
+        Me.AddFilteredOutArtistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddFilteredOutArtistButton.Location = New System.Drawing.Point(147, 19)
+        Me.AddFilteredOutArtistButton.Name = "AddFilteredOutArtistButton"
+        Me.AddFilteredOutArtistButton.Size = New System.Drawing.Size(39, 35)
+        Me.AddFilteredOutArtistButton.TabIndex = 2
+        Me.AddFilteredOutArtistButton.Text = "+"
+        Me.AddFilteredOutArtistButton.UseVisualStyleBackColor = True
+        '
+        'ArtistFilterOutTextBox
+        '
+        Me.ArtistFilterOutTextBox.Location = New System.Drawing.Point(10, 28)
+        Me.ArtistFilterOutTextBox.Name = "ArtistFilterOutTextBox"
+        Me.ArtistFilterOutTextBox.Size = New System.Drawing.Size(130, 20)
+        Me.ArtistFilterOutTextBox.TabIndex = 1
+        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(869, 505)
+        Me.ClientSize = New System.Drawing.Size(869, 678)
+        Me.Controls.Add(Me.ArtistFilterGB)
+        Me.Controls.Add(Me.NowPlayingGB)
         Me.Controls.Add(Me.PlaylistGeneratorsLabel)
         Me.Controls.Add(Me.NumberOfItemsText)
         Me.Controls.Add(Me.NumberOfItemsLabel)
-        Me.Controls.Add(Me.AlbumYearText)
-        Me.Controls.Add(Me.AlbumYearLabel)
         Me.Controls.Add(Me.TabControl1)
-        Me.Controls.Add(Me.TrackTextLabel)
-        Me.Controls.Add(Me.AlbumTextLabel)
-        Me.Controls.Add(Me.ArtistTextLabel)
-        Me.Controls.Add(Me.TagTrackLabel)
-        Me.Controls.Add(Me.TagAlbumLabel)
-        Me.Controls.Add(Me.TagArtistLabel)
-        Me.Controls.Add(Me.ShuffleCheckBox)
         Me.Controls.Add(Me.FilteredPlaylistLabel)
         Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
@@ -499,10 +610,16 @@ Partial Class MainInterface
         Me.TabPage3.PerformLayout()
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
+        Me.NowPlayingGB.ResumeLayout(False)
+        Me.NowPlayingGB.PerformLayout()
+        Me.ArtistFilterGB.ResumeLayout(False)
+        Me.ArtistFilterGB.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -510,13 +627,6 @@ Partial Class MainInterface
     Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
     Friend WithEvents PlaylistBox As System.Windows.Forms.ListBox
     Friend WithEvents FilteredPlaylistLabel As System.Windows.Forms.Label
-    Friend WithEvents ShuffleCheckBox As System.Windows.Forms.CheckBox
-    Friend WithEvents TagArtistLabel As System.Windows.Forms.Label
-    Friend WithEvents TagAlbumLabel As System.Windows.Forms.Label
-    Friend WithEvents TagTrackLabel As System.Windows.Forms.Label
-    Friend WithEvents ArtistTextLabel As System.Windows.Forms.Label
-    Friend WithEvents AlbumTextLabel As System.Windows.Forms.Label
-    Friend WithEvents TrackTextLabel As System.Windows.Forms.Label
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents ArtistSimilarityButton As System.Windows.Forms.Button
@@ -528,8 +638,6 @@ Partial Class MainInterface
     Friend WithEvents TrackSimilarityButton As System.Windows.Forms.Button
     Friend WithEvents TrackNameTextBox As System.Windows.Forms.MaskedTextBox
     Friend WithEvents TrackNameLabel As System.Windows.Forms.Label
-    Friend WithEvents AlbumYearLabel As System.Windows.Forms.Label
-    Friend WithEvents AlbumYearText As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsLabel As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsText As System.Windows.Forms.Label
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
@@ -549,5 +657,24 @@ Partial Class MainInterface
     Friend WithEvents TrackByUserButton As System.Windows.Forms.Button
     Friend WithEvents TrackByUserLabel As System.Windows.Forms.Label
     Friend WithEvents TrackByUserTextBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
+    Friend WithEvents AlbumTagButton As System.Windows.Forms.Button
+    Friend WithEvents AlbumTagTextBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents AlbumTagLabel As System.Windows.Forms.Label
+    Friend WithEvents NowPlayingGB As System.Windows.Forms.GroupBox
+    Friend WithEvents AlbumYearText As System.Windows.Forms.Label
+    Friend WithEvents AlbumYearLabel As System.Windows.Forms.Label
+    Friend WithEvents TrackTextLabel As System.Windows.Forms.Label
+    Friend WithEvents AlbumTextLabel As System.Windows.Forms.Label
+    Friend WithEvents ArtistTextLabel As System.Windows.Forms.Label
+    Friend WithEvents TagTrackLabel As System.Windows.Forms.Label
+    Friend WithEvents TagAlbumLabel As System.Windows.Forms.Label
+    Friend WithEvents TagArtistLabel As System.Windows.Forms.Label
+    Friend WithEvents ShuffleCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents ArtistFilterGB As System.Windows.Forms.GroupBox
+    Friend WithEvents RemoveFilteredOutArtistButton As System.Windows.Forms.Button
+    Friend WithEvents AddFilteredOutArtistButton As System.Windows.Forms.Button
+    Friend WithEvents ArtistFilterOutTextBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents FilteredOutArtistsLB As System.Windows.Forms.ListBox
 
 End Class

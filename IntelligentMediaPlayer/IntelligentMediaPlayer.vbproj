@@ -64,6 +64,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Album.vb" />
     <Compile Include="Artist.vb" />
     <Compile Include="LastFMClient.vb" />
     <Compile Include="MainInterface.vb">

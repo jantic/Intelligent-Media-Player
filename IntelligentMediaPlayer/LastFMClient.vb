@@ -14,6 +14,7 @@ Public Class LastFMClient
     Private Const similarTrackCall_track As String = "&track="
     Private Const topTagArtistsCall As String = "tag.gettopartists&tag="
     Private Const topTagTracksCall As String = "tag.gettoptracks&tag="
+    Private Const topTagAlbumsCall As String = "tag.gettopalbums&tag="
     Private Const topUserArtistsCall As String = "user.gettopartists&user="
     Private Const topUserTracksCall As String = "user.gettoptracks&user="
     Private Const apiTag As String = "&api_key="
@@ -70,13 +71,13 @@ Public Class LastFMClient
         Dim caller As XmlDocument = New XmlDocument
         caller.Load(webserviceCall)
         Dim root As XmlElement = caller.DocumentElement
-        Dim artistNodes As XmlNodeList = root.GetElementsByTagName("track")
+        Dim trackNodes As XmlNodeList = root.GetElementsByTagName("track")
 
         Dim trackList As ArrayList = New ArrayList
 
         trackList.Add(New Track(cleanedTrack, 100, New Artist(cleanedArtist, 100)))
 
-        For Each node As XmlElement In artistNodes
+        For Each node As XmlElement In trackNodes
             Dim name As String = node.Item("name").InnerText
             Dim match As Double = Convert.ToDouble(node.Item("match").InnerText)
             Dim trackArtist As String = node.Item("artist").Item("name").InnerText
@@ -151,11 +152,11 @@ Public Class LastFMClient
         Dim caller As XmlDocument = New XmlDocument
         caller.Load(webserviceCall)
         Dim root As XmlElement = caller.DocumentElement
-        Dim artistNodes As XmlNodeList = root.GetElementsByTagName("track")
+        Dim trackNodes As XmlNodeList = root.GetElementsByTagName("track")
 
         Dim trackList As ArrayList = New ArrayList
 
-        For Each node As XmlElement In artistNodes
+        For Each node As XmlElement In trackNodes
             Dim name As String = node.Item("name").InnerText
             Dim match As Double = Convert.ToDouble(node.Item("tagcount").InnerText)
             Dim trackArtist As String = node.Item("artist").Item("name").InnerText
@@ -163,6 +164,48 @@ Public Class LastFMClient
         Next
 
         Return trackList.ToArray(GetType(Track))
+    End Function
+
+
+    Public Function GetTopAlbumsByTag(ByVal tag As String) As Album()
+        'Sample call:  http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=disco&api_key=b25b959554ed76058ac...
+
+        '<topalbums tag="Disco">
+        '  <album rank="">
+        '    <name>Overpowered</name>
+        '    <tagcount>104</tagcount>
+        '    <mbid/>
+        '    <url>
+        '      http://www.last.fm/music/Róisín+Murphy/Overpowered
+        '    </url>
+        '    <artist>
+        '      <name>Róisín Murphy</name>
+        '      <mbid>4c56405d-ba8e-4283-99c3-1dc95bdd50e7</mbid>
+        '      <url>http://www.last.fm/music/Róisín+Murphy</url>
+        '    </artist>
+        '    <image size="small">...</image>
+        '    <image size="medium">...</image>
+        '    <image size="large">...</image>
+        '  </album>
+        '  ...
+        '</topalbums>
+
+        Dim cleanedTag As String = CleanUpName(tag)
+        Dim webserviceCall As String = String.Concat(baseAPIurl, topTagAlbumsCall, cleanedTag, apiTag, apiKey)
+        Dim caller As XmlDocument = New XmlDocument
+        caller.Load(webserviceCall)
+        Dim root As XmlElement = caller.DocumentElement
+        Dim albumNodes As XmlNodeList = root.GetElementsByTagName("album")
+
+        Dim albumList As ArrayList = New ArrayList
+
+        For Each node As XmlElement In albumNodes
+            Dim name As String = node.Item("name").InnerText
+            Dim tagCount As UInteger = Convert.ToDouble(node.Item("tagcount").InnerText)
+            albumList.Add(New Album(name, tagCount))
+        Next
+
+        Return albumList.ToArray(GetType(Album))
     End Function
 
 
@@ -233,11 +276,11 @@ Public Class LastFMClient
 
         caller.Load(webserviceCall)
         Dim root As XmlElement = caller.DocumentElement
-        Dim artistNodes As XmlNodeList = root.GetElementsByTagName("track")
+        Dim trackNodes As XmlNodeList = root.GetElementsByTagName("track")
 
         Dim trackList As ArrayList = New ArrayList
 
-        For Each node As XmlElement In artistNodes
+        For Each node As XmlElement In trackNodes
             Dim name As String = node.Item("name").InnerText
             Dim match As Double = Convert.ToDouble(node.Item("playcount").InnerText)
             Dim trackArtist As String = node.Item("artist").Item("name").InnerText

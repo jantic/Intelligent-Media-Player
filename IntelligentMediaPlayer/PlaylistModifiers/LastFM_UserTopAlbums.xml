@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<PlaylistModifier
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
+
+  <Type>LastFM</Type>
+
+  <UI>
+    <DisplayName>Last.FM User Top Albums</DisplayName>
+
+    <Inputs>
+      <Input>
+        <ID>1</ID>
+        <UILabel>Last.FM User</UILabel>
+      </Input>
+    </Inputs>
+  </UI>
+
+  <Action>Add</Action>
+
+  <Method>
+    <LastFMrequest>
+      <RequestURL>
+        <TemplateURL>http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&amp;user=[user]&amp;api_key=e295ea662af320c44101419cb30cfffe</TemplateURL>
+        <TemplateMappings>
+          <Mapping>
+            <ID>1</ID>
+            <ToReplace>[user]</ToReplace>
+            <InputID>1</InputID>
+          </Mapping>
+        </TemplateMappings>
+      </RequestURL>
+
+      <Response>
+        <Outputs>
+          <Output>
+            <ID>1</ID>
+            <WMP_Attribute>Album</WMP_Attribute>
+            <xPath>//topalbums/album/name</xPath>
+          </Output>
+          <Output>
+            <ID>2</ID>
+            <WMP_Attribute>Artist</WMP_Attribute>
+            <xPath>//topalbums/album/artist/name</xPath>
+          </Output>
+        </Outputs>
+      </Response>
+    </LastFMrequest>
+  </Method>
+</PlaylistModifier>

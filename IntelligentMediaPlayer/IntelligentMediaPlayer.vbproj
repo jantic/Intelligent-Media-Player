@@ -64,9 +64,6 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Album.vb" />
-    <Compile Include="Artist.vb" />
-    <Compile Include="LastFMClient.vb" />
     <Compile Include="MainInterface.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +86,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Track.vb" />
+    <Compile Include="PlaylistManagement\PlaylistManager.vb" />
+    <Compile Include="PlaylistManagement\IPlaylistModifier.vb" />
+    <Compile Include="PlaylistManagement\PlaylistModifierInput.vb" />
+    <Compile Include="PlaylistManagement\LastFMPlaylistModifier.vb" />
+    <Compile Include="PlaylistManagement\LastFMOutputMapping.vb" />
+    <Compile Include="PlaylistManagement\URLTemplateMapping.vb" />
+    <Compile Include="PlaylistManagement\WMPAttributePlaylistModifier.vb" />
+    <Compile Include="PlaylistManagement\PlaylistModifierUILiason.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainInterface.resx">
@@ -103,6 +107,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -111,6 +116,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="PlaylistManagement\PlaylistModifier.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +142,37 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="PlaylistModifiers\WMP_AddArtistName.xml" />
+    <Content Include="PlaylistModifiers\LastFM_ArtistTopTracks.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_UserTopAlbums.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_UserTopArtists.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_TracksByTag.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_AlbumsByTag.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_ArtistsByTag.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_SimilarTracks.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_UserTopTracks.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PlaylistModifiers\LastFM_SimilarArtists.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

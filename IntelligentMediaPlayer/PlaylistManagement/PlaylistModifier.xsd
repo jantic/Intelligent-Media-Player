@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="PlaylistModifier">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="Type">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="WMPAttribute"/>
+              <xs:enumeration value="LastFM"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <xs:element name="UI">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DisplayName" type="xs:string"/>
+
+              <xs:element name="Inputs">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element name="Input" minOccurs="1" maxOccurs="5">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ID">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:unsignedInt">
+                                <xs:minInclusive value="1"/>
+                                <xs:maxInclusive value="5"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="UILabel" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="Action">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Add"/>
+              <xs:enumeration value="Subtract"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        
+        
+
+        <xs:element name="Method">
+          <xs:complexType>
+            <xs:choice>
+
+              <xs:element name="MediaAttributeMatch">
+                <xs:complexType>
+                  <xs:sequence>
+                    
+                    <xs:element name="AttributeMappings">
+                      <xs:complexType>
+                        <xs:sequence>
+
+                          <xs:element name="Mapping" minOccurs="1" maxOccurs="5">
+                            <xs:complexType>
+                              <xs:sequence>
+
+                                <xs:element name="ID" type="xs:unsignedInt"/>
+                                <xs:element name="WMP_Attribute" type="xs:string"/>
+                                <xs:element name="InputID" type="xs:unsignedInt"/>
+                                
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              
+
+
+              <xs:element name="LastFMrequest">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element name="RequestURL">
+                      <xs:complexType>
+                        <xs:sequence>
+                          
+                          <xs:element name="TemplateURL" type="xs:string"/>
+                          
+                          <xs:element name="TemplateMappings">
+                            <xs:complexType>
+                              <xs:sequence>
+
+                                <xs:element name="Mapping" minOccurs="1" maxOccurs="5">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      
+                                      <xs:element name="ID" type="xs:unsignedInt"/>
+                                      <xs:element name="ToReplace" type="xs:string"/>
+                                      <xs:element name="InputID" type="xs:unsignedInt"/>
+                                      
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    
+                    
+                    
+
+                    <xs:element name="Response">
+                        <xs:complexType>
+                          <xs:sequence>
+                            
+                            <xs:element name="Outputs">
+                              <xs:complexType>
+                                <xs:sequence>
+
+                                  <xs:element name="Output" minOccurs="1" maxOccurs="5">
+                                    <xs:complexType>
+                                      <xs:sequence>
+                                        
+                                        <xs:element name="ID" type="xs:unsignedInt"/>
+                                        <xs:element name="WMP_Attribute" type="xs:string"/>
+                                        <xs:element name="xPath" type="xs:string"/>
+                                        
+                                      </xs:sequence>
+                                    </xs:complexType>
+                                  </xs:element>
+                                  
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                            
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+
+                    
+                    
+                    
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              </xs:choice>
+          </xs:complexType>
+         </xs:element>
+  
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

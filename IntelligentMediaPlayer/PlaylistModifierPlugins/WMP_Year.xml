@@ -2,17 +2,17 @@
 
 <PlaylistModifier 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
+xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
 
   <Type>WMPAttribute</Type>
   
   <UI>
-    <DisplayName>Artist Name</DisplayName>
+    <DisplayName>Year</DisplayName>
 
     <Inputs>
       <Input>
         <ID>1</ID>
-        <UILabel>Artist</UILabel>
+        <UILabel>Year</UILabel>
       </Input>
     </Inputs>
   </UI>
@@ -24,7 +24,7 @@ xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
       <AttributeMappings>
         <Mapping>
           <ID>1</ID>
-          <WMP_Attribute>Author</WMP_Attribute>
+          <WMP_Attribute>ReleaseDateYear</WMP_Attribute>
           <InputID>1</InputID>
         </Mapping>
       </AttributeMappings>

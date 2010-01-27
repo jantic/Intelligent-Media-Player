@@ -6,12 +6,6 @@ Imports System.Xml.XPath
 
 
 Partial Public Class PlaylistManager
-    Public Enum Action
-        Add
-        Subtract
-        Filter
-    End Enum
-
     Public Enum ModifierType
         WMPAttribute
         LastFM
@@ -29,32 +23,38 @@ Partial Public Class PlaylistManager
 
     Public Sub GeneratePlaylist(ByRef player As AxWindowsMediaPlayer)
 
-        Dim start As Integer = 0
+        If (myWorkingModifiers.Count > 0) Then
 
-        If (myPreviouslyAppliedLastModifierIndex <= -1) Then
-            player.currentPlaylist.clear()
-            myPreviouslyAppliedLastModifierIndex = -1
+            Dim start As Integer = 0
+
+            If (myPreviouslyAppliedLastModifierIndex <= -1) Then
+                player.currentPlaylist.clear()
+                myPreviouslyAppliedLastModifierIndex = -1
+            Else
+                start = myPreviouslyAppliedLastModifierIndex
+            End If
+
+
+            For index As Integer = start To myWorkingModifiers.Count - 1 Step 1
+                Dim modifier As IPlaylistModifier = DirectCast(myWorkingModifiers.Item(index), IPlaylistModifier)
+
+                If (index = 0 And modifier.ModificationAction.Name = "Subtract") Then 'otherwise you're subtracting from nothing
+                    player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
+                End If
+
+                If (index = start And myPreviouslyAppliedLastModifierIndex >= 0) Then
+                    modifier.ModifyPlaylist(player, True)
+                Else
+                    modifier.ModifyPlaylist(player, False)
+                End If
+            Next
+
+
         Else
-            start = myPreviouslyAppliedLastModifierIndex
+            player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
         End If
 
-
-        For index As Integer = start To myWorkingModifiers.Count - 1 Step 1
-            Dim modifier As IPlaylistModifier = DirectCast(myWorkingModifiers.Item(index), IPlaylistModifier)
-
-            If (index = 0 And modifier.ModificationAction = Action.Subtract) Then 'otherwise you're subtracting from nothing
-                player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
-            End If
-
-            If (index = start And myPreviouslyAppliedLastModifierIndex >= 0) Then
-                modifier.ModifyPlaylist(player, True)
-            Else
-                modifier.ModifyPlaylist(player, False)
-            End If
-        Next
-
         myPreviouslyAppliedLastModifierIndex = myWorkingModifiers.Count - 1
-
         RemoveDuplicates(player)
     End Sub
 

@@ -16,10 +16,10 @@ Public Class MainInterface
     End Sub
 
     Private Sub InitializePlaylist()
-        manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\PlaylistModifiers")
+        manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\PlaylistModifierPlugins")
 
         PlaylistBox.Items.Clear()
-        player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
+        manager.GeneratePlaylist(player)
         FillPlaylistBox()
     End Sub
 
@@ -122,20 +122,20 @@ Public Class MainInterface
         End If
     End Sub
 
-    Private Function GetSelectedAction() As PlaylistManager.Action
+    Private Function GetSelectedAction() As PlaylistManager.IModifierAction
         If (FilterRB.Checked) Then
-            Return PlaylistManager.Action.Filter
+            Return New PlaylistManager.ModifierAction_Add
         ElseIf (AddRB.Checked) Then
-            Return PlaylistManager.Action.Add
+            Return New PlaylistManager.ModifierAction_Add
         Else
-            Return PlaylistManager.Action.Subtract
+            Return New PlaylistManager.ModifierAction_Subtract
         End If
     End Function
 
-    Private Sub SetSelectedAction(ByVal theAction As PlaylistManager.Action)
-        If (theAction = PlaylistManager.Action.Add) Then
+    Private Sub SetSelectedAction(ByVal theAction As PlaylistManager.IModifierAction)
+        If (theAction.Name = "Add") Then
             AddRB.Select()
-        ElseIf (theAction = PlaylistManager.Action.Filter) Then
+        ElseIf (theAction.Name = "Filter") Then
             FilterRB.Select()
         Else
             RemoveRb.Select()
@@ -143,7 +143,7 @@ Public Class MainInterface
     End Sub
 
     Private Sub RemoveModifierButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RemoveModifierButton.Click
-        If (ActivePlaylistModifiersLB.SelectedIndex() <= manager.GetWorkingModifiers.Length - 1) Then
+        If (ActivePlaylistModifiersLB.SelectedIndex() <= manager.GetWorkingModifiers.Length - 1 And ActivePlaylistModifiersLB.SelectedIndex() > -1) Then
             manager.RemoveWorkingModifier(ActivePlaylistModifiersLB.SelectedIndex())
             UpdateActiveModifiersLB()
         End If
@@ -197,7 +197,7 @@ Public Class MainInterface
         If (Not (workingModifiers Is Nothing)) Then
             For Each liason As PlaylistManager.PlaylistModifierUILiason In workingModifiers
 
-                Dim displayText As String = "[" + ConvertActionToString(liason.ModifierAction) + "] " + liason.DisplayName + "("
+                Dim displayText As String = "[" + liason.ModifierAction.Name + "] " + liason.DisplayName + "("
 
                 For Each input As PlaylistManager.PlaylistModifierInput In liason.Inputs
                     displayText = displayText + input.DisplayName + " - " + input.Value + ";"
@@ -211,15 +211,6 @@ Public Class MainInterface
 
     End Sub
 
-    Private Function ConvertActionToString(ByRef theAction As PlaylistManager.Action) As String
-        If (theAction = PlaylistManager.Action.Add) Then
-            Return "Add"
-        ElseIf (theAction = PlaylistManager.Action.Filter) Then
-            Return "Filter"
-        Else
-            Return "Remove"
-        End If
-    End Function
 
     Private Sub GeneratePlaylistButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GeneratePlaylistButton.Click
         player.Ctlcontrols.stop()

@@ -28,12 +28,12 @@ Partial Public Class PlaylistManager
                 ApplyCachedPlaylist(player)
             Else
 
-                Dim mc As WMPLib.IWMPMediaCollection2 = player.mediaCollection
+
                 Dim resultIndex As UInteger = 0
 
                 While (1)
 
-                    Dim query As WMPLib.IWMPQuery = mc.createQuery()
+                    Dim attributeLookup As Dictionary(Of String, String) = New Dictionary(Of String, String)
 
                     For Each attributeMapping As LastFMOutputMapping In myCallResultMappings
 
@@ -45,52 +45,13 @@ Partial Public Class PlaylistManager
                         End If
 
                         attributeValue.Trim.ToLower()
+                        attributeLookup.Add(attributeName, attributeValue)
 
-                        ' Add two conditions to the Query. 
-                        query.addCondition(attributeName, "Equals", attributeValue)
                     Next
 
-                    Dim result As IWMPPlaylist = mc.getPlaylistByQuery(query, "audio", "", False)
 
-                    Dim quickMediaLookup As Dictionary(Of String, IWMPMedia) = New Dictionary(Of String, IWMPMedia) 'for proper, fast subtraction
-                    'this makes subtraction a O(N) operation as opposed to an O(N2) operation
-
-                    If (myLiason.ModifierAction = Action.Subtract) Then
-
-                        For y As Integer = 0 To player.currentPlaylist.count - 1 Step 1
-
-                            If (y >= player.currentPlaylist.count) Then 'need to check since we're potentially removing items.
-                                Exit For
-                            End If
-
-                            Dim item As IWMPMedia = player.currentPlaylist.Item(y)
-                            Dim key As String = GenerateMediaHashKey(item)
-
-                            If (Not (quickMediaLookup.ContainsKey(key))) Then
-                                quickMediaLookup.Add(key, item)
-                            Else
-                                player.currentPlaylist.removeItem(item)
-                                y -= 1
-                            End If
-                        Next
-                    End If
-
-
-
-                    For index As Integer = 0 To result.count - 1 Step 1
-                        Dim mediaItem As IWMPMedia = result.Item(index)
-
-                        If (myLiason.ModifierAction = Action.Subtract) Then
-                            Dim key As String = GenerateMediaHashKey(mediaItem)
-                            If (quickMediaLookup.ContainsKey(key)) Then
-                                player.currentPlaylist.removeItem(quickMediaLookup(GenerateMediaHashKey(mediaItem)))
-                                quickMediaLookup.Remove(key)
-                            End If
-                        ElseIf (myLiason.ModifierAction = Action.Add) Then
-                            player.currentPlaylist.appendItem(result.Item(index))
-                        End If
-                    Next
-
+                    'add action code here.
+                    Liason.ModifierAction.ModifyPlaylist(player, attributeLookup)
 
                     resultIndex += 1
                 End While
@@ -125,7 +86,7 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
-        Public ReadOnly Property ModificationAction As Action Implements IPlaylistModifier.ModificationAction
+        Public ReadOnly Property ModificationAction As IModifierAction Implements IPlaylistModifier.ModificationAction
             Get
                 Return myLiason.ModifierAction
             End Get

@@ -2,17 +2,17 @@
 
 <PlaylistModifier
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
+xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
 
   <Type>LastFM</Type>
-
+  
   <UI>
-    <DisplayName>Last.FM User Top Artists</DisplayName>
+    <DisplayName>Last.FM Artist Top Tracks</DisplayName>
 
     <Inputs>
       <Input>
         <ID>1</ID>
-        <UILabel>Last.FM User</UILabel>
+        <UILabel>Artist</UILabel>
       </Input>
     </Inputs>
   </UI>
@@ -22,11 +22,11 @@ xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
   <Method>
     <LastFMrequest>
       <RequestURL>
-        <TemplateURL>http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;user=[user]&amp;api_key=e295ea662af320c44101419cb30cfffe</TemplateURL>
+        <TemplateURL>http://ws.audioscrobbler.com/2.0/artist/[Artist]/toptracks.xml </TemplateURL>
         <TemplateMappings>
           <Mapping>
             <ID>1</ID>
-            <ToReplace>[user]</ToReplace>
+            <ToReplace>[Artist]</ToReplace>
             <InputID>1</InputID>
           </Mapping>
         </TemplateMappings>
@@ -37,10 +37,17 @@ xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
           <Output>
             <ID>1</ID>
             <WMP_Attribute>Artist</WMP_Attribute>
-            <xPath>//topartists/artist/name</xPath>
+            <xPath>//toptracks/track/artist/name</xPath>
+          </Output>
+          <Output>
+            <ID>2</ID>
+            <WMP_Attribute>Title</WMP_Attribute>
+            <xPath>//toptracks/track/name</xPath>
           </Output>
         </Outputs>
       </Response>
     </LastFMrequest>
   </Method>
+  
+  
 </PlaylistModifier>

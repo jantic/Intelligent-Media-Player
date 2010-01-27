@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<PlaylistModifier 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
+
+  <Type>WMPAttribute</Type>
+  
+  <UI>
+    <DisplayName>Artist Name</DisplayName>
+
+    <Inputs>
+      <Input>
+        <ID>1</ID>
+        <UILabel>Artist</UILabel>
+      </Input>
+    </Inputs>
+  </UI>
+
+  <Action>Add</Action>
+
+  <Method>
+    <MediaAttributeMatch>
+      <AttributeMappings>
+        <Mapping>
+          <ID>1</ID>
+          <WMP_Attribute>Author</WMP_Attribute>
+          <InputID>1</InputID>
+        </Mapping>
+      </AttributeMappings>
+    </MediaAttributeMatch>
+  </Method> 
+  
+</PlaylistModifier>

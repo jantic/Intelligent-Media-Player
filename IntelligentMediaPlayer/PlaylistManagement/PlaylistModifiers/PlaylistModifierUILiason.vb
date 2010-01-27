@@ -6,7 +6,7 @@ Partial Public Class PlaylistManager
 
     Public Class PlaylistModifierUILiason
         Private myDisplayName As String
-        Private myAction As Action
+        Private myAction As IModifierAction
         Private myFilePath As String
         Private myInputs As PlaylistModifierInput()
         Private myType As ModifierType
@@ -73,12 +73,14 @@ Partial Public Class PlaylistManager
             Return Nothing
         End Function
 
-        Private Function ConvertToAction(ByVal actionName As String) As Action
+        Private Function ConvertToAction(ByVal actionName As String) As IModifierAction
             If (actionName = "Add") Then
-                Return Action.Add
-            Else
-                Return Action.Subtract
+                Return New ModifierAction_Add
+            ElseIf (actionName = "Subtract") Then
+                Return New ModifierAction_Subtract
             End If
+
+            Return Nothing
         End Function
 
         Public Property Inputs As PlaylistModifierInput()
@@ -103,17 +105,17 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
-        Public Property ModifierAction As Action
+        Public Property ModifierAction As IModifierAction
             Get
                 Return myAction
             End Get
-            Set(ByVal value As Action)
+            Set(ByVal value As IModifierAction)
                 myAction = value
             End Set
         End Property
 
 
-       
+
     End Class
 
 End Class

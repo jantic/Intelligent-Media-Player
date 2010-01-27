@@ -2,7 +2,7 @@
 
 <PlaylistModifier
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
+xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
 
   <Type>LastFM</Type>
   
@@ -28,7 +28,7 @@ xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifier.xsd">
             <ID>1</ID>
             <ToReplace>[Tag]</ToReplace>
             <InputID>1</InputID>
-          </Mapping>
+          </Mapping>       
         </TemplateMappings>
       </RequestURL>
 

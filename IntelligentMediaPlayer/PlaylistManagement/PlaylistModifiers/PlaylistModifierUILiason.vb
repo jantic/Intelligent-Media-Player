@@ -78,6 +78,8 @@ Partial Public Class PlaylistManager
                 Return New ModifierAction_Add
             ElseIf (actionName = "Subtract") Then
                 Return New ModifierAction_Subtract
+            ElseIf (actionName = "Filter") Then
+                Return New ModifierAction_Filter
             End If
 
             Return Nothing

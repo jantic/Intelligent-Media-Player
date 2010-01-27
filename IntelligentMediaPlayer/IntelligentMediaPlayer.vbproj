@@ -87,6 +87,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Add.vb" />
+    <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Filter.vb" />
     <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Subtract.vb" />
     <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\IModifierAction.vb" />
     <Compile Include="PlaylistManagement\PlaylistManager.vb" />

@@ -38,7 +38,7 @@ Partial Public Class PlaylistManager
             For index As Integer = start To myWorkingModifiers.Count - 1 Step 1
                 Dim modifier As IPlaylistModifier = DirectCast(myWorkingModifiers.Item(index), IPlaylistModifier)
 
-                If (index = 0 And modifier.ModificationAction.Name = "Subtract") Then 'otherwise you're subtracting from nothing
+                If (index = 0 And (modifier.ModificationAction.Name = "Subtract" Or modifier.ModificationAction.Name = "Filter")) Then 'otherwise you're subtracting from nothing
                     player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
                 End If
 

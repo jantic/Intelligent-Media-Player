@@ -124,7 +124,7 @@ Public Class MainInterface
 
     Private Function GetSelectedAction() As PlaylistManager.IModifierAction
         If (FilterRB.Checked) Then
-            Return New PlaylistManager.ModifierAction_Add
+            Return New PlaylistManager.ModifierAction_Filter
         ElseIf (AddRB.Checked) Then
             Return New PlaylistManager.ModifierAction_Add
         Else

@@ -180,6 +180,8 @@
     <Content Include="PlaylistModifierPlugins\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Resources\WMPhq.bmp" />
+    <EmbeddedResource Include="Resources\LastFMhq.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

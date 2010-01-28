@@ -24,16 +24,49 @@ Public Class MainInterface
     End Sub
 
     Private Sub InitializePlaylistModifierUI()
+        AvailablePlaylistModifiersLB.Items.Clear()
+        PopulateModifiersListsWithIcons()
         FillAvailableModifierListBox(manager.Liasons)
     End Sub
 
+    Private Sub PopulateModifiersListsWithIcons()
+        Try
+            Dim imageListSmall As New ImageList()
+            Dim LastFMIcon As System.Drawing.Bitmap = GetImage("LastFMhq.bmp")
+            imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.LastFM), LastFMIcon)
+            Dim WMPIcon As System.Drawing.Bitmap = GetImage("WMPhq.bmp")
+            imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.WMPAttribute), WMPIcon)
+            AvailablePlaylistModifiersLB.SmallImageList = imageListSmall
+            ActivePlaylistModifiersLB.SmallImageList = imageListSmall
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
     Private Sub FillAvailableModifierListBox(ByRef liasons As PlaylistManager.PlaylistModifierUILiason())
-        AvailablePlaylistModifiersLB.Items.Clear()
 
         For Each liason As PlaylistManager.PlaylistModifierUILiason In liasons
-            AvailablePlaylistModifiersLB.Items.Add(liason.DisplayName)
+            Dim imageName As String = GetIconNameForModifierType(liason.Type)
+            AvailablePlaylistModifiersLB.Items.Add(liason.DisplayName, imageName)
         Next
     End Sub
+
+    Private Function GetImage(ByVal imageName As String) As System.Drawing.Bitmap
+        'Dim res() As String = GetType(MainInterface).Assembly.GetManifestResourceNames()
+        Dim lookUpName As String = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "." + imageName
+        Return New System.Drawing.Bitmap(GetType(MainInterface).Assembly.GetManifestResourceStream(lookUpName))
+    End Function
+
+    Private Function GetIconNameForModifierType(ByRef modType As PlaylistManager.ModifierType) As String
+        Select Case (modType)
+            Case PlaylistManager.ModifierType.LastFM
+                Return "LastFM"
+            Case PlaylistManager.ModifierType.WMPAttribute
+                Return "WMPAttribute"
+            Case Else
+                Return "WMPAttribute"
+        End Select
+    End Function
 
     Private Sub FillPlaylistBox()
         PlaylistBox.Items.Clear()
@@ -95,8 +128,8 @@ Public Class MainInterface
 
     Private Sub AddModifierButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddModifierButton.Click
 
-        If (AvailablePlaylistModifiersLB.SelectedIndex >= 0) Then
-            Dim liason As PlaylistManager.PlaylistModifierUILiason = manager.Liasons().ElementAt(AvailablePlaylistModifiersLB.SelectedIndex)
+        If (AvailablePlaylistModifiersLB.SelectedItems().Item(0).Index >= 0) Then
+            Dim liason As PlaylistManager.PlaylistModifierUILiason = manager.Liasons().ElementAt(AvailablePlaylistModifiersLB.SelectedItems().Item(0).Index)
 
             Dim myInputTextBoxes As ArrayList = New ArrayList
             myInputTextBoxes.Add(PlaylistModifierInput1)
@@ -134,24 +167,29 @@ Public Class MainInterface
 
     Private Sub SetSelectedAction(ByVal theAction As PlaylistManager.IModifierAction)
         If (theAction.Name = "Add") Then
-            AddRB.Select()
+            AddRB.Checked = True
         ElseIf (theAction.Name = "Filter") Then
-            FilterRB.Select()
+            FilterRB.Checked = True
         Else
-            RemoveRb.Select()
+            RemoveRb.Checked = True
         End If
     End Sub
 
     Private Sub RemoveModifierButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RemoveModifierButton.Click
-        If (ActivePlaylistModifiersLB.SelectedIndex() <= manager.GetWorkingModifiers.Length - 1 And ActivePlaylistModifiersLB.SelectedIndex() > -1) Then
-            manager.RemoveWorkingModifier(ActivePlaylistModifiersLB.SelectedIndex())
-            UpdateActiveModifiersLB()
+        If (ActivePlaylistModifiersLB.SelectedItems().Count > 0) Then
+            Dim selectedIndex As Integer = ActivePlaylistModifiersLB.SelectedItems().Item(0).Index
+            If ((selectedIndex <= manager.GetWorkingModifiers.Length - 1) And selectedIndex > -1) Then
+                manager.RemoveWorkingModifier(selectedIndex)
+                UpdateActiveModifiersLB()
+            End If
         End If
     End Sub
 
 
     Private Sub AvailablePlaylistModifiersLB_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AvailablePlaylistModifiersLB.SelectedIndexChanged
-        UpdateModiferInputsUI(manager.Liasons().ElementAt(AvailablePlaylistModifiersLB.SelectedIndex))
+        If (AvailablePlaylistModifiersLB.SelectedItems().Count > 0) Then
+            UpdateModiferInputsUI(manager.Liasons().ElementAt(AvailablePlaylistModifiersLB.SelectedItems().Item(0).Index))
+        End If
     End Sub
 
     Private Sub UpdateModiferInputsUI(ByRef liason As PlaylistManager.PlaylistModifierUILiason)
@@ -205,7 +243,8 @@ Public Class MainInterface
 
                 displayText = displayText.TrimEnd(";")
                 displayText = displayText + ")"
-                ActivePlaylistModifiersLB.Items.Add(displayText)
+                Dim imageName As String = GetIconNameForModifierType(liason.Type)
+                ActivePlaylistModifiersLB.Items.Add(displayText, imageName)
             Next
         End If
 

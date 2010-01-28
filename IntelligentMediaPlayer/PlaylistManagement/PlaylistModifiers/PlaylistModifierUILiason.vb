@@ -107,6 +107,7 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
+
         Public Property ModifierAction As IModifierAction
             Get
                 Return myAction

@@ -4,6 +4,7 @@ Imports AxWMPLib
 Public Class MainInterface
     Private player As AxWindowsMediaPlayer
     Private manager As PlaylistManager
+    Private artistBio As IArtistBio = Nothing
 
     Private Sub Initialize() Handles Me.Load
         InitializePlayer()
@@ -111,7 +112,35 @@ Public Class MainInterface
         If (currentIndex > 0) Then
             PlaylistBox.SelectedIndex = currentIndex
         End If
+        UpdateArtistBio()
+        UpdateAlbumInfo()
+    End Sub
 
+    Private Sub UpdateAlbumInfo()
+
+    End Sub
+
+    Private Sub UpdateArtistBio()
+        Dim currentArtist As String = player.currentMedia.getItemInfo("Artist")
+        Dim needsUpdated As Boolean = False
+        If (Not artistBio Is Nothing) Then
+            If (currentArtist.Trim.ToLower <> artistBio.Name.Trim.ToLower) Then
+                needsUpdated = True
+            End If
+        Else
+            needsUpdated = True
+        End If
+
+        If (needsUpdated) Then
+            artistBio = New LastFMArtistBio(currentArtist)
+            ArtistPictureBox.ImageLocation = artistBio.PictureLocation
+            FullBioTB.DocumentText = artistBio.Biography
+
+            If (Not FullBioTB.Document.Body Is Nothing) Then
+                Dim zoomLevel As Integer = 10
+                FullBioTB.Document.Body.Style = "zoom: " & zoomLevel.ToString & "%"
+            End If
+        End If
     End Sub
 
 

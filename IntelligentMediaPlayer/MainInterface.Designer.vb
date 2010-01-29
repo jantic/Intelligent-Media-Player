@@ -39,6 +39,8 @@ Partial Class MainInterface
         Me.TagArtistLabel = New System.Windows.Forms.Label()
         Me.ShuffleCheckBox = New System.Windows.Forms.CheckBox()
         Me.PlaylistModifierGB = New System.Windows.Forms.GroupBox()
+        Me.ActivePlaylistModifiersLB = New System.Windows.Forms.ListView()
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AvailablePlaylistModifiersLB = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ActivePlaylistModifiersLabel = New System.Windows.Forms.Label()
@@ -56,11 +58,13 @@ Partial Class MainInterface
         Me.PlaylistModifierInput1 = New System.Windows.Forms.MaskedTextBox()
         Me.RemoveModifierButton = New System.Windows.Forms.Button()
         Me.AddModifierButton = New System.Windows.Forms.Button()
-        Me.ActivePlaylistModifiersLB = New System.Windows.Forms.ListView()
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ArtistPictureBox = New System.Windows.Forms.PictureBox()
+        Me.FullBioTB = New System.Windows.Forms.WebBrowser()
+        Me.FullBioGB = New System.Windows.Forms.GroupBox()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
+        Me.FullBioGB.SuspendLayout()
         Me.SuspendLayout()
         '
         'AxWindowsMediaPlayer1
@@ -69,22 +73,22 @@ Partial Class MainInterface
         Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(285, 12)
         Me.AxWindowsMediaPlayer1.Name = "AxWindowsMediaPlayer1"
         Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(221, 181)
+        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(264, 181)
         Me.AxWindowsMediaPlayer1.TabIndex = 0
         '
         'PlaylistBox
         '
         Me.PlaylistBox.FormattingEnabled = True
-        Me.PlaylistBox.Location = New System.Drawing.Point(12, 212)
+        Me.PlaylistBox.Location = New System.Drawing.Point(12, 222)
         Me.PlaylistBox.Name = "PlaylistBox"
-        Me.PlaylistBox.Size = New System.Drawing.Size(494, 212)
+        Me.PlaylistBox.Size = New System.Drawing.Size(537, 290)
         Me.PlaylistBox.TabIndex = 1
         '
         'FilteredPlaylistLabel
         '
         Me.FilteredPlaylistLabel.AutoSize = True
         Me.FilteredPlaylistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FilteredPlaylistLabel.Location = New System.Drawing.Point(9, 196)
+        Me.FilteredPlaylistLabel.Location = New System.Drawing.Point(12, 206)
         Me.FilteredPlaylistLabel.Name = "FilteredPlaylistLabel"
         Me.FilteredPlaylistLabel.Size = New System.Drawing.Size(76, 13)
         Me.FilteredPlaylistLabel.TabIndex = 4
@@ -93,7 +97,7 @@ Partial Class MainInterface
         'NumberOfItemsLabel
         '
         Me.NumberOfItemsLabel.AutoSize = True
-        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(9, 427)
+        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(15, 515)
         Me.NumberOfItemsLabel.Name = "NumberOfItemsLabel"
         Me.NumberOfItemsLabel.Size = New System.Drawing.Size(87, 13)
         Me.NumberOfItemsLabel.TabIndex = 17
@@ -102,7 +106,7 @@ Partial Class MainInterface
         'NumberOfItemsText
         '
         Me.NumberOfItemsText.AutoSize = True
-        Me.NumberOfItemsText.Location = New System.Drawing.Point(102, 427)
+        Me.NumberOfItemsText.Location = New System.Drawing.Point(108, 515)
         Me.NumberOfItemsText.Name = "NumberOfItemsText"
         Me.NumberOfItemsText.Size = New System.Drawing.Size(0, 13)
         Me.NumberOfItemsText.TabIndex = 18
@@ -213,12 +217,32 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.Controls.Add(Me.ModifierInputGB)
         Me.PlaylistModifierGB.Controls.Add(Me.RemoveModifierButton)
         Me.PlaylistModifierGB.Controls.Add(Me.AddModifierButton)
-        Me.PlaylistModifierGB.Location = New System.Drawing.Point(12, 470)
+        Me.PlaylistModifierGB.Location = New System.Drawing.Point(12, 543)
         Me.PlaylistModifierGB.Name = "PlaylistModifierGB"
-        Me.PlaylistModifierGB.Size = New System.Drawing.Size(995, 225)
+        Me.PlaylistModifierGB.Size = New System.Drawing.Size(1042, 225)
         Me.PlaylistModifierGB.TabIndex = 21
         Me.PlaylistModifierGB.TabStop = False
         Me.PlaylistModifierGB.Text = "Playlist Modification"
+        '
+        'ActivePlaylistModifiersLB
+        '
+        Me.ActivePlaylistModifiersLB.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader2})
+        Me.ActivePlaylistModifiersLB.FullRowSelect = True
+        Me.ActivePlaylistModifiersLB.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.ActivePlaylistModifiersLB.HideSelection = False
+        Me.ActivePlaylistModifiersLB.Location = New System.Drawing.Point(540, 40)
+        Me.ActivePlaylistModifiersLB.MultiSelect = False
+        Me.ActivePlaylistModifiersLB.Name = "ActivePlaylistModifiersLB"
+        Me.ActivePlaylistModifiersLB.ShowGroups = False
+        Me.ActivePlaylistModifiersLB.Size = New System.Drawing.Size(444, 173)
+        Me.ActivePlaylistModifiersLB.TabIndex = 23
+        Me.ActivePlaylistModifiersLB.UseCompatibleStateImageBehavior = False
+        Me.ActivePlaylistModifiersLB.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = ""
+        Me.ColumnHeader2.Width = 400
         '
         'AvailablePlaylistModifiersLB
         '
@@ -230,7 +254,7 @@ Partial Class MainInterface
         Me.AvailablePlaylistModifiersLB.MultiSelect = False
         Me.AvailablePlaylistModifiersLB.Name = "AvailablePlaylistModifiersLB"
         Me.AvailablePlaylistModifiersLB.ShowGroups = False
-        Me.AvailablePlaylistModifiersLB.Size = New System.Drawing.Size(204, 173)
+        Me.AvailablePlaylistModifiersLB.Size = New System.Drawing.Size(243, 173)
         Me.AvailablePlaylistModifiersLB.TabIndex = 22
         Me.AvailablePlaylistModifiersLB.UseCompatibleStateImageBehavior = False
         Me.AvailablePlaylistModifiersLB.View = System.Windows.Forms.View.Details
@@ -238,12 +262,12 @@ Partial Class MainInterface
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = ""
-        Me.ColumnHeader1.Width = 160
+        Me.ColumnHeader1.Width = 193
         '
         'ActivePlaylistModifiersLabel
         '
         Me.ActivePlaylistModifiersLabel.AutoSize = True
-        Me.ActivePlaylistModifiersLabel.Location = New System.Drawing.Point(497, 24)
+        Me.ActivePlaylistModifiersLabel.Location = New System.Drawing.Point(537, 24)
         Me.ActivePlaylistModifiersLabel.Name = "ActivePlaylistModifiersLabel"
         Me.ActivePlaylistModifiersLabel.Size = New System.Drawing.Size(117, 13)
         Me.ActivePlaylistModifiersLabel.TabIndex = 14
@@ -262,7 +286,7 @@ Partial Class MainInterface
         'GeneratePlaylistButton
         '
         Me.GeneratePlaylistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(950, 180)
+        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(990, 180)
         Me.GeneratePlaylistButton.Name = "GeneratePlaylistButton"
         Me.GeneratePlaylistButton.Size = New System.Drawing.Size(37, 33)
         Me.GeneratePlaylistButton.TabIndex = 11
@@ -280,7 +304,7 @@ Partial Class MainInterface
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput2)
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput3)
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput1)
-        Me.ModifierInputGB.Location = New System.Drawing.Point(216, 33)
+        Me.ModifierInputGB.Location = New System.Drawing.Point(255, 33)
         Me.ModifierInputGB.Name = "ModifierInputGB"
         Me.ModifierInputGB.Size = New System.Drawing.Size(234, 180)
         Me.ModifierInputGB.TabIndex = 10
@@ -371,7 +395,7 @@ Partial Class MainInterface
         'RemoveModifierButton
         '
         Me.RemoveModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RemoveModifierButton.Location = New System.Drawing.Point(950, 108)
+        Me.RemoveModifierButton.Location = New System.Drawing.Point(990, 108)
         Me.RemoveModifierButton.Name = "RemoveModifierButton"
         Me.RemoveModifierButton.Size = New System.Drawing.Size(39, 35)
         Me.RemoveModifierButton.TabIndex = 3
@@ -381,38 +405,53 @@ Partial Class MainInterface
         'AddModifierButton
         '
         Me.AddModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddModifierButton.Location = New System.Drawing.Point(455, 108)
+        Me.AddModifierButton.Location = New System.Drawing.Point(495, 108)
         Me.AddModifierButton.Name = "AddModifierButton"
         Me.AddModifierButton.Size = New System.Drawing.Size(39, 35)
         Me.AddModifierButton.TabIndex = 2
         Me.AddModifierButton.Text = "+"
         Me.AddModifierButton.UseVisualStyleBackColor = True
         '
-        'ActivePlaylistModifiersLB
+        'ArtistPictureBox
         '
-        Me.ActivePlaylistModifiersLB.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader2})
-        Me.ActivePlaylistModifiersLB.FullRowSelect = True
-        Me.ActivePlaylistModifiersLB.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.ActivePlaylistModifiersLB.HideSelection = False
-        Me.ActivePlaylistModifiersLB.Location = New System.Drawing.Point(500, 40)
-        Me.ActivePlaylistModifiersLB.MultiSelect = False
-        Me.ActivePlaylistModifiersLB.Name = "ActivePlaylistModifiersLB"
-        Me.ActivePlaylistModifiersLB.ShowGroups = False
-        Me.ActivePlaylistModifiersLB.Size = New System.Drawing.Size(444, 173)
-        Me.ActivePlaylistModifiersLB.TabIndex = 23
-        Me.ActivePlaylistModifiersLB.UseCompatibleStateImageBehavior = False
-        Me.ActivePlaylistModifiersLB.View = System.Windows.Forms.View.Details
+        Me.ArtistPictureBox.BackColor = System.Drawing.SystemColors.Desktop
+        Me.ArtistPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.ArtistPictureBox.ErrorImage = Nothing
+        Me.ArtistPictureBox.ImageLocation = ""
+        Me.ArtistPictureBox.InitialImage = Nothing
+        Me.ArtistPictureBox.Location = New System.Drawing.Point(566, 12)
+        Me.ArtistPictureBox.Name = "ArtistPictureBox"
+        Me.ArtistPictureBox.Size = New System.Drawing.Size(488, 267)
+        Me.ArtistPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.ArtistPictureBox.TabIndex = 22
+        Me.ArtistPictureBox.TabStop = False
         '
-        'ColumnHeader2
+        'FullBioTB
         '
-        Me.ColumnHeader2.Text = ""
-        Me.ColumnHeader2.Width = 400
+        Me.FullBioTB.Location = New System.Drawing.Point(6, 19)
+        Me.FullBioTB.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.FullBioTB.Name = "FullBioTB"
+        Me.FullBioTB.Size = New System.Drawing.Size(475, 202)
+        Me.FullBioTB.TabIndex = 29
+        '
+        'FullBioGB
+        '
+        Me.FullBioGB.BackColor = System.Drawing.SystemColors.Control
+        Me.FullBioGB.Controls.Add(Me.FullBioTB)
+        Me.FullBioGB.Location = New System.Drawing.Point(566, 285)
+        Me.FullBioGB.Name = "FullBioGB"
+        Me.FullBioGB.Size = New System.Drawing.Size(487, 227)
+        Me.FullBioGB.TabIndex = 30
+        Me.FullBioGB.TabStop = False
+        Me.FullBioGB.Text = "Full Biography"
         '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1011, 707)
+        Me.ClientSize = New System.Drawing.Size(1066, 774)
+        Me.Controls.Add(Me.FullBioGB)
+        Me.Controls.Add(Me.ArtistPictureBox)
         Me.Controls.Add(Me.PlaylistModifierGB)
         Me.Controls.Add(Me.NowPlayingGB)
         Me.Controls.Add(Me.NumberOfItemsText)
@@ -422,6 +461,7 @@ Partial Class MainInterface
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.MinimumSize = New System.Drawing.Size(885, 420)
         Me.Name = "MainInterface"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "Intelligent Media Player"
         Me.NowPlayingGB.ResumeLayout(False)
         Me.NowPlayingGB.PerformLayout()
@@ -429,6 +469,7 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.PerformLayout()
         Me.ModifierInputGB.ResumeLayout(False)
         Me.ModifierInputGB.PerformLayout()
+        Me.FullBioGB.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -468,5 +509,8 @@ Partial Class MainInterface
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ActivePlaylistModifiersLB As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ArtistPictureBox As System.Windows.Forms.PictureBox
+    Friend WithEvents FullBioTB As System.Windows.Forms.WebBrowser
+    Friend WithEvents FullBioGB As System.Windows.Forms.GroupBox
 
 End Class

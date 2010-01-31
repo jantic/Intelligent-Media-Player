@@ -116,7 +116,7 @@ Partial Public Class PlaylistManager
 
     Private Sub LoadModifierLiasons(ByVal modifiersDirectory As String)
         If (Directory.Exists(modifiersDirectory)) Then
-            Dim modifierPaths = Directory.GetFiles(modifiersDirectory, "*.xml", SearchOption.AllDirectories)
+            Dim modifierPaths As String() = Directory.GetFiles(modifiersDirectory, "*.xml", SearchOption.AllDirectories)
 
             Dim liasons As ArrayList = New ArrayList
 
@@ -128,30 +128,6 @@ Partial Public Class PlaylistManager
         End If
     End Sub
 
-    Private Shared Function XMLGetValueAt(ByRef modifierFile As XmlDocument, ByVal pathQuery As String, ByVal index As UInteger) As String
-        Dim theElement As Xml.XmlElement = Nothing
-
-        Try
-            Dim nodes As XmlNodeList = modifierFile.SelectNodes(pathQuery)
-
-            If (nodes.Count >= index + 1) Then
-                theElement = nodes.Item(index)
-            Else
-                Return Nothing
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-
-        If (Not theElement Is Nothing) Then
-            Dim value As String = theElement.InnerText
-            Return value
-        End If
-
-        Return Nothing
-    End Function
 
     Private Shared Function GenerateMediaHashKey(ByRef media As IWMPMedia)
         Return media.getItemInfo("Artist") + media.getItemInfo("Title") + media.getItemInfo("Album")

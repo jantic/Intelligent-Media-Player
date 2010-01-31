@@ -30,7 +30,7 @@ Partial Public Class PlaylistManager
             Dim modifierFile As XmlDocument = New XmlDocument()
             modifierFile.Load(liason.FilePath)
             Dim pathQuery As String = "//Method/LastFMrequest/RequestURL/TemplateURL"
-            Dim value As String = PlaylistManager.XMLGetValueAt(modifierFile, pathQuery, 0)
+            Dim value As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, pathQuery, 0)
 
             If (Not value Is Nothing) Then
                 Return value
@@ -58,16 +58,16 @@ Partial Public Class PlaylistManager
 
                 Dim mappings As ArrayList = New ArrayList
                 Dim index As UInteger = 0
-                Dim toReplace As String = PlaylistManager.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ToReplace", index)
+                Dim toReplace As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ToReplace", index)
 
                 While (Not (toReplace Is Nothing))
-                    Dim ID As UInteger = UInteger.Parse(PlaylistManager.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ID", index))
-                    Dim InputID = UInteger.Parse(PlaylistManager.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/InputID", index))
+                    Dim ID As UInteger = UInteger.Parse(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ID", index))
+                    Dim InputID = UInteger.Parse(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/InputID", index))
 
                     mappings.Add(New StringReplaceMapping(ID, toReplace, InputID))
 
                     index += 1
-                    toReplace = XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ToReplace", index)
+                    toReplace = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/LastFMrequest/RequestURL/TemplateMappings/Mapping/ToReplace", index)
                 End While
 
                 Return mappings.ToArray(GetType(StringReplaceMapping))

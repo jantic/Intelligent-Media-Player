@@ -28,7 +28,7 @@ Partial Public Class PlaylistManager
         End Property
 
         Public Function ExtractOutputValue(ByVal index As UInteger, ByRef resultXML As XmlDocument) As String
-            Return PlaylistManager.XMLGetValueAt(resultXML, myXPath, index)
+            Return WebServiceClient.GetClient.XMLGetValueAt(resultXML, myXPath, index)
         End Function
 
         Public Shared Function LoadResultMappings(ByRef liason As PlaylistModifierUILiason) As LastFMOutputMapping()
@@ -38,16 +38,16 @@ Partial Public Class PlaylistManager
 
             Dim mappings As ArrayList = New ArrayList
             Dim index As UInteger = 0
-            Dim attribute As String = PlaylistManager.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/WMP_Attribute", index)
+            Dim attribute As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/WMP_Attribute", index)
 
             While (Not (attribute Is Nothing))
-                Dim ID As UInteger = UInteger.Parse(PlaylistManager.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/ID", index))
-                Dim xPathQuery As String = PlaylistManager.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/xPath", index)
+                Dim ID As UInteger = UInteger.Parse(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/ID", index))
+                Dim xPathQuery As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/xPath", index)
 
                 mappings.Add(New LastFMOutputMapping(attribute, xPathQuery, ID))
 
                 index += 1
-                attribute = PlaylistManager.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/WMP_Attribute", index)
+                attribute = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Response/Outputs/Output/WMP_Attribute", index)
             End While
 
             Return mappings.ToArray(GetType(LastFMOutputMapping))

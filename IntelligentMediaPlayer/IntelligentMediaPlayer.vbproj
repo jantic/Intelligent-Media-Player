@@ -101,6 +101,7 @@
     <Compile Include="PlaylistManagement\PlaylistModifiers\WMPAttribute\PlaylistModifierAttributeMapping.vb" />
     <Compile Include="PlaylistManagement\PlaylistModifiers\WMPAttribute\WMPAttributePlaylistModifier.vb" />
     <Compile Include="PlaylistManagement\PlaylistModifiers\PlaylistModifierUILiason.vb" />
+    <Compile Include="WebServiceClient\WebServiceClient.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainInterface.resx">

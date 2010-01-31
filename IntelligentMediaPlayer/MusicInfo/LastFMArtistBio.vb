@@ -21,7 +21,7 @@ Public Class LastFMArtistBio
             End If
 
             Dim biographyXpathQuery As String = "//lfm/artist/bio/content"
-            Return XMLGetValueAt(myCallResultXML, biographyXpathQuery, 0)
+            Return WebServiceClient.GetClient.XMLGetValueAt(myCallResultXML, biographyXpathQuery, 0)
         End Get
     End Property
 
@@ -38,7 +38,8 @@ Public Class LastFMArtistBio
             End If
 
             Dim imageXpathQuery As String = "//lfm/artist/image"
-            Return XMLGetValueAt(myCallResultXML, imageXpathQuery, "size", "extralarge")
+            Dim imageUrl As String = WebServiceClient.GetClient.XMLGetValueAt(myCallResultXML, imageXpathQuery, "size", "extralarge")
+            Return WebServiceClient.GetClient.RetrieveImageLocationToUse(imageUrl)
         End Get
     End Property
 
@@ -49,67 +50,14 @@ Public Class LastFMArtistBio
             End If
 
             Dim summaryXpathQuery As String = "//lfm/artist/bio/summary"
-            Return XMLGetValueAt(myCallResultXML, summaryXpathQuery, 0)
+            Return WebServiceClient.GetClient.XMLGetValueAt(myCallResultXML, summaryXpathQuery, 0)
         End Get
     End Property
 
     Private Sub RetrieveAndStoreResultsFromWebservice()
         Dim url As String = myTemplateURL.Replace("[Artist]", myName)
-        myCallResultXML = New XmlDocument()
-        Try
-            myCallResultXML.Load(url)
-        Catch ex As Exception
-            myCallResultXML = Nothing
-        End Try
+        myCallResultXML = WebServiceClient.GetClient.RetrieveResult(url)
     End Sub
 
-    Private Shared Function XMLGetValueAt(ByRef document As XmlDocument, ByVal pathQuery As String, ByVal index As UInteger) As String
-        Dim theElement As Xml.XmlElement = Nothing
 
-        Try
-            Dim nodes As XmlNodeList = document.SelectNodes(pathQuery)
-
-            If (nodes.Count >= index + 1) Then
-                theElement = nodes.Item(index)
-            Else
-                Return Nothing
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-
-        If (Not theElement Is Nothing) Then
-            Dim value As String = theElement.InnerText
-            Return value
-        End If
-
-        Return Nothing
-    End Function
-
-    Private Shared Function XMLGetValueAt(ByRef document As XmlDocument, ByVal pathQuery As String, ByVal attributeName As String, ByVal attributeValue As String) As String
-        Dim theElement As Xml.XmlElement = Nothing
-
-        Try
-            Dim nodes As XmlNodeList = document.SelectNodes(pathQuery)
-
-            For Each element As XmlElement In nodes
-                If (element.GetAttribute(attributeName) = attributeValue) Then
-                    theElement = element
-                End If
-            Next
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-
-        If (Not theElement Is Nothing) Then
-            Dim value As String = theElement.InnerText
-            Return value
-        End If
-
-        Return Nothing
-    End Function
 End Class

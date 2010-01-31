@@ -22,16 +22,16 @@ Partial Public Class PlaylistManager
 
                 Dim mappings As ArrayList = New ArrayList
                 Dim index As UInteger = 0
-                Dim attribute As String = PlaylistManager.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/WMP_Attribute", index)
+                Dim attribute As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/WMP_Attribute", index)
 
                 While (Not (attribute Is Nothing))
-                    Dim ID As UInteger = UInteger.Parse(PlaylistManager.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/ID", index))
-                    Dim InputID As UInteger = UInteger.Parse(PlaylistManager.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/InputID", index))
+                    Dim ID As UInteger = UInteger.Parse(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/ID", index))
+                    Dim InputID As UInteger = UInteger.Parse(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/InputID", index))
 
                     mappings.Add(New PlaylistModifierAttributeMapping(ID, attribute, InputID))
 
                     index += 1
-                    attribute = PlaylistManager.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/WMP_Attribute", index)
+                    attribute = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//Method/MediaAttributeMatch/AttributeMappings/Mapping/WMP_Attribute", index)
                 End While
 
                 Return mappings.ToArray(GetType(PlaylistModifierAttributeMapping))

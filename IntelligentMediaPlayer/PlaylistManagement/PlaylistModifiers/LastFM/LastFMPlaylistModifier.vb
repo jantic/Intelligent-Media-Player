@@ -94,8 +94,7 @@ Partial Public Class PlaylistManager
 
         Private Sub RetrieveAndStoreResultsFromWebservice()
             Dim url As String = myURLTemplateMapping.GetResultingURL(myLiason.Inputs)
-            myCallResultXML = New XmlDocument()
-            myCallResultXML.Load(url)
+            myCallResultXML = WebServiceClient.GetClient.RetrieveResult(url)
         End Sub
 
     End Class

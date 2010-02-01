@@ -149,14 +149,14 @@ Public Class WebServiceClient
         End If
     End Sub
 
-    Public Function XMLGetValueAt(ByRef document As XmlDocument, ByVal pathQuery As String, ByVal index As UInteger) As String
-        Dim theElement As Xml.XmlElement = Nothing
+    Public Function XMLGetValueAt(ByRef node As XmlNode, ByVal pathQuery As String, ByVal index As UInteger) As String
+        Dim valueElement As Xml.XmlElement = Nothing
 
         Try
-            Dim nodes As XmlNodeList = document.SelectNodes(pathQuery)
+            Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
 
             If (nodes.Count >= index + 1) Then
-                theElement = nodes.Item(index)
+                valueElement = nodes.Item(index)
             Else
                 Return Nothing
             End If
@@ -166,23 +166,23 @@ Public Class WebServiceClient
         End Try
 
 
-        If (Not theElement Is Nothing) Then
-            Dim value As String = theElement.InnerText
+        If (Not valueElement Is Nothing) Then
+            Dim value As String = valueElement.InnerText
             Return value
         End If
 
         Return Nothing
     End Function
 
-    Public Function XMLGetValueAt(ByRef document As XmlDocument, ByVal pathQuery As String, ByVal attributeName As String, ByVal attributeValue As String) As String
-        Dim theElement As Xml.XmlElement = Nothing
+    Public Function XMLGetValueAt(ByRef node As XmlNode, ByVal pathQuery As String, ByVal attributeName As String, ByVal attributeValue As String) As String
+        Dim valueElement As Xml.XmlElement = Nothing
 
         Try
-            Dim nodes As XmlNodeList = document.SelectNodes(pathQuery)
+            Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
 
             For Each element As XmlElement In nodes
                 If (element.GetAttribute(attributeName) = attributeValue) Then
-                    theElement = element
+                    valueElement = element
                 End If
             Next
 
@@ -191,8 +191,8 @@ Public Class WebServiceClient
         End Try
 
 
-        If (Not theElement Is Nothing) Then
-            Dim value As String = theElement.InnerText
+        If (Not valueElement Is Nothing) Then
+            Dim value As String = valueElement.InnerText
             Return value
         End If
 

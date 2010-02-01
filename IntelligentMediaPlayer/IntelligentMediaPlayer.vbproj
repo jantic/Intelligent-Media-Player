@@ -71,7 +71,9 @@
       <DependentUpon>MainInterface.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MusicInfo\IAlbumInfo.vb" />
     <Compile Include="MusicInfo\IArtistInfo.vb" />
+    <Compile Include="MusicInfo\LastFMAlbumInfo.vb" />
     <Compile Include="MusicInfo\LastFMArtistInfo.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

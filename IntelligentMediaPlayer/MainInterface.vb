@@ -34,9 +34,9 @@ Public Class MainInterface
     Private Sub PopulateModifiersListsWithIcons()
         Try
             Dim imageListSmall As New ImageList()
-            Dim LastFMIcon As System.Drawing.Bitmap = GetImage("LastFMhq.bmp")
+            Dim LastFMIcon As System.Drawing.Bitmap = GetIconImage("LastFMhq.bmp")
             imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.LastFM), LastFMIcon)
-            Dim WMPIcon As System.Drawing.Bitmap = GetImage("WMPhq.bmp")
+            Dim WMPIcon As System.Drawing.Bitmap = GetIconImage("WMPhq.bmp")
             imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.WMPAttribute), WMPIcon)
             AvailablePlaylistModifiersLB.SmallImageList = imageListSmall
             ActivePlaylistModifiersLB.SmallImageList = imageListSmall
@@ -53,7 +53,7 @@ Public Class MainInterface
         Next
     End Sub
 
-    Private Function GetImage(ByVal imageName As String) As System.Drawing.Bitmap
+    Private Function GetIconImage(ByVal imageName As String) As System.Drawing.Bitmap
         'Dim res() As String = GetType(MainInterface).Assembly.GetManifestResourceNames()
         Dim lookUpName As String = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "." + imageName
         Return New System.Drawing.Bitmap(GetType(MainInterface).Assembly.GetManifestResourceStream(lookUpName))
@@ -123,6 +123,7 @@ Public Class MainInterface
 
     Private Sub UpdateArtistInfo()
         Dim currentArtist As String = player.currentMedia.getItemInfo("Artist")
+
         Dim needsUpdated As Boolean = False
         If (Not artistInfo Is Nothing) Then
             If (currentArtist.Trim.ToLower <> artistInfo.Name.Trim.ToLower) Then
@@ -133,16 +134,79 @@ Public Class MainInterface
         End If
 
         If (needsUpdated) Then
+            'need to clean up memory once in a while with all these images..
+            System.GC.Collect()
+
             artistInfo = New LastFMArtistInfo(currentArtist)
             UpdateBiography()
+            UpdateTags()
+
+            Dim topAlbumsThread As Threading.Thread = New Threading.Thread(AddressOf Me.UpdateTopAlbums)
+            topAlbumsThread.Start()
+
             Dim similarArtistThread As Threading.Thread = New Threading.Thread(AddressOf Me.UpdateSimilarArtists)
             similarArtistThread.Start()
-            UpdateTags()
         End If
     End Sub
 
+
+
+    Private Sub UpdateTopAlbums()
+        TopAlbumsLV.Clear()
+
+        Dim albums As IAlbumInfo() = artistInfo.TopAlbums()
+
+        If (Not albums Is Nothing) Then
+
+            Dim albumImages As ImageList = New ImageList()
+            albumImages.ImageSize = GetTopAlbumImagesSize()
+            albumImages.ColorDepth = ColorDepth.Depth32Bit
+            'get album imagelist built first
+            For Each album As IAlbumInfo In albums
+                Dim albumArt As Image
+                If (Not (album.PictureLocation Is Nothing Or album.PictureLocation = "")) Then
+                    albumArt = Image.FromFile(album.PictureLocation)
+                Else
+                    albumArt = GetDefaultAlbumImage()
+                End If
+
+                albumImages.Images.Add(album.Name, albumArt)
+            Next
+
+
+            TopAlbumsLV.LargeImageList = albumImages
+
+            For Each album As IAlbumInfo In albums
+                TopAlbumsLV.Items.Add(album.Name, album.Name)
+            Next
+        End If
+    End Sub
+
+    Private Function GetSimilarArtistsImagesSize() As Drawing.Size
+        Dim imageWidth As UInteger = 150
+        Dim imageHeight As UInteger = imageWidth
+        Return New System.Drawing.Size(imageWidth, imageHeight)
+    End Function
+
+    Private Function GetDefaultArtistImage() As Image
+        Return New Bitmap(GetTopAlbumImagesSize().Width, GetTopAlbumImagesSize.Height) ' just a blank bitmap
+    End Function
+
+
+    Private Function GetTopAlbumImagesSize() As Drawing.Size
+        Dim imageWidth As UInteger = 90
+        Dim imageHeight As UInteger = imageWidth
+        Return New System.Drawing.Size(imageWidth, imageHeight)
+    End Function
+
+    Private Function GetDefaultAlbumImage() As Image
+        Return New Bitmap(GetTopAlbumImagesSize().Width, GetTopAlbumImagesSize.Height) ' just a blank bitmap
+    End Function
+
     Private Sub UpdateTags()
         Dim tags As String() = artistInfo.Tags()
+
+
 
         Dim tagLabels As ArrayList = New ArrayList()
 
@@ -154,14 +218,27 @@ Public Class MainInterface
 
         Dim index As UInteger = 0
 
+        'initialize to be invisible
         For Each tagLabel As Windows.Forms.Label In tagLabels
-            If (index >= tags.Count) Then
-                Exit For
-            End If
-
-            tagLabel.Text = tags.ElementAt(index)
-            index += 1
+            tagLabel.Visible = False
         Next
+
+        If (Not tags Is Nothing) Then
+
+            For Each tagLabel As Windows.Forms.Label In tagLabels
+                If (tags Is Nothing) Then
+                    Exit For
+                End If
+
+                If (index >= tags.Count) Then
+                    Exit For
+                End If
+
+                tagLabel.Text = tags.ElementAt(index)
+                tagLabel.Visible = True
+                index += 1
+            Next
+        End If
     End Sub
 
     Private Sub UpdateBiography()
@@ -175,56 +252,43 @@ Public Class MainInterface
     End Sub
 
     Private Sub UpdateSimilarArtists()
+
+        SimilarArtistsLV.Clear()
+
         If (Not artistInfo Is Nothing) Then
             Dim similarArtists As IArtistInfo() = artistInfo.SimilarArtists()
 
-            Dim similarArtistPictureBoxes As ArrayList = New ArrayList()
+            If (Not similarArtists Is Nothing) Then
 
-            similarArtistPictureBoxes.Add(SimilarArtistPB1)
-            similarArtistPictureBoxes.Add(SimilarArtistPB2)
-            similarArtistPictureBoxes.Add(SimilarArtistPB3)
-            similarArtistPictureBoxes.Add(SimilarArtistPB4)
-            similarArtistPictureBoxes.Add(SimilarArtistPB5)
+                Dim index As UInteger = 0
 
-            Dim index As UInteger = 0
 
-            For Each pb As Windows.Forms.PictureBox In similarArtistPictureBoxes
-                If (index >= similarArtists.Count) Then
-                    Exit For
-                End If
+                Dim artistImages As ImageList = New ImageList()
+                artistImages.ImageSize = GetSimilarArtistsImagesSize()
+                artistImages.ColorDepth = ColorDepth.Depth32Bit
 
-                If (Not similarArtists.ElementAt(index) Is Nothing) Then
-                    pb.ImageLocation = similarArtists.ElementAt(index).SmallPictureLocation()
-                End If
+                'get album imagelist built first
+                For Each artist As IArtistInfo In similarArtists
+                    Dim artistPicture As Image
+                    If (Not (artist.PictureLocation Is Nothing Or artist.PictureLocation = "")) Then
+                        artistPicture = Image.FromFile(artist.PictureLocation)
+                    Else
+                        artistPicture = GetDefaultArtistImage()
+                    End If
 
-                index += 1
-            Next
 
-            Dim similarArtistLabels As ArrayList = New ArrayList()
+                    artistImages.Images.Add(artist.Name, artistPicture)
+                Next
 
-            similarArtistLabels.Add(SimilarArtist1)
-            similarArtistLabels.Add(SimilarArtist2)
-            similarArtistLabels.Add(SimilarArtist3)
-            similarArtistLabels.Add(SimilarArtist4)
-            similarArtistLabels.Add(SimilarArtist5)
 
-            index = 0
+                SimilarArtistsLV.LargeImageList = artistImages
 
-            For Each artistLabel As Windows.Forms.LinkLabel In similarArtistLabels
-                If (index >= similarArtists.Count) Then
-                    Exit For
-                End If
-
-                If (Not similarArtists.ElementAt(index) Is Nothing) Then
-                    artistLabel.Text = similarArtists.ElementAt(index).Name
-                End If
-
-                index += 1
-            Next
+                For Each artist As IArtistInfo In similarArtists
+                    SimilarArtistsLV.Items.Add(artist.Name, artist.Name)
+                Next
+            End If
         End If
     End Sub
-
-
 
 
     Private Sub player_CurrentPlaylistChange(ByVal sender As Object, ByVal e As AxWMPLib._WMPOCXEvents_CurrentPlaylistChangeEvent) Handles AxWindowsMediaPlayer1.CurrentPlaylistChange
@@ -374,30 +438,22 @@ Public Class MainInterface
         FillPlaylistBox()
     End Sub
 
-    Private Sub SimilarArtist1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist1.LinkClicked
-        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist1.Text))
-    End Sub
-
-    Private Sub SimilarArtist2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist2.Text))
-    End Sub
-
-
-    Private Sub SimilarArtist3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist3.LinkClicked
-        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist3.Text))
-    End Sub
-
-    Private Sub SimilarArtist4_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist4.LinkClicked
-        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist4.Text))
-    End Sub
-
-    Private Sub SimilarArtist5_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist5.LinkClicked
-        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist5.Text))
-    End Sub
 
     Private Function GetTorrentzURLForArtistSearch(ByVal artist As String) As String
         Dim baseURL As String = "http://www.torrentz.com/search?q="
         Dim searchString As String = artist.Replace(" ", "+")
         Return baseURL + searchString
     End Function
+
+    Private Sub SimilarArtistsLV_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SimilarArtistsLV.DoubleClick
+
+        If (Not SimilarArtistsLV.SelectedIndices Is Nothing) Then
+
+            If (SimilarArtistsLV.SelectedIndices.Count > 0) Then
+
+                Dim selectedArtist As String = SimilarArtistsLV.Items.Item(SimilarArtistsLV.SelectedIndices(0)).Text
+                System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(selectedArtist))
+            End If
+        End If
+    End Sub
 End Class

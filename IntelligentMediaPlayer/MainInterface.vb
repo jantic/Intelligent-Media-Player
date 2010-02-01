@@ -4,9 +4,10 @@ Imports AxWMPLib
 Public Class MainInterface
     Private player As AxWindowsMediaPlayer
     Private manager As PlaylistManager
-    Private artistBio As IArtistBio = Nothing
+    Private artistInfo As IArtistInfo = Nothing
 
     Private Sub Initialize() Handles Me.Load
+        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         InitializePlayer()
         InitializePlaylist()
         InitializePlaylistModifierUI()
@@ -112,7 +113,7 @@ Public Class MainInterface
         If (currentIndex > 0) Then
             PlaylistBox.SelectedIndex = currentIndex
         End If
-        UpdateArtistBio()
+        UpdateArtistInfo()
         UpdateAlbumInfo()
     End Sub
 
@@ -120,11 +121,11 @@ Public Class MainInterface
 
     End Sub
 
-    Private Sub UpdateArtistBio()
+    Private Sub UpdateArtistInfo()
         Dim currentArtist As String = player.currentMedia.getItemInfo("Artist")
         Dim needsUpdated As Boolean = False
-        If (Not artistBio Is Nothing) Then
-            If (currentArtist.Trim.ToLower <> artistBio.Name.Trim.ToLower) Then
+        If (Not artistInfo Is Nothing) Then
+            If (currentArtist.Trim.ToLower <> artistInfo.Name.Trim.ToLower) Then
                 needsUpdated = True
             End If
         Else
@@ -132,16 +133,98 @@ Public Class MainInterface
         End If
 
         If (needsUpdated) Then
-            artistBio = New LastFMArtistBio(currentArtist)
-            ArtistPictureBox.ImageLocation = artistBio.PictureLocation
-            FullBioTB.DocumentText = artistBio.Biography
-
-            If (Not FullBioTB.Document.Body Is Nothing) Then
-                Dim zoomLevel As Integer = 10
-                FullBioTB.Document.Body.Style = "zoom: " & zoomLevel.ToString & "%"
-            End If
+            artistInfo = New LastFMArtistInfo(currentArtist)
+            UpdateBiography()
+            Dim similarArtistThread As Threading.Thread = New Threading.Thread(AddressOf Me.UpdateSimilarArtists)
+            similarArtistThread.Start()
+            UpdateTags()
         End If
     End Sub
+
+    Private Sub UpdateTags()
+        Dim tags As String() = artistInfo.Tags()
+
+        Dim tagLabels As ArrayList = New ArrayList()
+
+        tagLabels.Add(Tag1)
+        tagLabels.Add(Tag2)
+        tagLabels.Add(Tag3)
+        tagLabels.Add(Tag4)
+        tagLabels.Add(Tag5)
+
+        Dim index As UInteger = 0
+
+        For Each tagLabel As Windows.Forms.Label In tagLabels
+            If (index >= tags.Count) Then
+                Exit For
+            End If
+
+            tagLabel.Text = tags.ElementAt(index)
+            index += 1
+        Next
+    End Sub
+
+    Private Sub UpdateBiography()
+        ArtistPictureBox.ImageLocation = artistInfo.PictureLocation
+        FullBioTB.DocumentText = artistInfo.Biography
+
+        If (Not FullBioTB.Document.Body Is Nothing) Then
+            Dim zoomLevel As Integer = 10
+            FullBioTB.Document.Body.Style = "zoom: " & zoomLevel.ToString & "%"
+        End If
+    End Sub
+
+    Private Sub UpdateSimilarArtists()
+        If (Not artistInfo Is Nothing) Then
+            Dim similarArtists As IArtistInfo() = artistInfo.SimilarArtists()
+
+            Dim similarArtistPictureBoxes As ArrayList = New ArrayList()
+
+            similarArtistPictureBoxes.Add(SimilarArtistPB1)
+            similarArtistPictureBoxes.Add(SimilarArtistPB2)
+            similarArtistPictureBoxes.Add(SimilarArtistPB3)
+            similarArtistPictureBoxes.Add(SimilarArtistPB4)
+            similarArtistPictureBoxes.Add(SimilarArtistPB5)
+
+            Dim index As UInteger = 0
+
+            For Each pb As Windows.Forms.PictureBox In similarArtistPictureBoxes
+                If (index >= similarArtists.Count) Then
+                    Exit For
+                End If
+
+                If (Not similarArtists.ElementAt(index) Is Nothing) Then
+                    pb.ImageLocation = similarArtists.ElementAt(index).SmallPictureLocation()
+                End If
+
+                index += 1
+            Next
+
+            Dim similarArtistLabels As ArrayList = New ArrayList()
+
+            similarArtistLabels.Add(SimilarArtist1)
+            similarArtistLabels.Add(SimilarArtist2)
+            similarArtistLabels.Add(SimilarArtist3)
+            similarArtistLabels.Add(SimilarArtist4)
+            similarArtistLabels.Add(SimilarArtist5)
+
+            index = 0
+
+            For Each artistLabel As Windows.Forms.LinkLabel In similarArtistLabels
+                If (index >= similarArtists.Count) Then
+                    Exit For
+                End If
+
+                If (Not similarArtists.ElementAt(index) Is Nothing) Then
+                    artistLabel.Text = similarArtists.ElementAt(index).Name
+                End If
+
+                index += 1
+            Next
+        End If
+    End Sub
+
+
 
 
     Private Sub player_CurrentPlaylistChange(ByVal sender As Object, ByVal e As AxWMPLib._WMPOCXEvents_CurrentPlaylistChangeEvent) Handles AxWindowsMediaPlayer1.CurrentPlaylistChange
@@ -291,4 +374,7 @@ Public Class MainInterface
         FillPlaylistBox()
     End Sub
 
+    Private Sub SimilarArtist2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+    End Sub
 End Class

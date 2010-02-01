@@ -11,6 +11,8 @@ Public Class WebServiceClient
     Dim resultsCacheDirectory As String = Directory.GetCurrentDirectory + "\cache\resultXMLs\"
     Dim cacheKeyXPath As String = "//CacheKey"
     Dim cachedResultsLookup As Dictionary(Of String, String) = New Dictionary(Of String, String)
+    Dim timeOfPreviousCall As DateTime = Nothing
+    Const minimumTimeBetweenCallsInMilliseconds As UInteger = 1000
 
     Public Shared Function GetClient() As WebServiceClient
         If (singleton Is Nothing) Then
@@ -43,6 +45,12 @@ Public Class WebServiceClient
 
         Dim myCallResultXML As XmlDocument = New XmlDocument()
 
+        If (timeOfPreviousCall = Nothing) Then
+            timeOfPreviousCall = DateTime.Now
+        ElseIf (DateTime.Now.Subtract(timeOfPreviousCall).Milliseconds < minimumTimeBetweenCallsInMilliseconds) Then
+            System.Threading.Thread.Sleep(minimumTimeBetweenCallsInMilliseconds - DateTime.Now.Subtract(timeOfPreviousCall).Milliseconds)
+        End If
+
         Try
             myCallResultXML.Load(url)
         Catch ex As Exception
@@ -52,6 +60,8 @@ Public Class WebServiceClient
         If (Not myCallResultXML Is Nothing) Then
             CommitResultFileToCache(url, myCallResultXML)
         End If
+
+        timeOfPreviousCall = DateTime.Now
 
         Return myCallResultXML
     End Function

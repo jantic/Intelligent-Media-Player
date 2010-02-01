@@ -60,11 +60,32 @@ Partial Class MainInterface
         Me.AddModifierButton = New System.Windows.Forms.Button()
         Me.ArtistPictureBox = New System.Windows.Forms.PictureBox()
         Me.FullBioTB = New System.Windows.Forms.WebBrowser()
-        Me.FullBioGB = New System.Windows.Forms.GroupBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.BiographyTab = New System.Windows.Forms.TabPage()
+        Me.TagsTab = New System.Windows.Forms.TabPage()
+        Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
+        Me.SimilarArtistPB1 = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtistPB2 = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtistPB3 = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtistPB4 = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtistPB5 = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtist1 = New System.Windows.Forms.LinkLabel()
+        Me.SimilarArtist2 = New System.Windows.Forms.LinkLabel()
+        Me.SimilarArtist3 = New System.Windows.Forms.LinkLabel()
+        Me.SimilarArtist4 = New System.Windows.Forms.LinkLabel()
+        Me.SimilarArtist5 = New System.Windows.Forms.LinkLabel()
+        Me.Tag1 = New System.Windows.Forms.Label()
+        Me.Tag2 = New System.Windows.Forms.Label()
+        Me.Tag3 = New System.Windows.Forms.Label()
+        Me.Tag5 = New System.Windows.Forms.Label()
+        Me.Tag4 = New System.Windows.Forms.Label()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
-        Me.FullBioGB.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.BiographyTab.SuspendLayout()
+        Me.TagsTab.SuspendLayout()
+        Me.SimilarArtistsTab.SuspendLayout()
         Me.SuspendLayout()
         '
         'AxWindowsMediaPlayer1
@@ -97,7 +118,7 @@ Partial Class MainInterface
         'NumberOfItemsLabel
         '
         Me.NumberOfItemsLabel.AutoSize = True
-        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(15, 515)
+        Me.NumberOfItemsLabel.Location = New System.Drawing.Point(9, 515)
         Me.NumberOfItemsLabel.Name = "NumberOfItemsLabel"
         Me.NumberOfItemsLabel.Size = New System.Drawing.Size(87, 13)
         Me.NumberOfItemsLabel.TabIndex = 17
@@ -428,29 +449,254 @@ Partial Class MainInterface
         '
         'FullBioTB
         '
-        Me.FullBioTB.Location = New System.Drawing.Point(6, 19)
+        Me.FullBioTB.Location = New System.Drawing.Point(6, 6)
         Me.FullBioTB.MinimumSize = New System.Drawing.Size(20, 20)
         Me.FullBioTB.Name = "FullBioTB"
-        Me.FullBioTB.Size = New System.Drawing.Size(475, 202)
+        Me.FullBioTB.Size = New System.Drawing.Size(468, 188)
         Me.FullBioTB.TabIndex = 29
         '
-        'FullBioGB
+        'TabControl1
         '
-        Me.FullBioGB.BackColor = System.Drawing.SystemColors.Control
-        Me.FullBioGB.Controls.Add(Me.FullBioTB)
-        Me.FullBioGB.Location = New System.Drawing.Point(566, 285)
-        Me.FullBioGB.Name = "FullBioGB"
-        Me.FullBioGB.Size = New System.Drawing.Size(487, 227)
-        Me.FullBioGB.TabIndex = 30
-        Me.FullBioGB.TabStop = False
-        Me.FullBioGB.Text = "Full Biography"
+        Me.TabControl1.Controls.Add(Me.BiographyTab)
+        Me.TabControl1.Controls.Add(Me.TagsTab)
+        Me.TabControl1.Controls.Add(Me.SimilarArtistsTab)
+        Me.TabControl1.Location = New System.Drawing.Point(566, 286)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(488, 226)
+        Me.TabControl1.TabIndex = 30
+        '
+        'BiographyTab
+        '
+        Me.BiographyTab.Controls.Add(Me.FullBioTB)
+        Me.BiographyTab.Location = New System.Drawing.Point(4, 22)
+        Me.BiographyTab.Name = "BiographyTab"
+        Me.BiographyTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.BiographyTab.Size = New System.Drawing.Size(480, 200)
+        Me.BiographyTab.TabIndex = 0
+        Me.BiographyTab.Text = "Biography"
+        Me.BiographyTab.UseVisualStyleBackColor = True
+        '
+        'TagsTab
+        '
+        Me.TagsTab.Controls.Add(Me.Tag5)
+        Me.TagsTab.Controls.Add(Me.Tag4)
+        Me.TagsTab.Controls.Add(Me.Tag3)
+        Me.TagsTab.Controls.Add(Me.Tag2)
+        Me.TagsTab.Controls.Add(Me.Tag1)
+        Me.TagsTab.Location = New System.Drawing.Point(4, 22)
+        Me.TagsTab.Name = "TagsTab"
+        Me.TagsTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.TagsTab.Size = New System.Drawing.Size(480, 200)
+        Me.TagsTab.TabIndex = 1
+        Me.TagsTab.Text = "Tags"
+        Me.TagsTab.UseVisualStyleBackColor = True
+        '
+        'SimilarArtistsTab
+        '
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtist5)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtist4)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtist3)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtist2)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtist1)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistPB5)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistPB4)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistPB3)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistPB2)
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistPB1)
+        Me.SimilarArtistsTab.Location = New System.Drawing.Point(4, 22)
+        Me.SimilarArtistsTab.Name = "SimilarArtistsTab"
+        Me.SimilarArtistsTab.Size = New System.Drawing.Size(480, 200)
+        Me.SimilarArtistsTab.TabIndex = 2
+        Me.SimilarArtistsTab.Text = "Simlar Artists"
+        Me.SimilarArtistsTab.UseVisualStyleBackColor = True
+        '
+        'SimilarArtistPB1
+        '
+        Me.SimilarArtistPB1.BackColor = System.Drawing.SystemColors.Desktop
+        Me.SimilarArtistPB1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SimilarArtistPB1.ErrorImage = Nothing
+        Me.SimilarArtistPB1.ImageLocation = ""
+        Me.SimilarArtistPB1.InitialImage = Nothing
+        Me.SimilarArtistPB1.Location = New System.Drawing.Point(3, 3)
+        Me.SimilarArtistPB1.Name = "SimilarArtistPB1"
+        Me.SimilarArtistPB1.Size = New System.Drawing.Size(89, 60)
+        Me.SimilarArtistPB1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistPB1.TabIndex = 23
+        Me.SimilarArtistPB1.TabStop = False
+        '
+        'SimilarArtistPB2
+        '
+        Me.SimilarArtistPB2.BackColor = System.Drawing.SystemColors.Desktop
+        Me.SimilarArtistPB2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SimilarArtistPB2.ErrorImage = Nothing
+        Me.SimilarArtistPB2.ImageLocation = ""
+        Me.SimilarArtistPB2.InitialImage = Nothing
+        Me.SimilarArtistPB2.Location = New System.Drawing.Point(3, 69)
+        Me.SimilarArtistPB2.Name = "SimilarArtistPB2"
+        Me.SimilarArtistPB2.Size = New System.Drawing.Size(89, 59)
+        Me.SimilarArtistPB2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistPB2.TabIndex = 24
+        Me.SimilarArtistPB2.TabStop = False
+        '
+        'SimilarArtistPB3
+        '
+        Me.SimilarArtistPB3.BackColor = System.Drawing.SystemColors.Desktop
+        Me.SimilarArtistPB3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SimilarArtistPB3.ErrorImage = Nothing
+        Me.SimilarArtistPB3.ImageLocation = ""
+        Me.SimilarArtistPB3.InitialImage = Nothing
+        Me.SimilarArtistPB3.Location = New System.Drawing.Point(3, 134)
+        Me.SimilarArtistPB3.Name = "SimilarArtistPB3"
+        Me.SimilarArtistPB3.Size = New System.Drawing.Size(89, 63)
+        Me.SimilarArtistPB3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistPB3.TabIndex = 25
+        Me.SimilarArtistPB3.TabStop = False
+        '
+        'SimilarArtistPB4
+        '
+        Me.SimilarArtistPB4.BackColor = System.Drawing.SystemColors.Desktop
+        Me.SimilarArtistPB4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SimilarArtistPB4.ErrorImage = Nothing
+        Me.SimilarArtistPB4.ImageLocation = ""
+        Me.SimilarArtistPB4.InitialImage = Nothing
+        Me.SimilarArtistPB4.Location = New System.Drawing.Point(239, 3)
+        Me.SimilarArtistPB4.Name = "SimilarArtistPB4"
+        Me.SimilarArtistPB4.Size = New System.Drawing.Size(89, 60)
+        Me.SimilarArtistPB4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistPB4.TabIndex = 26
+        Me.SimilarArtistPB4.TabStop = False
+        '
+        'SimilarArtistPB5
+        '
+        Me.SimilarArtistPB5.BackColor = System.Drawing.SystemColors.Desktop
+        Me.SimilarArtistPB5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SimilarArtistPB5.ErrorImage = Nothing
+        Me.SimilarArtistPB5.ImageLocation = ""
+        Me.SimilarArtistPB5.InitialImage = Nothing
+        Me.SimilarArtistPB5.Location = New System.Drawing.Point(239, 69)
+        Me.SimilarArtistPB5.Name = "SimilarArtistPB5"
+        Me.SimilarArtistPB5.Size = New System.Drawing.Size(89, 60)
+        Me.SimilarArtistPB5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistPB5.TabIndex = 31
+        Me.SimilarArtistPB5.TabStop = False
+        '
+        'SimilarArtist1
+        '
+        Me.SimilarArtist1.AutoSize = True
+        Me.SimilarArtist1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.SimilarArtist1.LinkColor = System.Drawing.Color.Black
+        Me.SimilarArtist1.Location = New System.Drawing.Point(98, 50)
+        Me.SimilarArtist1.Name = "SimilarArtist1"
+        Me.SimilarArtist1.Size = New System.Drawing.Size(59, 13)
+        Me.SimilarArtist1.TabIndex = 33
+        Me.SimilarArtist1.TabStop = True
+        Me.SimilarArtist1.Text = "LinkLabel1"
+        '
+        'SimilarArtist2
+        '
+        Me.SimilarArtist2.AutoSize = True
+        Me.SimilarArtist2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.SimilarArtist2.LinkColor = System.Drawing.Color.Black
+        Me.SimilarArtist2.Location = New System.Drawing.Point(98, 115)
+        Me.SimilarArtist2.Name = "SimilarArtist2"
+        Me.SimilarArtist2.Size = New System.Drawing.Size(59, 13)
+        Me.SimilarArtist2.TabIndex = 34
+        Me.SimilarArtist2.TabStop = True
+        Me.SimilarArtist2.Text = "LinkLabel1"
+        '
+        'SimilarArtist3
+        '
+        Me.SimilarArtist3.AutoSize = True
+        Me.SimilarArtist3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.SimilarArtist3.LinkColor = System.Drawing.Color.Black
+        Me.SimilarArtist3.Location = New System.Drawing.Point(98, 184)
+        Me.SimilarArtist3.Name = "SimilarArtist3"
+        Me.SimilarArtist3.Size = New System.Drawing.Size(59, 13)
+        Me.SimilarArtist3.TabIndex = 35
+        Me.SimilarArtist3.TabStop = True
+        Me.SimilarArtist3.Text = "LinkLabel1"
+        '
+        'SimilarArtist4
+        '
+        Me.SimilarArtist4.AutoSize = True
+        Me.SimilarArtist4.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.SimilarArtist4.LinkColor = System.Drawing.Color.Black
+        Me.SimilarArtist4.Location = New System.Drawing.Point(334, 50)
+        Me.SimilarArtist4.Name = "SimilarArtist4"
+        Me.SimilarArtist4.Size = New System.Drawing.Size(59, 13)
+        Me.SimilarArtist4.TabIndex = 36
+        Me.SimilarArtist4.TabStop = True
+        Me.SimilarArtist4.Text = "LinkLabel1"
+        '
+        'SimilarArtist5
+        '
+        Me.SimilarArtist5.AutoSize = True
+        Me.SimilarArtist5.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.SimilarArtist5.LinkColor = System.Drawing.Color.Black
+        Me.SimilarArtist5.Location = New System.Drawing.Point(334, 115)
+        Me.SimilarArtist5.Name = "SimilarArtist5"
+        Me.SimilarArtist5.Size = New System.Drawing.Size(59, 13)
+        Me.SimilarArtist5.TabIndex = 37
+        Me.SimilarArtist5.TabStop = True
+        Me.SimilarArtist5.Text = "LinkLabel1"
+        '
+        'Tag1
+        '
+        Me.Tag1.AutoSize = True
+        Me.Tag1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tag1.Location = New System.Drawing.Point(7, 20)
+        Me.Tag1.Name = "Tag1"
+        Me.Tag1.Size = New System.Drawing.Size(57, 20)
+        Me.Tag1.TabIndex = 0
+        Me.Tag1.Text = "Label1"
+        '
+        'Tag2
+        '
+        Me.Tag2.AutoSize = True
+        Me.Tag2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tag2.Location = New System.Drawing.Point(7, 52)
+        Me.Tag2.Name = "Tag2"
+        Me.Tag2.Size = New System.Drawing.Size(57, 20)
+        Me.Tag2.TabIndex = 1
+        Me.Tag2.Text = "Label1"
+        '
+        'Tag3
+        '
+        Me.Tag3.AutoSize = True
+        Me.Tag3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tag3.Location = New System.Drawing.Point(6, 82)
+        Me.Tag3.Name = "Tag3"
+        Me.Tag3.Size = New System.Drawing.Size(57, 20)
+        Me.Tag3.TabIndex = 2
+        Me.Tag3.Text = "Label1"
+        '
+        'Tag5
+        '
+        Me.Tag5.AutoSize = True
+        Me.Tag5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tag5.Location = New System.Drawing.Point(6, 143)
+        Me.Tag5.Name = "Tag5"
+        Me.Tag5.Size = New System.Drawing.Size(57, 20)
+        Me.Tag5.TabIndex = 4
+        Me.Tag5.Text = "Label2"
+        '
+        'Tag4
+        '
+        Me.Tag4.AutoSize = True
+        Me.Tag4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tag4.Location = New System.Drawing.Point(7, 113)
+        Me.Tag4.Name = "Tag4"
+        Me.Tag4.Size = New System.Drawing.Size(57, 20)
+        Me.Tag4.TabIndex = 3
+        Me.Tag4.Text = "Label1"
         '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1066, 774)
-        Me.Controls.Add(Me.FullBioGB)
+        Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ArtistPictureBox)
         Me.Controls.Add(Me.PlaylistModifierGB)
         Me.Controls.Add(Me.NowPlayingGB)
@@ -469,7 +715,12 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.PerformLayout()
         Me.ModifierInputGB.ResumeLayout(False)
         Me.ModifierInputGB.PerformLayout()
-        Me.FullBioGB.ResumeLayout(False)
+        Me.TabControl1.ResumeLayout(False)
+        Me.BiographyTab.ResumeLayout(False)
+        Me.TagsTab.ResumeLayout(False)
+        Me.TagsTab.PerformLayout()
+        Me.SimilarArtistsTab.ResumeLayout(False)
+        Me.SimilarArtistsTab.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -511,6 +762,24 @@ Partial Class MainInterface
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ArtistPictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents FullBioTB As System.Windows.Forms.WebBrowser
-    Friend WithEvents FullBioGB As System.Windows.Forms.GroupBox
+    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+    Friend WithEvents BiographyTab As System.Windows.Forms.TabPage
+    Friend WithEvents TagsTab As System.Windows.Forms.TabPage
+    Friend WithEvents SimilarArtistsTab As System.Windows.Forms.TabPage
+    Friend WithEvents SimilarArtistPB4 As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtistPB3 As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtistPB2 As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtistPB1 As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtistPB5 As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtist5 As System.Windows.Forms.LinkLabel
+    Friend WithEvents SimilarArtist4 As System.Windows.Forms.LinkLabel
+    Friend WithEvents SimilarArtist3 As System.Windows.Forms.LinkLabel
+    Friend WithEvents SimilarArtist2 As System.Windows.Forms.LinkLabel
+    Friend WithEvents SimilarArtist1 As System.Windows.Forms.LinkLabel
+    Friend WithEvents Tag5 As System.Windows.Forms.Label
+    Friend WithEvents Tag4 As System.Windows.Forms.Label
+    Friend WithEvents Tag3 As System.Windows.Forms.Label
+    Friend WithEvents Tag2 As System.Windows.Forms.Label
+    Friend WithEvents Tag1 As System.Windows.Forms.Label
 
 End Class

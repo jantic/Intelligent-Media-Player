@@ -374,7 +374,30 @@ Public Class MainInterface
         FillPlaylistBox()
     End Sub
 
-    Private Sub SimilarArtist2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-
+    Private Sub SimilarArtist1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist1.LinkClicked
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist1.Text))
     End Sub
+
+    Private Sub SimilarArtist2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist2.Text))
+    End Sub
+
+
+    Private Sub SimilarArtist3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist3.LinkClicked
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist3.Text))
+    End Sub
+
+    Private Sub SimilarArtist4_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist4.LinkClicked
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist4.Text))
+    End Sub
+
+    Private Sub SimilarArtist5_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles SimilarArtist5.LinkClicked
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(SimilarArtist5.Text))
+    End Sub
+
+    Private Function GetTorrentzURLForArtistSearch(ByVal artist As String) As String
+        Dim baseURL As String = "http://www.torrentz.com/search?q="
+        Dim searchString As String = artist.Replace(" ", "+")
+        Return baseURL + searchString
+    End Function
 End Class

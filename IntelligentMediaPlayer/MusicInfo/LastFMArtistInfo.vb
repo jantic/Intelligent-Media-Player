@@ -134,8 +134,15 @@ Public Class LastFMArtistInfo
 
             Dim albumNodes As XmlNodeList = myTopAlbumsResultXML.GetElementsByTagName("album")
 
+            'limiting to 9 for performance reasons.
+            Dim count As Integer = 1
+
             For Each albumElement As XmlElement In albumNodes
+                If (count > 9) Then
+                    Exit For
+                End If
                 albumsList.Add(New LastFMAlbumInfo(albumElement, Me))
+                count += 1
             Next
 
             Return albumsList.ToArray(GetType(IAlbumInfo))

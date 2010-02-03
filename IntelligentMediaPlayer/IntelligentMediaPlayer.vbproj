@@ -70,14 +70,17 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainInterface.vb">
+    <Compile Include="Interface\GUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainInterface.Designer.vb">
+    <Compile Include="Interface\MainInterface.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\MainInterface.Designer.vb">
       <DependentUpon>MainInterface.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessageFilter.vb" />
+    <Compile Include="Interface\MessageFilter.vb" />
     <Compile Include="MusicInfo\IAlbumInfo.vb" />
     <Compile Include="MusicInfo\IArtistInfo.vb" />
     <Compile Include="MusicInfo\LastFMAlbumInfo.vb" />
@@ -113,7 +116,7 @@
     <Compile Include="WebServiceClient\WebServiceClient.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainInterface.resx">
+    <EmbeddedResource Include="Interface\MainInterface.resx">
       <DependentUpon>MainInterface.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

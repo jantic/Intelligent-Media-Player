@@ -68,18 +68,18 @@ Partial Class MainInterface
         Me.Tag3 = New System.Windows.Forms.Label()
         Me.Tag2 = New System.Windows.Forms.Label()
         Me.Tag1 = New System.Windows.Forms.Label()
-        Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
-        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
         Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
+        Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
+        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.BiographyTab.SuspendLayout()
         Me.TagsTab.SuspendLayout()
-        Me.TopAlbumsTab.SuspendLayout()
         Me.SimilarArtistsTab.SuspendLayout()
+        Me.TopAlbumsTab.SuspendLayout()
         Me.SuspendLayout()
         '
         'AxWindowsMediaPlayer1
@@ -537,30 +537,6 @@ Partial Class MainInterface
         Me.Tag1.TabIndex = 0
         Me.Tag1.Text = "Label1"
         '
-        'TopAlbumsTab
-        '
-        Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLV)
-        Me.TopAlbumsTab.Location = New System.Drawing.Point(4, 22)
-        Me.TopAlbumsTab.Name = "TopAlbumsTab"
-        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 200)
-        Me.TopAlbumsTab.TabIndex = 3
-        Me.TopAlbumsTab.Text = "Top Albums"
-        Me.TopAlbumsTab.UseVisualStyleBackColor = True
-        '
-        'TopAlbumsLV
-        '
-        Me.TopAlbumsLV.FullRowSelect = True
-        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.TopAlbumsLV.HideSelection = False
-        Me.TopAlbumsLV.Location = New System.Drawing.Point(3, 3)
-        Me.TopAlbumsLV.MultiSelect = False
-        Me.TopAlbumsLV.Name = "TopAlbumsLV"
-        Me.TopAlbumsLV.RightToLeftLayout = True
-        Me.TopAlbumsLV.ShowGroups = False
-        Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
-        Me.TopAlbumsLV.TabIndex = 23
-        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
-        '
         'SimilarArtistsTab
         '
         Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistsLV)
@@ -585,11 +561,35 @@ Partial Class MainInterface
         Me.SimilarArtistsLV.TabIndex = 24
         Me.SimilarArtistsLV.UseCompatibleStateImageBehavior = False
         '
+        'TopAlbumsTab
+        '
+        Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLV)
+        Me.TopAlbumsTab.Location = New System.Drawing.Point(4, 22)
+        Me.TopAlbumsTab.Name = "TopAlbumsTab"
+        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 200)
+        Me.TopAlbumsTab.TabIndex = 3
+        Me.TopAlbumsTab.Text = "Top Albums"
+        Me.TopAlbumsTab.UseVisualStyleBackColor = True
+        '
+        'TopAlbumsLV
+        '
+        Me.TopAlbumsLV.FullRowSelect = True
+        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.TopAlbumsLV.HideSelection = False
+        Me.TopAlbumsLV.Location = New System.Drawing.Point(3, 3)
+        Me.TopAlbumsLV.MultiSelect = False
+        Me.TopAlbumsLV.Name = "TopAlbumsLV"
+        Me.TopAlbumsLV.RightToLeftLayout = True
+        Me.TopAlbumsLV.ShowGroups = False
+        Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
+        Me.TopAlbumsLV.TabIndex = 23
+        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
+        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1066, 774)
+        Me.ClientSize = New System.Drawing.Size(1064, 777)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ArtistPictureBox)
         Me.Controls.Add(Me.PlaylistModifierGB)
@@ -599,7 +599,8 @@ Partial Class MainInterface
         Me.Controls.Add(Me.FilteredPlaylistLabel)
         Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
-        Me.MinimumSize = New System.Drawing.Size(885, 420)
+        Me.MaximumSize = New System.Drawing.Size(1080, 815)
+        Me.MinimumSize = New System.Drawing.Size(1080, 815)
         Me.Name = "MainInterface"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "Intelligent Media Player"
@@ -613,8 +614,8 @@ Partial Class MainInterface
         Me.BiographyTab.ResumeLayout(False)
         Me.TagsTab.ResumeLayout(False)
         Me.TagsTab.PerformLayout()
-        Me.TopAlbumsTab.ResumeLayout(False)
         Me.SimilarArtistsTab.ResumeLayout(False)
+        Me.TopAlbumsTab.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -14,7 +14,9 @@ Partial Public Class MainInterface
         Private UpdateTagsASYNC As New AsyncSub(AddressOf UpdateTags)
         Private UpdateTopAlbumsASYNC As New AsyncSub(AddressOf UpdateTopAlbums)
 
-        Dim sleeptime As UInteger = 200 ' ms
+        Private sleeptime As UInteger = 200 ' ms
+        Private previousArtist As String = ""
+
 
 
         Private myParentInterface As MainInterface
@@ -33,11 +35,11 @@ Partial Public Class MainInterface
 
 
         Public Sub AddArtistNameToQueue(ByVal artistName As String)
-            If (myArtistNameQueue.Count = 0) Then
-                myArtistNameQueue.Enqueue(artistName)
-            ElseIf (artistName.Trim.ToLower <> myArtistNameQueue.Peek().Trim.ToLower) Then
-                myArtistNameQueue.Enqueue(artistName)
+            If (artistName.Trim.ToLower <> previousArtist.Trim.ToLower) Then
+            myArtistNameQueue.Enqueue(artistName)
             End If
+
+            previousArtist = artistName
         End Sub
 
         Private Sub UpdateArtistInfo()

@@ -6,7 +6,7 @@ Public Interface IArtistInfo
     ReadOnly Property Biography As String
     ReadOnly Property PictureLocation As String 'filepath
     ReadOnly Property SmallPictureLocation As String ' filepath
-    ReadOnly Property SimilarArtists As IArtistInfo()
+    ReadOnly Property SimilarArtists As IArtistNameFace()
     ReadOnly Property WebLink As String
     ReadOnly Property Tags As String()
     ReadOnly Property TopAlbums As IAlbumInfo()

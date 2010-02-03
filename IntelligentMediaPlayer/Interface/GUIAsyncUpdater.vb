@@ -8,25 +8,29 @@ Partial Public Class MainInterface
         Private mySimilarArtistInfoQueue As New Queue(Of IArtistInfo)
         Private myTopAlbumsArtistInfoQueue As New Queue(Of IArtistInfo)
 
-        Dim sleeptime As UInteger = 250 ' ms
+        Private UpdateArtistInfoASYNC As New AsyncSub(AddressOf UpdateArtistInfo)
+        Private UpdateBiographyASYNC As New AsyncSub(AddressOf UpdateBiography)
+        Private UpdateSimilarArtistsASYNC As New AsyncSub(AddressOf UpdateSimilarArtists)
+        Private UpdateTagsASYNC As New AsyncSub(AddressOf UpdateTags)
+        Private UpdateTopAlbumsASYNC As New AsyncSub(AddressOf UpdateTopAlbums)
+
+        Dim sleeptime As UInteger = 200 ' ms
 
 
         Private myParentInterface As MainInterface
 
+        Private Delegate Sub AsyncSub()
+
         Public Sub New(ByRef theParentInterface As MainInterface)
             myParentInterface = theParentInterface
 
-            Dim UpdateArtistInfoTHREAD As New System.Threading.Thread(AddressOf UpdateArtistInfo)
-            UpdateArtistInfoTHREAD.Start()
-            Dim UpdateBiographyTHREAD As New System.Threading.Thread(AddressOf UpdateBiography)
-            UpdateBiographyTHREAD.Start()
-            Dim UpdateSimilarArtistsTHREAD As New System.Threading.Thread(AddressOf UpdateSimilarArtists)
-            UpdateSimilarArtistsTHREAD.Start()
-            Dim UpdateTagsTHREAD As New System.Threading.Thread(AddressOf UpdateTags)
-            UpdateTagsTHREAD.Start()
-            Dim UpdateTopAlbumsTHREAD As New System.Threading.Thread(AddressOf UpdateTopAlbums)
-            UpdateTopAlbumsTHREAD.Start()
+            UpdateArtistInfoASYNC.BeginInvoke(Nothing, Nothing)
+            UpdateBiographyASYNC.BeginInvoke(Nothing, Nothing)
+            UpdateSimilarArtistsASYNC.BeginInvoke(Nothing, Nothing)
+            UpdateTagsASYNC.BeginInvoke(Nothing, Nothing)
+            UpdateTopAlbumsASYNC.BeginInvoke(Nothing, Nothing)
         End Sub
+
 
         Public Sub AddArtistNameToQueue(ByVal artistName As String)
             If (myArtistNameQueue.Count = 0) Then
@@ -46,11 +50,13 @@ Partial Public Class MainInterface
 
                 If (Not currentArtist Is Nothing) Then
                     Dim artistInfo As IArtistInfo = New LastFMArtistInfo(currentArtist)
-                    myBiographyArtistInfoQueue.Enqueue(artistInfo)
-                    myTagsArtistInfoQueue.Enqueue(artistInfo)
-                    mySimilarArtistInfoQueue.Enqueue(artistInfo)
-                    myTopAlbumsArtistInfoQueue.Enqueue(artistInfo)
-                    System.GC.Collect()
+                    If (myArtistNameQueue.Count = 0) Then 'making sure we don't waste time updating anything if a new artist has been added.
+                        myBiographyArtistInfoQueue.Enqueue(artistInfo)
+                        myTagsArtistInfoQueue.Enqueue(artistInfo)
+                        mySimilarArtistInfoQueue.Enqueue(artistInfo)
+                        myTopAlbumsArtistInfoQueue.Enqueue(artistInfo)
+                        System.GC.Collect()
+                    End If
                 End If
 
                 System.Threading.Thread.Sleep(sleeptime)
@@ -97,13 +103,14 @@ Partial Public Class MainInterface
                             albumImages.Images.Add(album.Name, albumArt)
                         Next
 
+                        If (myTopAlbumsArtistInfoQueue.Count = 0) Then ' don't waste time adding images for an artist if a new one has been added.
 
+                            myParentInterface.TopAlbumsLV.LargeImageList = albumImages
 
-                        myParentInterface.TopAlbumsLV.LargeImageList = albumImages
-
-                        For Each album As IAlbumInfo In albums
-                            myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name)
-                        Next
+                            For Each album As IAlbumInfo In albums
+                                myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name)
+                            Next
+                        End If
                     End If
                 End If
                 System.Threading.Thread.Sleep(sleeptime)
@@ -111,7 +118,7 @@ Partial Public Class MainInterface
         End Sub
 
         Private Function GetSimilarArtistsImagesSize() As Drawing.Size
-            Dim imageWidth As UInteger = 150
+            Dim imageWidth As UInteger = 90
             Dim imageHeight As UInteger = imageWidth
             Return New System.Drawing.Size(imageWidth, imageHeight)
         End Function
@@ -160,17 +167,21 @@ Partial Public Class MainInterface
                         tagLabel.Visible = False
                     Next
 
-                    If (Not tags Is Nothing) Then
+                    If (myTagsArtistInfoQueue.Count = 0) Then 'don't waste time adding tags to UI if new artist has since been added.
 
-                        For Each tagLabel As Label In tagLabels
-                            If (index >= tags.Count) Then
-                                Exit For
-                            End If
 
-                            tagLabel.Text = tags(index)
-                            tagLabel.Visible = True
-                            index += 1
-                        Next
+                        If (Not tags Is Nothing) Then
+
+                            For Each tagLabel As Label In tagLabels
+                                If (index >= tags.Count) Then
+                                    Exit For
+                                End If
+
+                                tagLabel.Text = tags(index)
+                                tagLabel.Visible = True
+                                index += 1
+                            Next
+                        End If
                     End If
                 End If
                 System.Threading.Thread.Sleep(sleeptime)
@@ -232,7 +243,7 @@ Partial Public Class MainInterface
                     myParentInterface.SimilarArtistsLV.Clear()
 
                     If (Not artistInfo Is Nothing) Then
-                        Dim similarArtists As IArtistInfo() = artistInfo.SimilarArtists()
+                        Dim similarArtists As IArtistNameFace() = artistInfo.SimilarArtists()
 
                         If (Not similarArtists Is Nothing) Then
 
@@ -244,11 +255,11 @@ Partial Public Class MainInterface
                             artistImages.ColorDepth = ColorDepth.Depth32Bit
 
                             'get album imagelist built first
-                            For Each artist As IArtistInfo In similarArtists
+                            For Each artist As IArtistNameFace In similarArtists
                                 Dim artistPicture As Image
-                                If (Not (artist.PictureLocation Is Nothing Or artist.PictureLocation = "")) Then
+                                If (Not (artist.LargePictureLocation Is Nothing Or artist.LargePictureLocation = "")) Then
                                     Try
-                                        artistPicture = Image.FromFile(artist.PictureLocation)
+                                        artistPicture = Image.FromFile(artist.LargePictureLocation)
                                     Catch
                                         artistPicture = GetDefaultArtistImage()
                                     End Try
@@ -263,7 +274,7 @@ Partial Public Class MainInterface
 
                             myParentInterface.SimilarArtistsLV.LargeImageList = artistImages
 
-                            For Each artist As IArtistInfo In similarArtists
+                            For Each artist As IArtistNameFace In similarArtists
                                 myParentInterface.SimilarArtistsLV.Items.Add(artist.Name, artist.Name)
                             Next
                         End If

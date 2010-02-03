@@ -141,7 +141,7 @@ Public Class MainInterface
     Private Sub player_CurrentItemChange(ByVal sender As Object, ByVal e As AxWMPLib._WMPOCXEvents_CurrentItemChangeEvent) Handles AxWindowsMediaPlayer1.CurrentItemChange
         ' Display the name of the new media item.
         Dim currentArtist As String = player.currentMedia.getItemInfo("Artist")
-        ArtistTextLabel.Text = player.currentMedia.getItemInfo(currentArtist)
+        ArtistTextLabel.Text = currentArtist
         AlbumTextLabel.Text = player.currentMedia.getItemInfo("Album")
         TrackTextLabel.Text = player.currentMedia.getItemInfo("Title")
         AlbumYearText.Text = player.currentMedia.getItemInfo("ReleaseDateYear")

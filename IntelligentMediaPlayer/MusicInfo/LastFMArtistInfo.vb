@@ -2,17 +2,17 @@
 Imports System.Xml
 Imports System.Xml.XPath
 
-Public Class LastFMArtistInfo
+Partial Public Class LastFMArtistInfo
     Implements IArtistInfo
     Private myName As String
     Private Const myTemplateArtistInfoURL As String = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=[Artist]&api_key=e295ea662af320c44101419cb30cfffe"
     Private Const myTemplateTopAlbumsURL As String = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=[Artist]&api_key=e295ea662af320c44101419cb30cfffe"
-    Private myArtistInfoResultXML As XmlDocument 'cached because otherwise last.fm will kick this program out for too many calls.
-    Private myTopAlbumsResultXML As XmlDocument
+    Private myArtistInfoResultXML As XmlDocument = Nothing 'cached because otherwise last.fm will kick this program out for too many calls.
+    Private myTopAlbumsResultXML As XmlDocument = Nothing
 
     Public Sub New(ByRef artistName As String)
         myName = artistName
-        RetrieveAndStoreResultsFromWebservice()
+        RetrieveAndStoreArtistInfoFromWebservice()
     End Sub
 
 
@@ -79,24 +79,21 @@ Public Class LastFMArtistInfo
         End Get
     End Property
 
-    Public ReadOnly Property SimilarArtists As IArtistInfo() Implements IArtistInfo.SimilarArtists
+    Public ReadOnly Property SimilarArtists As IArtistNameFace() Implements IArtistInfo.SimilarArtists
         Get
             If (myArtistInfoResultXML Is Nothing) Then
                 Return Nothing
             End If
 
             Dim artists As ArrayList = New ArrayList()
-            Dim similarArtistNameXpathQuery As String = "//lfm/artist/similar/artist/name"
-            Dim index As UInteger = 0
-            Dim similarArtistName As String = WebServiceClient.GetClient.XMLGetValueAt(myArtistInfoResultXML, similarArtistNameXpathQuery, index)
+            Dim similarArtistXPathQuery As String = "//lfm/artist/similar/artist"
+            Dim similarArtistXMLs As XmlNodeList = myArtistInfoResultXML.SelectNodes(similarArtistXPathQuery)
 
-            While (Not similarArtistName Is Nothing)
-                artists.Add(New LastFMArtistInfo(similarArtistName))
-                index += 1
-                similarArtistName = WebServiceClient.GetClient.XMLGetValueAt(myArtistInfoResultXML, similarArtistNameXpathQuery, index)
-            End While
+            For Each artistXML As XmlElement In similarArtistXMLs
+                artists.Add(New LastFMArtistNameFace(artistXML))
+            Next
 
-            Return artists.ToArray(GetType(IArtistInfo))
+            Return artists.ToArray(GetType(IArtistNameFace))
         End Get
     End Property
 
@@ -124,6 +121,8 @@ Public Class LastFMArtistInfo
     Public ReadOnly Property TopAlbums As IAlbumInfo() Implements IArtistInfo.TopAlbums
         Get
 
+            RetrieveAndStoreTopAlbumsInfoFromWebService()
+
             If (myTopAlbumsResultXML Is Nothing) Then
                 Return Nothing
             End If
@@ -135,26 +134,31 @@ Public Class LastFMArtistInfo
             Dim albumNodes As XmlNodeList = myTopAlbumsResultXML.GetElementsByTagName("album")
 
             'limiting to 9 for performance reasons.
-            Dim count As Integer = 1
+            'Dim count As Integer = 1
 
             For Each albumElement As XmlElement In albumNodes
-                If (count > 9) Then
-                    Exit For
-                End If
+                'If (count > 9) Then
+                'Exit For
+                'End If
                 albumsList.Add(New LastFMAlbumInfo(albumElement, Me))
-                count += 1
+                'count += 1
             Next
 
             Return albumsList.ToArray(GetType(IAlbumInfo))
         End Get
     End Property
 
-    Private Sub RetrieveAndStoreResultsFromWebservice()
+    Private Sub RetrieveAndStoreArtistInfoFromWebservice()
         Dim artistInfoURL As String = myTemplateArtistInfoURL.Replace("[Artist]", myName)
         myArtistInfoResultXML = WebServiceClient.GetClient.RetrieveResult(artistInfoURL)
 
-        Dim topAlbumInfoURL As String = myTemplateTopAlbumsURL.Replace("[Artist]", myName)
-        myTopAlbumsResultXML = WebServiceClient.GetClient.RetrieveResult(topAlbumInfoURL)
+    End Sub
+
+    Private Sub RetrieveAndStoreTopAlbumsInfoFromWebService()
+        If (myTopAlbumsResultXML Is Nothing) Then
+            Dim topAlbumInfoURL As String = myTemplateTopAlbumsURL.Replace("[Artist]", myName)
+            myTopAlbumsResultXML = WebServiceClient.GetClient.RetrieveResult(topAlbumInfoURL)
+        End If
     End Sub
 
 

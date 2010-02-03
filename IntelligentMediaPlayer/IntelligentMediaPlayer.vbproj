@@ -83,8 +83,10 @@
     <Compile Include="Interface\MessageFilter.vb" />
     <Compile Include="MusicInfo\IAlbumInfo.vb" />
     <Compile Include="MusicInfo\IArtistInfo.vb" />
+    <Compile Include="MusicInfo\IArtistNameFace.vb" />
     <Compile Include="MusicInfo\LastFMAlbumInfo.vb" />
     <Compile Include="MusicInfo\LastFMArtistInfo.vb" />
+    <Compile Include="MusicInfo\LastFMArtistNameFace.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

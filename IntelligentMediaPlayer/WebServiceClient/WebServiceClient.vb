@@ -149,7 +149,7 @@ Public Class WebServiceClient
         End If
     End Sub
 
-    Public Function XMLGetValueAt(ByRef node As XmlNode, ByVal pathQuery As String, ByVal index As UInteger) As String
+    Public Function XMLGetValueAt(ByVal node As XmlNode, ByVal pathQuery As String, ByVal index As UInteger) As String
         Dim valueElement As Xml.XmlElement = Nothing
 
         Try

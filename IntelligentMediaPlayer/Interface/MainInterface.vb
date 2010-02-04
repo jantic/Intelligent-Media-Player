@@ -153,7 +153,7 @@ Public Class MainInterface
             PlaylistBox.SelectedIndex = currentIndex
         End If
 
-        myGUIAsyncUpdater.AddArtistNameToQueue(currentArtist)
+        myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
        
     End Sub
 

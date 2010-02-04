@@ -313,6 +313,12 @@ Public Class MainInterface
         Return baseURL + searchString
     End Function
 
+    Private Function GetTorrentzURLForAlbumSearch(ByVal artist As String, ByVal album As String) As String
+        Dim baseURL As String = "http://www.torrentz.com/search?q="
+        Dim searchString As String = artist.Replace(" ", "+") + "+" + album.Replace(" ", "+")
+        Return baseURL + searchString
+    End Function
+
     Private Sub SimilarArtistsLV_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SimilarArtistsLV.DoubleClick
 
         If (Not SimilarArtistsLV.SelectedIndices Is Nothing) Then
@@ -323,5 +329,21 @@ Public Class MainInterface
                 System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(selectedArtist))
             End If
         End If
+    End Sub
+
+    Private Sub TopAlbumsLV_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TopAlbumsLV.DoubleClick
+        If (Not TopAlbumsLV.SelectedIndices Is Nothing) Then
+
+            If (TopAlbumsLV.SelectedIndices.Count > 0) Then
+                Dim artist As String = ArtistTextLabel.Text
+                Dim selectedAlbum As String = TopAlbumsLV.Items.Item(TopAlbumsLV.SelectedIndices(0)).Text
+                System.Diagnostics.Process.Start(GetTorrentzURLForAlbumSearch(artist, selectedAlbum))
+            End If
+        End If
+    End Sub
+
+    Private Sub ArtistPictureBox_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ArtistPictureBox.DoubleClick
+        Dim artist As String = ArtistTextLabel.Text
+        System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(artist))
     End Sub
 End Class

@@ -61,6 +61,10 @@ Partial Class MainInterface
         Me.ArtistPictureBox = New System.Windows.Forms.PictureBox()
         Me.FullBioTB = New System.Windows.Forms.WebBrowser()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
+        Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
+        Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
+        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.BiographyTab = New System.Windows.Forms.TabPage()
         Me.TagsTab = New System.Windows.Forms.TabPage()
         Me.Tag5 = New System.Windows.Forms.Label()
@@ -68,18 +72,14 @@ Partial Class MainInterface
         Me.Tag3 = New System.Windows.Forms.Label()
         Me.Tag2 = New System.Windows.Forms.Label()
         Me.Tag1 = New System.Windows.Forms.Label()
-        Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
-        Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
-        Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
-        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
         Me.TabControl1.SuspendLayout()
-        Me.BiographyTab.SuspendLayout()
-        Me.TagsTab.SuspendLayout()
         Me.SimilarArtistsTab.SuspendLayout()
         Me.TopAlbumsTab.SuspendLayout()
+        Me.BiographyTab.SuspendLayout()
+        Me.TagsTab.SuspendLayout()
         Me.SuspendLayout()
         '
         'AxWindowsMediaPlayer1
@@ -245,11 +245,11 @@ Partial Class MainInterface
         Me.ActivePlaylistModifiersLB.FullRowSelect = True
         Me.ActivePlaylistModifiersLB.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
         Me.ActivePlaylistModifiersLB.HideSelection = False
-        Me.ActivePlaylistModifiersLB.Location = New System.Drawing.Point(540, 40)
+        Me.ActivePlaylistModifiersLB.Location = New System.Drawing.Point(554, 40)
         Me.ActivePlaylistModifiersLB.MultiSelect = False
         Me.ActivePlaylistModifiersLB.Name = "ActivePlaylistModifiersLB"
         Me.ActivePlaylistModifiersLB.ShowGroups = False
-        Me.ActivePlaylistModifiersLB.Size = New System.Drawing.Size(444, 173)
+        Me.ActivePlaylistModifiersLB.Size = New System.Drawing.Size(430, 173)
         Me.ActivePlaylistModifiersLB.TabIndex = 23
         Me.ActivePlaylistModifiersLB.UseCompatibleStateImageBehavior = False
         Me.ActivePlaylistModifiersLB.View = System.Windows.Forms.View.Details
@@ -269,7 +269,7 @@ Partial Class MainInterface
         Me.AvailablePlaylistModifiersLB.MultiSelect = False
         Me.AvailablePlaylistModifiersLB.Name = "AvailablePlaylistModifiersLB"
         Me.AvailablePlaylistModifiersLB.ShowGroups = False
-        Me.AvailablePlaylistModifiersLB.Size = New System.Drawing.Size(243, 173)
+        Me.AvailablePlaylistModifiersLB.Size = New System.Drawing.Size(257, 173)
         Me.AvailablePlaylistModifiersLB.TabIndex = 22
         Me.AvailablePlaylistModifiersLB.UseCompatibleStateImageBehavior = False
         Me.AvailablePlaylistModifiersLB.View = System.Windows.Forms.View.Details
@@ -282,7 +282,7 @@ Partial Class MainInterface
         'ActivePlaylistModifiersLabel
         '
         Me.ActivePlaylistModifiersLabel.AutoSize = True
-        Me.ActivePlaylistModifiersLabel.Location = New System.Drawing.Point(537, 24)
+        Me.ActivePlaylistModifiersLabel.Location = New System.Drawing.Point(551, 24)
         Me.ActivePlaylistModifiersLabel.Name = "ActivePlaylistModifiersLabel"
         Me.ActivePlaylistModifiersLabel.Size = New System.Drawing.Size(117, 13)
         Me.ActivePlaylistModifiersLabel.TabIndex = 14
@@ -319,7 +319,7 @@ Partial Class MainInterface
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput2)
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput3)
         Me.ModifierInputGB.Controls.Add(Me.PlaylistModifierInput1)
-        Me.ModifierInputGB.Location = New System.Drawing.Point(255, 33)
+        Me.ModifierInputGB.Location = New System.Drawing.Point(269, 33)
         Me.ModifierInputGB.Name = "ModifierInputGB"
         Me.ModifierInputGB.Size = New System.Drawing.Size(234, 180)
         Me.ModifierInputGB.TabIndex = 10
@@ -420,7 +420,7 @@ Partial Class MainInterface
         'AddModifierButton
         '
         Me.AddModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddModifierButton.Location = New System.Drawing.Point(495, 108)
+        Me.AddModifierButton.Location = New System.Drawing.Point(509, 108)
         Me.AddModifierButton.Name = "AddModifierButton"
         Me.AddModifierButton.Size = New System.Drawing.Size(39, 35)
         Me.AddModifierButton.TabIndex = 2
@@ -452,14 +452,62 @@ Partial Class MainInterface
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.BiographyTab)
-        Me.TabControl1.Controls.Add(Me.TagsTab)
         Me.TabControl1.Controls.Add(Me.SimilarArtistsTab)
         Me.TabControl1.Controls.Add(Me.TopAlbumsTab)
+        Me.TabControl1.Controls.Add(Me.TagsTab)
         Me.TabControl1.Location = New System.Drawing.Point(566, 286)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(488, 226)
         Me.TabControl1.TabIndex = 30
+        '
+        'SimilarArtistsTab
+        '
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistsLV)
+        Me.SimilarArtistsTab.Location = New System.Drawing.Point(4, 22)
+        Me.SimilarArtistsTab.Name = "SimilarArtistsTab"
+        Me.SimilarArtistsTab.Size = New System.Drawing.Size(480, 200)
+        Me.SimilarArtistsTab.TabIndex = 2
+        Me.SimilarArtistsTab.Text = "Simlar Artists"
+        Me.SimilarArtistsTab.UseVisualStyleBackColor = True
+        '
+        'SimilarArtistsLV
+        '
+        Me.SimilarArtistsLV.FullRowSelect = True
+        Me.SimilarArtistsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.SimilarArtistsLV.HideSelection = False
+        Me.SimilarArtistsLV.Location = New System.Drawing.Point(3, 3)
+        Me.SimilarArtistsLV.MultiSelect = False
+        Me.SimilarArtistsLV.Name = "SimilarArtistsLV"
+        Me.SimilarArtistsLV.RightToLeftLayout = True
+        Me.SimilarArtistsLV.ShowGroups = False
+        Me.SimilarArtistsLV.Size = New System.Drawing.Size(474, 194)
+        Me.SimilarArtistsLV.TabIndex = 24
+        Me.SimilarArtistsLV.UseCompatibleStateImageBehavior = False
+        '
+        'TopAlbumsTab
+        '
+        Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLV)
+        Me.TopAlbumsTab.Location = New System.Drawing.Point(4, 22)
+        Me.TopAlbumsTab.Name = "TopAlbumsTab"
+        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 200)
+        Me.TopAlbumsTab.TabIndex = 3
+        Me.TopAlbumsTab.Text = "Top Albums"
+        Me.TopAlbumsTab.UseVisualStyleBackColor = True
+        '
+        'TopAlbumsLV
+        '
+        Me.TopAlbumsLV.FullRowSelect = True
+        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.TopAlbumsLV.HideSelection = False
+        Me.TopAlbumsLV.Location = New System.Drawing.Point(3, 3)
+        Me.TopAlbumsLV.MultiSelect = False
+        Me.TopAlbumsLV.Name = "TopAlbumsLV"
+        Me.TopAlbumsLV.RightToLeftLayout = True
+        Me.TopAlbumsLV.ShowGroups = False
+        Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
+        Me.TopAlbumsLV.TabIndex = 23
+        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
         '
         'BiographyTab
         '
@@ -537,54 +585,6 @@ Partial Class MainInterface
         Me.Tag1.TabIndex = 0
         Me.Tag1.Text = "Label1"
         '
-        'SimilarArtistsTab
-        '
-        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistsLV)
-        Me.SimilarArtistsTab.Location = New System.Drawing.Point(4, 22)
-        Me.SimilarArtistsTab.Name = "SimilarArtistsTab"
-        Me.SimilarArtistsTab.Size = New System.Drawing.Size(480, 200)
-        Me.SimilarArtistsTab.TabIndex = 2
-        Me.SimilarArtistsTab.Text = "Simlar Artists"
-        Me.SimilarArtistsTab.UseVisualStyleBackColor = True
-        '
-        'SimilarArtistsLV
-        '
-        Me.SimilarArtistsLV.FullRowSelect = True
-        Me.SimilarArtistsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.SimilarArtistsLV.HideSelection = False
-        Me.SimilarArtistsLV.Location = New System.Drawing.Point(3, 3)
-        Me.SimilarArtistsLV.MultiSelect = False
-        Me.SimilarArtistsLV.Name = "SimilarArtistsLV"
-        Me.SimilarArtistsLV.RightToLeftLayout = True
-        Me.SimilarArtistsLV.ShowGroups = False
-        Me.SimilarArtistsLV.Size = New System.Drawing.Size(474, 194)
-        Me.SimilarArtistsLV.TabIndex = 24
-        Me.SimilarArtistsLV.UseCompatibleStateImageBehavior = False
-        '
-        'TopAlbumsTab
-        '
-        Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLV)
-        Me.TopAlbumsTab.Location = New System.Drawing.Point(4, 22)
-        Me.TopAlbumsTab.Name = "TopAlbumsTab"
-        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 200)
-        Me.TopAlbumsTab.TabIndex = 3
-        Me.TopAlbumsTab.Text = "Top Albums"
-        Me.TopAlbumsTab.UseVisualStyleBackColor = True
-        '
-        'TopAlbumsLV
-        '
-        Me.TopAlbumsLV.FullRowSelect = True
-        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.TopAlbumsLV.HideSelection = False
-        Me.TopAlbumsLV.Location = New System.Drawing.Point(3, 3)
-        Me.TopAlbumsLV.MultiSelect = False
-        Me.TopAlbumsLV.Name = "TopAlbumsLV"
-        Me.TopAlbumsLV.RightToLeftLayout = True
-        Me.TopAlbumsLV.ShowGroups = False
-        Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
-        Me.TopAlbumsLV.TabIndex = 23
-        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
-        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -611,11 +611,11 @@ Partial Class MainInterface
         Me.ModifierInputGB.ResumeLayout(False)
         Me.ModifierInputGB.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
+        Me.SimilarArtistsTab.ResumeLayout(False)
+        Me.TopAlbumsTab.ResumeLayout(False)
         Me.BiographyTab.ResumeLayout(False)
         Me.TagsTab.ResumeLayout(False)
         Me.TagsTab.PerformLayout()
-        Me.SimilarArtistsTab.ResumeLayout(False)
-        Me.TopAlbumsTab.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

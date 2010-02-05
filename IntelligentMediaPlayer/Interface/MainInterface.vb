@@ -1,5 +1,6 @@
 ﻿Imports System
 Imports System.Threading
+Imports System.Threading.Tasks
 Imports System.Runtime.InteropServices
 Imports WMPLib
 Imports AxWMPLib
@@ -57,7 +58,7 @@ Public Class MainInterface
     End Sub
 
     Private Sub InitializePlaylist()
-        manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\PlaylistModifierPlugins")
+        manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\Playlist Modifier Plugins")
 
         PlaylistBox.Items.Clear()
         manager.GeneratePlaylist(player)
@@ -110,14 +111,35 @@ Public Class MainInterface
     End Function
 
     Private Sub FillPlaylistBox()
+
+        'This code is a bit more complicated than it would otherwise be, because we're taking advantage of multicore processing to speed up the processing.
+        'End result:  it takes 40% less time that it would otherwise need to process this on my 4 cores for 75000 songs.  
+
         PlaylistBox.Items.Clear()
         Dim count As Integer = player.currentPlaylist.count
 
+        Dim mediaList(count) As IWMPMedia
+
         For index As Integer = 0 To count - 1 Step 1
-            Dim media As IWMPMedia = player.currentPlaylist.Item(index)
-            Dim trackName As String = media.getItemInfo("Author") + " - " + media.getItemInfo("Album") + ": " + media.name
-            PlaylistBox.Items.Add(trackName)
+            mediaList(index) = player.currentPlaylist.Item(index)
         Next
+
+        Dim processedPlayList(count - 1) As String '(for some reason, the last one is nothing)
+
+        Dim authorAtom As Integer = player.mediaCollection.getMediaAtom("Author")
+        Dim albumAtom As Integer = player.mediaCollection.getMediaAtom("Album")
+        Dim playlistIndexAtom As Integer = player.mediaCollection.getMediaAtom("PlaylistIndex")
+
+        Parallel.ForEach(mediaList, Sub(media As IWMPMedia)
+                                        If (Not media Is Nothing) Then
+
+                                            Dim trackName As String = String.Concat(media.getItemInfoByAtom(authorAtom), " - ", media.getItemInfoByAtom(albumAtom), ": ", media.name)
+                                            processedPlayList(media.getItemInfoByAtom(playlistIndexAtom)) = trackName
+                                            'End If
+                                        End If
+                                    End Sub)
+
+        PlaylistBox.Items.AddRange(processedPlayList)
     End Sub
 
     Private Sub PlaylistBox_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlaylistBox.DoubleClick
@@ -154,10 +176,10 @@ Public Class MainInterface
         End If
 
         myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
-       
+
     End Sub
 
-   
+
 
     Private Sub player_CurrentPlaylistChange(ByVal sender As Object, ByVal e As AxWMPLib._WMPOCXEvents_CurrentPlaylistChangeEvent) Handles AxWindowsMediaPlayer1.CurrentPlaylistChange
 

@@ -55,10 +55,15 @@ Partial Public Class PlaylistManager
         End If
 
         myPreviouslyAppliedLastModifierIndex = myWorkingModifiers.Count - 1
-        RemoveDuplicates(player)
+
+        'Only go through the trouble if current playlist is a reasonable size (<10000).  Otherwise, this takes way too long.
+        If (player.currentPlaylist.count < 10000) Then
+            RemoveDuplicates(player)
+        End If
     End Sub
 
     Private Sub RemoveDuplicates(ByRef player As AxWindowsMediaPlayer)
+
         Dim nonDuplicatedList As Dictionary(Of String, IWMPMedia) = New Dictionary(Of String, IWMPMedia)
 
         For x As Integer = 0 To player.currentPlaylist.count - 1 Step 1
@@ -69,7 +74,9 @@ Partial Public Class PlaylistManager
             End If
         Next
 
+
         player.currentPlaylist.clear()
+
 
         For Each mediaItem As IWMPMedia In nonDuplicatedList.Values.ToArray()
             player.currentPlaylist.appendItem(mediaItem)

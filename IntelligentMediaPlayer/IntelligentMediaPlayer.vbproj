@@ -70,22 +70,22 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\GUIAsyncUpdates\Artist Info\Components\ArtistBiographyAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\ArtistBiographyAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUIAsyncUpdates\Artist Info\ArtistInfoGUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Artist Info\ArtistInfoGUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUIAsyncUpdates\Artist Info\Components\ArtistTagsGUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\ArtistTagsGUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUIAsyncUpdates\GUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\GUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUIAsyncUpdates\Artist Info\Components\SimilarArtistsGUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\SimilarArtistsGUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUIAsyncUpdates\Artist Info\Components\TopAlbumsGUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\TopAlbumsGUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\MainInterface.vb">
@@ -96,12 +96,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\MessageFilter.vb" />
-    <Compile Include="MusicInfo\Album Info\IAlbumInfo.vb" />
-    <Compile Include="MusicInfo\Artist Info\IArtistInfo.vb" />
-    <Compile Include="MusicInfo\Artist Info\IArtistNameFace.vb" />
-    <Compile Include="MusicInfo\Album Info\LastFMAlbumInfo.vb" />
-    <Compile Include="MusicInfo\Artist Info\LastFMArtistInfo.vb" />
-    <Compile Include="MusicInfo\Artist Info\LastFMArtistNameFace.vb" />
+    <Compile Include="Music Library Stats\MusicLibraryStats.vb" />
+    <Compile Include="Music Info\Album Info\IAlbumInfo.vb" />
+    <Compile Include="Music Info\Artist Info\IArtistInfo.vb" />
+    <Compile Include="Music Info\Artist Info\IArtistNameFace.vb" />
+    <Compile Include="Music Info\Album Info\LastFMAlbumInfo.vb" />
+    <Compile Include="Music Info\Artist Info\LastFMArtistInfo.vb" />
+    <Compile Include="Music Info\Artist Info\LastFMArtistNameFace.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -117,20 +118,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Add.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Filter.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\ModifierAction_Subtract.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\Modifier Actions\IModifierAction.vb" />
-    <Compile Include="PlaylistManagement\PlaylistManager.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\IPlaylistModifier.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\PlaylistModifierInput.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\LastFM\LastFMPlaylistModifier.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\LastFM\LastFMOutputMapping.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\LastFM\URLTemplateMapping.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\WMPAttribute\PlaylistModifierAttributeMapping.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\WMPAttribute\WMPAttributePlaylistModifier.vb" />
-    <Compile Include="PlaylistManagement\PlaylistModifiers\PlaylistModifierUILiason.vb" />
-    <Compile Include="WebServiceClient\WebServiceClient.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Add.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Filter.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Subtract.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\IModifierAction.vb" />
+    <Compile Include="Playlist Management\PlaylistManager.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\IPlaylistModifier.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\PlaylistModifierInput.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\LastFM\LastFMPlaylistModifier.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\LastFM\LastFMOutputMapping.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\LastFM\URLTemplateMapping.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\WMPAttribute\PlaylistModifierAttributeMapping.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\WMPAttribute\WMPAttributePlaylistModifier.vb" />
+    <Compile Include="Playlist Management\PlaylistModifiers\PlaylistModifierUILiason.vb" />
+    <Compile Include="Webservice Client\WebServiceClient.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interface\MainInterface.resx">
@@ -154,7 +155,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
+    <None Include="Playlist Management\PlaylistModifiers\PlaylistModifier.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -182,34 +183,34 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="PlaylistModifierPlugins\WMP\WMP_Year.xml" />
-    <Content Include="PlaylistModifierPlugins\WMP\WMP_AlbumName.xml" />
-    <Content Include="PlaylistModifierPlugins\WMP\WMP_ArtistName.xml" />
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_ArtistTopTracks.xml">
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_Year.xml" />
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_AlbumName.xml" />
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_ArtistName.xml" />
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_ArtistTopTracks.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_UserTopAlbums.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_UserTopAlbums.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_UserTopArtists.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_UserTopArtists.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_TracksByTag.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_TracksByTag.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_AlbumsByTag.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_AlbumsByTag.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_ArtistsByTag.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_ArtistsByTag.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_SimilarTracks.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarTracks.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_UserTopTracks.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_UserTopTracks.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PlaylistModifierPlugins\LastFM\LastFM_SimilarArtists.xml">
+    <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Resources\WMPhq.bmp" />

@@ -31,7 +31,7 @@ Partial Public Class PlaylistManager
 
                 Dim resultIndex As UInteger = 0
 
-                While (1)
+                While (True)
 
                     Dim attributeLookup As Dictionary(Of String, String) = New Dictionary(Of String, String)
 
@@ -48,9 +48,6 @@ Partial Public Class PlaylistManager
                         attributeLookup.Add(attributeName, attributeValue)
 
                     Next
-
-
-                    'add action code here.
                     Liason.ModifierAction.ModifyPlaylist(player, attributeLookup)
 
                     resultIndex += 1

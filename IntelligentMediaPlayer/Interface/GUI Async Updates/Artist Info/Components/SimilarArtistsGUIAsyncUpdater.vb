@@ -7,6 +7,7 @@ Partial Public Class MainInterface
                 Private UpdateSimilarArtistsASYNC As New AsyncSub(AddressOf UpdateSimilarArtists)
                 Private myParentInterface As MainInterface
                 Private sleeptime As UInteger = 200 ' ms
+                Private myMusicLibraryStats As New MusicLibraryStats()
 
                 Public Sub New(ByRef ParentInterface As MainInterface)
                     myParentInterface = ParentInterface
@@ -90,7 +91,9 @@ Partial Public Class MainInterface
                                     myParentInterface.SimilarArtistsLV.LargeImageList = artistImages
 
                                     For Each artist As IArtistNameFace In similarArtists
-                                        myParentInterface.SimilarArtistsLV.Items.Add(artist.Name, artist.Name)
+                                        Dim count As UInteger = myMusicLibraryStats.HowManyTracksByArtist(artist.Name, myParentInterface.player)
+                                        Dim textColor As Color = GetSimilarArtistTextColor(count)
+                                        myParentInterface.SimilarArtistsLV.Items.Add(artist.Name, artist.Name).ForeColor = textColor
                                     Next
                                 End If
                             End If
@@ -98,6 +101,15 @@ Partial Public Class MainInterface
                         System.Threading.Thread.Sleep(sleeptime)
                     End While
                 End Sub
+
+                Private Function GetSimilarArtistTextColor(ByVal numberOfTracks As UInteger)
+                    If (numberOfTracks > 0) Then
+                        Return Color.Blue
+                    Else
+                        Return Color.Black
+                    End If
+                End Function
+
             End Class
         End Class
     End Class

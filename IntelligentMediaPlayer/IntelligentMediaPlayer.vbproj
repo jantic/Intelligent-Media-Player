@@ -96,7 +96,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\MessageFilter.vb" />
-    <Compile Include="Music Library Stats\MusicLibraryStats.vb" />
+    <Compile Include="Music Library Statistics\MusicLibraryStats.vb" />
     <Compile Include="Music Info\Album Info\IAlbumInfo.vb" />
     <Compile Include="Music Info\Artist Info\IArtistInfo.vb" />
     <Compile Include="Music Info\Artist Info\IArtistNameFace.vb" />

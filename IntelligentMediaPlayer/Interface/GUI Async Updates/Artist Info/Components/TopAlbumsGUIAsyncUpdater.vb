@@ -7,6 +7,7 @@ Partial Public Class MainInterface
                 Private UpdateTopAlbumsASYNC As New AsyncSub(AddressOf UpdateTopAlbums)
                 Private sleeptime As UInteger = 200 ' ms
                 Private myParentInterface As MainInterface
+                Private myMusicLibraryStats As New MusicLibraryStats()
 
                 Public Sub New(ByRef ParentInterface As MainInterface)
                     myParentInterface = ParentInterface
@@ -78,7 +79,11 @@ Partial Public Class MainInterface
                                     myParentInterface.TopAlbumsLV.LargeImageList = albumImages
 
                                     For Each album As IAlbumInfo In albums
-                                        myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name).ForeColor = Color.Black
+                                        Dim artist As String = album.Artist.Name
+                                        Dim albumName As String = album.Name
+                                        Dim haveAlbum As Boolean = myMusicLibraryStats.DoIHaveThisAlbum(artist, albumName, myParentInterface.player)
+                                        Dim textColor As Color = GetTopAlbumsTextColor(haveAlbum)
+                                        myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name).ForeColor = textColor
                                     Next
                                 End If
                             End If
@@ -95,6 +100,14 @@ Partial Public Class MainInterface
 
                 Private Function GetDefaultAlbumImage() As Image
                     Return New Bitmap(GetTopAlbumImagesSize().Width, GetTopAlbumImagesSize.Height) ' just a blank bitmap
+                End Function
+
+                Private Function GetTopAlbumsTextColor(ByVal haveAlbum As Boolean)
+                    If (haveAlbum) Then
+                        Return Color.Blue
+                    Else
+                        Return Color.Black
+                    End If
                 End Function
             End Class
         End Class

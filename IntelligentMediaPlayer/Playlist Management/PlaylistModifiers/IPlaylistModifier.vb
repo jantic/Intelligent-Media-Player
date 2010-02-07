@@ -5,7 +5,7 @@ Partial Public Class PlaylistManager
     Private Interface IPlaylistModifier
         ReadOnly Property Liason() As PlaylistModifierUILiason
         ReadOnly Property ModificationAction() As IModifierAction
-        Sub ModifyPlaylist(ByRef player As AxWindowsMediaPlayer, Optional ByVal UseCachedResult As Boolean = False)
+        Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResult As Boolean = False)
 
     End Interface
 End Class

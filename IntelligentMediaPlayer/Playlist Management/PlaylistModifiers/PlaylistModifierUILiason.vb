@@ -10,15 +10,84 @@ Partial Public Class PlaylistManager
         Private myFilePath As String
         Private myInputs As PlaylistModifierInput()
         Private myType As ModifierType
+        Private myModifierKey As String
+        Private Shared myModifiersDirectory As String = Nothing
+        Private Shared myModifierKeyLookup As New Dictionary(Of String, String)
 
-        Public Sub New(ByVal modifierFilePath As String)
+        Public Sub New(ByVal modifierFilePath As String, ByVal modifiersDirectory As String)
+            InitializeModifierKeyLookup(modifiersDirectory)
             Load(modifierFilePath)
+        End Sub
+
+
+        Public Sub New(ByRef metaModifierComponent As XmlElement, ByVal modifiersDirectory As String)
+            InitializeModifierKeyLookup(modifiersDirectory)
+            Dim modifierKey As String = WebServiceClient.GetClient.XMLGetValueAt(metaModifierComponent, "ModifierKey", 0)
+            Dim path As String = FindFilePathByModifierKey(modifierKey)
+
+            If (File.Exists(path)) Then
+                Dim modifierFile As New XmlDocument()
+                modifierFile.Load(path)
+
+                myDisplayName = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/DisplayName", 0)
+                myAction = ConvertToAction(WebServiceClient.GetClient.XMLGetValueAt(metaModifierComponent, "./Action", 0))
+                myModifierKey = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//PlaylistModifier/ModifierKey", 0)
+                Dim index As Integer = 0
+                Dim inputs As ArrayList = New ArrayList()
+
+                Dim inputLabel As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/Inputs/Input/UILabel", index)
+                Dim inputID As String = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/Inputs/Input/ID", index)
+                Dim inputValue As String = WebServiceClient.GetClient.XMLGetValueAt(metaModifierComponent, "./Inputs/Input/Value", index)
+
+                While (Not (inputLabel Is Nothing) And Not (inputID Is Nothing))
+                    inputs.Add(New PlaylistModifierInput(inputLabel, inputID, inputValue))
+                    index += 1
+                    inputLabel = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/Inputs/Input/UILabel", index)
+                    inputID = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/Inputs/Input/ID", index)
+                    inputValue = WebServiceClient.GetClient.XMLGetValueAt(metaModifierComponent, "./Inputs/Input/Value", index)
+                End While
+
+                myFilePath = path
+                myInputs = inputs.ToArray(GetType(PlaylistModifierInput))
+                myType = TranslateModifierType(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//PlaylistModifier/Type", 0))
+            End If
+        End Sub
+
+        Private Shared Function FindFilePathByModifierKey(ByVal modifierKey As String) As String
+            If (myModifierKeyLookup.ContainsKey(modifierKey)) Then
+                Return myModifierKeyLookup.Item(modifierKey)
+            End If
+
+            Return Nothing
+        End Function
+
+        Private Shared Sub InitializeModifierKeyLookup(ByVal modifiersDirectory As String)
+            If (myModifiersDirectory Is Nothing) Then
+                myModifiersDirectory = modifiersDirectory
+
+                If (Directory.Exists(modifiersDirectory)) Then
+                    Dim modifierPaths As String() = Directory.GetFiles(modifiersDirectory, "*.xml", SearchOption.AllDirectories)
+                    Dim modifierKeyXPath As String = "//PlaylistModifier/ModifierKey"
+
+                    For Each path As String In modifierPaths
+                        Dim modifierXML As New XmlDocument
+                        modifierXML.Load(path)
+                        Dim modifierKey As String = WebServiceClient.GetClient().XMLGetValueAt(modifierXML, modifierKeyXPath, 0)
+                        If (Not myModifierKeyLookup.ContainsKey(modifierKey)) Then
+                            myModifierKeyLookup.Add(modifierKey, path)
+                        End If
+                    Next
+
+                End If
+            End If
         End Sub
 
         Public Sub New(ByVal toCopy As PlaylistModifierUILiason)
             myDisplayName = toCopy.DisplayName
             myAction = toCopy.myAction
             myFilePath = toCopy.myFilePath
+            myModifierKey = toCopy.myModifierKey
+            InitializeModifierKeyLookup(ModifiersDirectory)
 
             Dim inputsList As ArrayList = New ArrayList()
 
@@ -36,6 +105,7 @@ Partial Public Class PlaylistManager
                 modifierFile.Load(modifierFilePath)
                 myDisplayName = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//UI/DisplayName", 0)
                 myAction = ConvertToAction(WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//PlaylistModifier/Action", 0))
+                myModifierKey = WebServiceClient.GetClient.XMLGetValueAt(modifierFile, "//PlaylistModifier/ModifierKey", 0)
                 Dim index As Integer = 0
                 Dim inputs As ArrayList = New ArrayList()
 
@@ -68,6 +138,8 @@ Partial Public Class PlaylistManager
                 Return ModifierType.WMPAttribute
             ElseIf (typeName = "LastFM") Then
                 Return ModifierType.LastFM
+            ElseIf (typeName = "Meta") Then
+                Return ModifierType.Meta
             End If
 
             Return Nothing
@@ -100,6 +172,10 @@ Partial Public Class PlaylistManager
                 Return myFilePath
             End Get
         End Property
+
+        Public Shared Function ModifiersDirectory() As String
+            Return myModifiersDirectory
+        End Function
 
         Public ReadOnly Property DisplayName As String
             Get

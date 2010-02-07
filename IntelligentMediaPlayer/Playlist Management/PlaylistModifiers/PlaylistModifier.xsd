@@ -10,9 +10,12 @@
             <xs:restriction base="xs:string">
               <xs:enumeration value="WMPAttribute"/>
               <xs:enumeration value="LastFM"/>
+              <xs:enumeration value="Meta"/>
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
+
+
 
         <xs:element name="UI">
           <xs:complexType>
@@ -23,7 +26,7 @@
                 <xs:complexType>
                   <xs:sequence>
 
-                    <xs:element name="Input" minOccurs="1" maxOccurs="5">
+                    <xs:element name="Input" minOccurs="0" maxOccurs="5">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="ID">
@@ -52,15 +55,104 @@
             <xs:restriction base="xs:string">
               <xs:enumeration value="Add"/>
               <xs:enumeration value="Subtract"/>
+              <xs:enumeration value="Filter"/>
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
-        
-        
+
+        <xs:element name="ModifierKey">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
 
         <xs:element name="Method">
           <xs:complexType>
             <xs:choice>
+
+
+
+               <xs:element name="Meta">
+                <xs:complexType>
+                  <xs:sequence>
+
+
+                    <xs:element name ="Components">
+                      <xs:complexType>
+                        <xs:sequence>
+
+                          <xs:element name ="Modifier"  minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+
+                                <xs:element name="ID">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:unsignedInt">
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+
+                                <xs:element name="ModifierKey">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+
+                                <xs:element name="Inputs">
+                                  <xs:complexType>
+                                    <xs:sequence>
+
+                                      <xs:element name="Input" minOccurs="0" maxOccurs="5">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="ID">
+                                              <xs:simpleType>
+                                                <xs:restriction base="xs:unsignedInt">
+                                                  <xs:minInclusive value="1"/>
+                                                  <xs:maxInclusive value="5"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="Value" type="xs:string"/>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+
+
+
+                                <xs:element name="Action">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Add"/>
+                                      <xs:enumeration value="Subtract"/>
+                                      <xs:enumeration value="Filter"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+
+
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element> 
+              
+              
+              
 
               <xs:element name="MediaAttributeMatch">
                 <xs:complexType>

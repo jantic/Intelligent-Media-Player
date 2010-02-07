@@ -118,6 +118,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Playlist Management\PlaylistModifiers\Meta\MetaPlaylistModifier.vb" />
     <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Add.vb" />
     <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Filter.vb" />
     <Compile Include="Playlist Management\PlaylistModifiers\Modifier Actions\ModifierAction_Subtract.vb" />
@@ -183,9 +184,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticNewAge.xml" />
+    <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticTraditional.xml" />
     <Content Include="Playlist Modifier Plugins\WMP\WMP_Year.xml" />
-    <Content Include="Playlist Modifier Plugins\WMP\WMP_AlbumName.xml" />
-    <Content Include="Playlist Modifier Plugins\WMP\WMP_ArtistName.xml" />
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_AlbumName.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_ArtistName.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_ArtistTopTracks.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -213,6 +220,7 @@
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Resources\MetaHQ.bmp" />
     <EmbeddedResource Include="Resources\WMPhq.bmp" />
     <EmbeddedResource Include="Resources\LastFMhq.bmp" />
   </ItemGroup>

@@ -9,6 +9,7 @@ Partial Public Class PlaylistManager
     Public Enum ModifierType
         WMPAttribute
         LastFM
+        Meta
     End Enum
 
     Private myModifiersDirectory As String
@@ -43,9 +44,9 @@ Partial Public Class PlaylistManager
                 End If
 
                 If (index = start And myPreviouslyAppliedLastModifierIndex >= 0) Then
-                    modifier.ModifyPlaylist(player, True)
+                    modifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, True)
                 Else
-                    modifier.ModifyPlaylist(player, False)
+                    modifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, False)
                 End If
             Next
 
@@ -91,6 +92,8 @@ Partial Public Class PlaylistManager
                 myWorkingModifiers.Add(New WMPAttributePlaylistModifier(liason))
             ElseIf (liason.Type = ModifierType.LastFM) Then
                 myWorkingModifiers.Add(New LastFMPlaylistModifier(liason))
+            ElseIf (liason.Type = ModifierType.Meta) Then
+                myWorkingModifiers.Add(New MetaPlaylistModifier(liason))
             End If
 
         End If
@@ -128,7 +131,7 @@ Partial Public Class PlaylistManager
             Dim liasons As ArrayList = New ArrayList
 
             For Each path As String In modifierPaths
-                liasons.Add(New PlaylistModifierUILiason(path))
+                liasons.Add(New PlaylistModifierUILiason(path, myModifiersDirectory))
             Next
 
             myLiasons = liasons.ToArray(GetType(PlaylistModifierUILiason))

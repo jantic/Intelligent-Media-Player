@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<PlaylistModifier
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="..\..\Playlist Management\PlaylistModifiers\PlaylistModifier.xsd">
+
+  <Type>Meta</Type>
+  
+  <UI>
+    <DisplayName>Celtic-New Age</DisplayName>
+    <Inputs/>
+  </UI>
+  
+  <Action>Add</Action>
+
+  <ModifierKey>CelticNewAge</ModifierKey>
+
+  <Method>
+    <Meta>
+
+      <Components>
+        <Modifier>
+          <ID>1</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Celtic</Value>
+            </Input>
+          </Inputs>
+          <Action>Add</Action>
+        </Modifier>
+        <Modifier>
+          <ID>2</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>New Age</Value>
+            </Input>
+          </Inputs>
+          <Action>Filter</Action>
+        </Modifier>
+      </Components>
+    </Meta>
+  </Method>
+</PlaylistModifier>

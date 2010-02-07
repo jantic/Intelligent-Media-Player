@@ -78,6 +78,8 @@ Public Class MainInterface
             imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.LastFM), LastFMIcon)
             Dim WMPIcon As System.Drawing.Bitmap = GetIconImage("WMPhq.bmp")
             imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.WMPAttribute), WMPIcon)
+            Dim MetaIcon As System.Drawing.Bitmap = GetIconImage("MetaHQ.bmp")
+            imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.Meta), MetaIcon)
             AvailablePlaylistModifiersLB.SmallImageList = imageListSmall
             ActivePlaylistModifiersLB.SmallImageList = imageListSmall
         Catch ex As Exception
@@ -105,6 +107,8 @@ Public Class MainInterface
                 Return "LastFM"
             Case PlaylistManager.ModifierType.WMPAttribute
                 Return "WMPAttribute"
+            Case PlaylistManager.ModifierType.Meta
+                Return "Meta"
             Case Else
                 Return "WMPAttribute"
         End Select

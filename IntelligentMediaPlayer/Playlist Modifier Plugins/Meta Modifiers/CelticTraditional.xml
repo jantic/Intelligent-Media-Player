@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<PlaylistModifier
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="..\..\Playlist Management\PlaylistModifiers\PlaylistModifier.xsd">
+
+  <Type>Meta</Type>
+  
+  <UI>
+    <DisplayName>Celtic-Traditional</DisplayName>
+    <Inputs/>
+  </UI>
+  
+  <Action>Add</Action>
+
+  <ModifierKey>CelticTraditional</ModifierKey>
+
+  <Method>
+    <Meta>
+
+      <Components>
+        <Modifier>
+          <ID>1</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Celtic</Value>
+            </Input>
+          </Inputs>
+          <Action>Add</Action>
+        </Modifier>
+        <Modifier>
+          <ID>2</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Irish Folk</Value>
+            </Input>
+          </Inputs>
+          <Action>Add</Action>
+        </Modifier>
+        <Modifier>
+          <ID>3</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>New Age</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>4</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Rock</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>5</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Metal</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>6</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Punk</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>7</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Alternative</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>7</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Celtic Rock</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+        <Modifier>
+          <ID>8</ID>
+          <ModifierKey>LastFM_ArtistsByTag</ModifierKey>
+          <Inputs>
+            <Input>
+              <ID>1</ID>
+              <Value>Pop</Value>
+            </Input>
+          </Inputs>
+          <Action>Subtract</Action>
+        </Modifier>
+      </Components>
+    </Meta>
+  </Method>
+</PlaylistModifier>

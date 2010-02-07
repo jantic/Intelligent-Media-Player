@@ -24,10 +24,10 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
-        Public Sub ModifyPlaylist(ByRef player As AxWindowsMediaPlayer, Optional ByVal UseCachedResult As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResult As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
 
             If (UseCachedResult And Not (myCachedPlaylist.Count > 0)) Then
-                ApplyCachedPlaylist(player)
+                ApplyCachedPlaylist(currentPlaylist)
             Else
 
                 Dim attributeLookup As Dictionary(Of String, String) = New Dictionary(Of String, String)
@@ -39,9 +39,9 @@ Partial Public Class PlaylistManager
                     attributeLookup.Add(attributeName, attributeValue)
                 Next
 
-                Liason.ModifierAction.ModifyPlaylist(player, attributeLookup)
+                Liason.ModifierAction.ModifyPlaylist(currentPlaylist, mediaCollection, attributeLookup)
 
-                CacheThePlaylist(player)
+                CacheThePlaylist(currentPlaylist)
             End If
         End Sub
 
@@ -52,20 +52,20 @@ Partial Public Class PlaylistManager
         End Property
 
 
-        Private Sub CacheThePlaylist(ByRef player As AxWindowsMediaPlayer)
+        Private Sub CacheThePlaylist(ByRef currentPlaylist As IWMPPlaylist)
             myCachedPlaylist.Clear()
 
-            For index As Integer = 0 To player.currentPlaylist.count - 1 Step 1
-                myCachedPlaylist.Add(player.currentPlaylist.Item(index))
+            For index As Integer = 0 To currentPlaylist.count - 1 Step 1
+                myCachedPlaylist.Add(currentPlaylist.Item(index))
             Next
         End Sub
 
-        Private Sub ApplyCachedPlaylist(ByRef player As AxWindowsMediaPlayer)
+        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As IWMPPlaylist)
 
             If (myCachedPlaylist.Count > 0) Then
-                player.currentPlaylist.clear()
+                currentPlaylist.clear()
                 For Each mediaItem As IWMPMedia In myCachedPlaylist
-                    player.currentPlaylist.appendItem(mediaItem)
+                    currentPlaylist.appendItem(mediaItem)
                 Next
             End If
         End Sub

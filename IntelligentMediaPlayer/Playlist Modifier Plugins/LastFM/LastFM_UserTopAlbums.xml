@@ -2,7 +2,7 @@
 
 <PlaylistModifier
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistModifier.xsd">
+xsi:noNamespaceSchemaLocation="..\..\Playlist Management\PlaylistModifiers\PlaylistModifier.xsd">
 
   <Type>LastFM</Type>
 
@@ -18,6 +18,8 @@ xsi:noNamespaceSchemaLocation="..\PlaylistManagement\PlaylistModifiers\PlaylistM
   </UI>
 
   <Action>Add</Action>
+
+  <ModifierKey>LastFM_UserTopAlbums</ModifierKey>
 
   <Method>
     <LastFMrequest>

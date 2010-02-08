@@ -10,8 +10,8 @@ Partial Public Class PlaylistManager
         Implements IPlaylistModifier
 
         Private myLiason As PlaylistModifierUILiason
-        Private myCachedPlaylist As New ArrayList
         Private myComponentModifiers As New ArrayList
+        Private myPreviouslyAppliedLastModifierIndex As Integer = -1
 
         Public Sub New(ByVal theLiason As PlaylistModifierUILiason)
             myLiason = New PlaylistModifierUILiason(theLiason)
@@ -19,40 +19,74 @@ Partial Public Class PlaylistManager
         End Sub
 
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResult As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+            Dim mediaPlayerCore As New WMPLib.WindowsMediaPlayerClass
 
-            If (UseCachedResult And Not (myCachedPlaylist.Count = 0)) Then
-                ApplyCachedPlaylist(currentPlaylist)
+            While (mediaPlayerCore.playlistCollection.getByName("temp").count > 0)
+                mediaPlayerCore.remove(mediaPlayerCore.playlistCollection.getByName("temp").Item(0))
+            End While
+
+            Dim tempPlaylist As IWMPPlaylist = mediaPlayerCore.newPlaylist("temp")
+
+            For index As Integer = 0 To currentPlaylist.count - 1 Step 1
+                tempPlaylist.appendItem(currentPlaylist.Item(index))
+            Next
+
+            Dim start As Integer = 0
+
+            If (myPreviouslyAppliedLastModifierIndex <= -1 Or UseCachedResults = False) Then
+                myPreviouslyAppliedLastModifierIndex = -1
             Else
-                'run through component modifiers here.  Apply changes to temporary playlist, then use the appropriate action
-                'on the current playlist.
+                start = myPreviouslyAppliedLastModifierIndex
+            End If
 
 
-                Dim mediaPlayerCore As New WMPLib.WindowsMediaPlayerClass
+            For index As Integer = start To myComponentModifiers.Count - 1 Step 1
+                Dim modifier As IPlaylistModifier = DirectCast(myComponentModifiers.Item(index), IPlaylistModifier)
 
-
-                If (mediaPlayerCore.playlistCollection.getByName("temp").count > 0) Then
-                    mediaPlayerCore.remove(mediaPlayerCore.playlistCollection.getByName("temp").Item(0))
-                End If
-
-                Dim tempPlaylist As IWMPPlaylist = mediaPlayerCore.newPlaylist("temp")
-
-
-                For index As Integer = 0 To currentPlaylist.count - 1 Step 1
-                    tempPlaylist.appendItem(currentPlaylist.Item(index))
-
-                Next
-
-                For Each modifier As IPlaylistModifier In myComponentModifiers
+                If (index = start And myPreviouslyAppliedLastModifierIndex >= 0) Then
+                    modifier.ModifyPlaylist(tempPlaylist, mediaCollection, True)
+                Else
                     modifier.ModifyPlaylist(tempPlaylist, mediaCollection, False)
-                Next
+                End If
+            Next
 
-                myLiason.ModifierAction.ModifyPlaylist(currentPlaylist, mediaCollection, tempPlaylist)
+            myLiason.ModifierAction.ModifyPlaylist(currentPlaylist, mediaCollection, tempPlaylist)
 
-                mediaPlayerCore.playlistCollection.remove(tempPlaylist)
-                CacheThePlaylist(currentPlaylist)
+            mediaPlayerCore.playlistCollection.remove(tempPlaylist)
+            myPreviouslyAppliedLastModifierIndex = myComponentModifiers.Count - 1
+
+        End Sub
+
+        Public Sub AddComponentModifier(ByVal liason As PlaylistModifierUILiason)
+            myComponentModifiers.Add(LoadModifier(liason))
+        End Sub
+
+        Public Sub RemoveComponentModifier(ByVal index As UInteger)
+            myComponentModifiers.RemoveAt(index)
+
+            If (index <= myPreviouslyAppliedLastModifierIndex) Then
+                myPreviouslyAppliedLastModifierIndex = index - 1
             End If
         End Sub
+
+        Public ReadOnly Property ComponentModifierLiasons() As PlaylistModifierUILiason()
+            Get
+                Dim liasons As New ArrayList
+
+                For Each modifier As IPlaylistModifier In myComponentModifiers
+                    liasons.Add(modifier.Liason)
+                Next
+
+                Return liasons.ToArray(GetType(PlaylistModifierUILiason))
+            End Get
+        End Property
+
+        Public ReadOnly Property NumberOfComponentModifiers()
+            Get
+                Return myComponentModifiers.Count
+            End Get
+        End Property
 
         Private Sub LoadComponentModifiers()
             Dim metaModifierPath As String = myLiason.FilePath
@@ -85,26 +119,6 @@ Partial Public Class PlaylistManager
 
             Return Nothing
         End Function
-
-
-        Private Sub CacheThePlaylist(ByRef currentPlaylist As IWMPPlaylist)
-            myCachedPlaylist.Clear()
-
-            For index As Integer = 0 To currentPlaylist.count - 1 Step 1
-                myCachedPlaylist.Add(currentPlaylist.Item(index))
-            Next
-        End Sub
-
-        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As IWMPPlaylist)
-
-            If (myCachedPlaylist.Count > 0) Then
-                currentPlaylist.clear()
-                For Each mediaItem As IWMPMedia In myCachedPlaylist
-                    currentPlaylist.appendItem(mediaItem)
-                Next
-            End If
-        End Sub
-
 
         Public ReadOnly Property Liason As PlaylistModifierUILiason Implements IPlaylistModifier.Liason
             Get

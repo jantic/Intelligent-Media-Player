@@ -24,9 +24,9 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResult As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
 
-            If (UseCachedResult And Not (myCachedPlaylist.Count > 0)) Then
+            If (UseCachedResults And Not (myCachedPlaylist.Count > 0)) Then
                 ApplyCachedPlaylist(currentPlaylist)
             Else
 

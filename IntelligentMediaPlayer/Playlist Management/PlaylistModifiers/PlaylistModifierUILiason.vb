@@ -5,14 +5,22 @@ Imports System.Xml.XPath
 Partial Public Class PlaylistManager
 
     Public Class PlaylistModifierUILiason
-        Private myDisplayName As String
-        Private myAction As IModifierAction
-        Private myFilePath As String
-        Private myInputs As PlaylistModifierInput()
-        Private myType As ModifierType
-        Private myModifierKey As String
+        Private myDisplayName As String = Nothing
+        Private myAction As IModifierAction = Nothing
+        Private myFilePath As String = Nothing
+        Private myInputs As PlaylistModifierInput() = Nothing
+        Private myType As ModifierType = Nothing
+        Private myModifierKey As String = Nothing
         Private Shared myModifiersDirectory As String = Nothing
         Private Shared myModifierKeyLookup As New Dictionary(Of String, String)
+
+        Public Sub New(ByVal modifiersDirectory As String) 'used to create new meta filters
+            myType = ModifierType.Meta
+            myAction = New ModifierAction_Add
+            myDisplayName = ""
+            Dim inputs As ArrayList = New ArrayList
+            myInputs = inputs.ToArray(GetType(PlaylistModifierInput))
+        End Sub
 
         Public Sub New(ByVal modifierFilePath As String, ByVal modifiersDirectory As String)
             InitializeModifierKeyLookup(modifiersDirectory)
@@ -53,6 +61,23 @@ Partial Public Class PlaylistManager
             End If
         End Sub
 
+        Public Sub New(ByVal toCopy As PlaylistModifierUILiason)
+            myDisplayName = toCopy.DisplayName
+            myAction = toCopy.myAction
+            myFilePath = toCopy.myFilePath
+            myModifierKey = toCopy.myModifierKey
+            InitializeModifierKeyLookup(ModifiersDirectory)
+
+            Dim inputsList As ArrayList = New ArrayList()
+
+            For Each input As PlaylistModifierInput In toCopy.myInputs
+                inputsList.Add(New PlaylistModifierInput(input.DisplayName, input.ID, input.Value))
+            Next
+
+            myInputs = inputsList.ToArray(GetType(PlaylistModifierInput))
+            myType = toCopy.myType
+        End Sub
+
         Private Shared Function FindFilePathByModifierKey(ByVal modifierKey As String) As String
             If (myModifierKeyLookup.ContainsKey(modifierKey)) Then
                 Return myModifierKeyLookup.Item(modifierKey)
@@ -82,22 +107,7 @@ Partial Public Class PlaylistManager
             End If
         End Sub
 
-        Public Sub New(ByVal toCopy As PlaylistModifierUILiason)
-            myDisplayName = toCopy.DisplayName
-            myAction = toCopy.myAction
-            myFilePath = toCopy.myFilePath
-            myModifierKey = toCopy.myModifierKey
-            InitializeModifierKeyLookup(ModifiersDirectory)
 
-            Dim inputsList As ArrayList = New ArrayList()
-
-            For Each input As PlaylistModifierInput In toCopy.myInputs
-                inputsList.Add(New PlaylistModifierInput(input.DisplayName, input.ID, input.Value))
-            Next
-
-            myInputs = inputsList.ToArray(GetType(PlaylistModifierInput))
-            myType = toCopy.myType
-        End Sub
 
         Private Sub Load(ByRef modifierFilePath As String)
             If (File.Exists(modifierFilePath)) Then
@@ -167,20 +177,27 @@ Partial Public Class PlaylistManager
 
         End Property
 
-        Public ReadOnly Property FilePath As String
+        Public Property FilePath As String
             Get
                 Return myFilePath
             End Get
+            Set(ByVal value As String)
+                myFilePath = value
+                myModifierKey = myFilePath
+            End Set
         End Property
 
         Public Shared Function ModifiersDirectory() As String
             Return myModifiersDirectory
         End Function
 
-        Public ReadOnly Property DisplayName As String
+        Public Property DisplayName As String
             Get
                 Return myDisplayName
             End Get
+            Set(ByVal value As String)
+                myDisplayName = value
+            End Set
         End Property
 
 

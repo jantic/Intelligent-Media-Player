@@ -12,54 +12,37 @@ Partial Public Class PlaylistManager
         Meta
     End Enum
 
+    Private myMetaModifier As MetaPlaylistModifier
     Private myModifiersDirectory As String
     Private myLiasons As PlaylistModifierUILiason()
-    Private myWorkingModifiers As ArrayList = New ArrayList
-    Private myPreviouslyAppliedLastModifierIndex As Integer = -1
+
 
     Public Sub New(ByVal modifiersDirectory As String)
         myModifiersDirectory = modifiersDirectory
+        myMetaModifier = New MetaPlaylistModifier(New PlaylistModifierUILiason(myModifiersDirectory))
         LoadModifierLiasons(myModifiersDirectory)
     End Sub
 
     Public Sub GeneratePlaylist(ByRef player As AxWindowsMediaPlayer)
-
-        If (myWorkingModifiers.Count > 0) Then
-
-            Dim start As Integer = 0
-
-            If (myPreviouslyAppliedLastModifierIndex <= -1) Then
-                player.currentPlaylist.clear()
-                myPreviouslyAppliedLastModifierIndex = -1
-            Else
-                start = myPreviouslyAppliedLastModifierIndex
-            End If
-
-
-            For index As Integer = start To myWorkingModifiers.Count - 1 Step 1
-                Dim modifier As IPlaylistModifier = DirectCast(myWorkingModifiers.Item(index), IPlaylistModifier)
-
-                If (index = 0 And (modifier.ModificationAction.Name = "Subtract" Or modifier.ModificationAction.Name = "Filter")) Then 'otherwise you're subtracting from nothing
-                    player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
-                End If
-
-                If (index = start And myPreviouslyAppliedLastModifierIndex >= 0) Then
-                    modifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, True)
-                Else
-                    modifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, False)
-                End If
-            Next
-
-
-        Else
-            player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
-        End If
-
-        myPreviouslyAppliedLastModifierIndex = myWorkingModifiers.Count - 1
+        InitializePlaylistForModification(player)
+        myMetaModifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, True)
 
         'Only go through the trouble if current playlist is a reasonable size (<10000).  Otherwise, this takes way too long.
         If (player.currentPlaylist.count < 10000) Then
             RemoveDuplicates(player)
+        End If
+    End Sub
+
+    Private Sub InitializePlaylistForModification(ByRef player As AxWindowsMediaPlayer)
+        If (myMetaModifier.NumberOfComponentModifiers > 0) Then
+            If (myMetaModifier.Liason.ModifierAction.Name = "Add") Then
+                player.currentPlaylist.clear()
+            ElseIf ((myMetaModifier.Liason.ModifierAction.Name = "Subtract" Or (myMetaModifier.Liason.ModifierAction.Name = "Filter") And _
+                     player.currentPlaylist.count = 0)) Then
+                player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
+            End If
+        Else
+            player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
         End If
     End Sub
 
@@ -75,9 +58,7 @@ Partial Public Class PlaylistManager
             End If
         Next
 
-
         player.currentPlaylist.clear()
-
 
         For Each mediaItem As IWMPMedia In nonDuplicatedList.Values.ToArray()
             player.currentPlaylist.appendItem(mediaItem)
@@ -87,35 +68,16 @@ Partial Public Class PlaylistManager
 
     Public Sub AddWorkingModifier(ByVal liason As PlaylistModifierUILiason)
         If (File.Exists(liason.FilePath)) Then
-
-            If (liason.Type = ModifierType.WMPAttribute) Then
-                myWorkingModifiers.Add(New WMPAttributePlaylistModifier(liason))
-            ElseIf (liason.Type = ModifierType.LastFM) Then
-                myWorkingModifiers.Add(New LastFMPlaylistModifier(liason))
-            ElseIf (liason.Type = ModifierType.Meta) Then
-                myWorkingModifiers.Add(New MetaPlaylistModifier(liason))
-            End If
-
+            myMetaModifier.AddComponentModifier(liason)
         End If
     End Sub
 
     Public Sub RemoveWorkingModifier(ByVal index As UInteger)
-        myWorkingModifiers.RemoveAt(index)
-
-        If (index <= myPreviouslyAppliedLastModifierIndex) Then
-            myPreviouslyAppliedLastModifierIndex = index - 1
-        End If
+        myMetaModifier.RemoveComponentModifier(index)
     End Sub
 
     Public Function GetWorkingModifiers() As PlaylistModifierUILiason()
-        Dim modifiers As IPlaylistModifier() = myWorkingModifiers.ToArray(GetType(IPlaylistModifier))
-        Dim liasons As ArrayList = New ArrayList()
-
-        For Each modifier As IPlaylistModifier In modifiers
-            liasons.Add(modifier.Liason)
-        Next
-
-        Return liasons.ToArray(GetType(PlaylistModifierUILiason))
+        Return myMetaModifier.ComponentModifierLiasons
     End Function
 
     Public ReadOnly Property Liasons As PlaylistModifierUILiason()

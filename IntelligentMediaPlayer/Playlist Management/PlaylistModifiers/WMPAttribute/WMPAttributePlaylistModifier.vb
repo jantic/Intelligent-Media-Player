@@ -29,7 +29,7 @@ Partial Public Class PlaylistManager
             If (UseCachedResults And Not (myCachedPlaylist.Count > 0)) Then
                 ApplyCachedPlaylist(currentPlaylist)
             Else
-
+                Dim attributeLookupArray As New ArrayList()
                 Dim attributeLookup As Dictionary(Of String, String) = New Dictionary(Of String, String)
 
                 For Each attributeMapping As PlaylistModifierAttributeMapping In myAttributeMappings
@@ -39,7 +39,10 @@ Partial Public Class PlaylistManager
                     attributeLookup.Add(attributeName, attributeValue)
                 Next
 
-                Liason.ModifierAction.ModifyPlaylist(currentPlaylist, mediaCollection, attributeLookup)
+                attributeLookupArray.Add(attributeLookup)
+                Dim lookupArray() As Dictionary(Of String, String) = attributeLookupArray.ToArray(GetType(Dictionary(Of String, String)))
+
+                Liason.ModifierAction.ModifyPlaylist(currentPlaylist, mediaCollection, lookupArray)
 
                 CacheThePlaylist(currentPlaylist)
             End If

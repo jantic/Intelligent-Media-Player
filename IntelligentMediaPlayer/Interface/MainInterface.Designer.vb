@@ -39,6 +39,7 @@ Partial Class MainInterface
         Me.TagArtistLabel = New System.Windows.Forms.Label()
         Me.ShuffleCheckBox = New System.Windows.Forms.CheckBox()
         Me.PlaylistModifierGB = New System.Windows.Forms.GroupBox()
+        Me.SaveButton = New System.Windows.Forms.Button()
         Me.ActivePlaylistModifiersLB = New System.Windows.Forms.ListView()
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AvailablePlaylistModifiersLB = New System.Windows.Forms.ListView()
@@ -61,11 +62,11 @@ Partial Class MainInterface
         Me.ArtistPictureBox = New System.Windows.Forms.PictureBox()
         Me.FullBioTB = New System.Windows.Forms.WebBrowser()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.BiographyTab = New System.Windows.Forms.TabPage()
         Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
         Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
         Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
         Me.TopAlbumsLV = New System.Windows.Forms.ListView()
-        Me.BiographyTab = New System.Windows.Forms.TabPage()
         Me.TagsTab = New System.Windows.Forms.TabPage()
         Me.Tag5 = New System.Windows.Forms.Label()
         Me.Tag4 = New System.Windows.Forms.Label()
@@ -76,9 +77,9 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
         Me.TabControl1.SuspendLayout()
+        Me.BiographyTab.SuspendLayout()
         Me.SimilarArtistsTab.SuspendLayout()
         Me.TopAlbumsTab.SuspendLayout()
-        Me.BiographyTab.SuspendLayout()
         Me.TagsTab.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -224,6 +225,7 @@ Partial Class MainInterface
         '
         'PlaylistModifierGB
         '
+        Me.PlaylistModifierGB.Controls.Add(Me.SaveButton)
         Me.PlaylistModifierGB.Controls.Add(Me.ActivePlaylistModifiersLB)
         Me.PlaylistModifierGB.Controls.Add(Me.AvailablePlaylistModifiersLB)
         Me.PlaylistModifierGB.Controls.Add(Me.ActivePlaylistModifiersLabel)
@@ -238,6 +240,17 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.TabIndex = 21
         Me.PlaylistModifierGB.TabStop = False
         Me.PlaylistModifierGB.Text = "Playlist Modification"
+        '
+        'SaveButton
+        '
+        Me.SaveButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SaveButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.SaveHQ
+        Me.SaveButton.Location = New System.Drawing.Point(990, 109)
+        Me.SaveButton.Name = "SaveButton"
+        Me.SaveButton.Size = New System.Drawing.Size(40, 40)
+        Me.SaveButton.TabIndex = 24
+        Me.SaveButton.Text = "-"
+        Me.SaveButton.UseVisualStyleBackColor = True
         '
         'ActivePlaylistModifiersLB
         '
@@ -300,13 +313,15 @@ Partial Class MainInterface
         '
         'GeneratePlaylistButton
         '
+        Me.GeneratePlaylistButton.BackColor = System.Drawing.SystemColors.Control
         Me.GeneratePlaylistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(990, 180)
+        Me.GeneratePlaylistButton.ForeColor = System.Drawing.SystemColors.Control
+        Me.GeneratePlaylistButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlaylistHQ
+        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(990, 173)
         Me.GeneratePlaylistButton.Name = "GeneratePlaylistButton"
-        Me.GeneratePlaylistButton.Size = New System.Drawing.Size(37, 33)
+        Me.GeneratePlaylistButton.Size = New System.Drawing.Size(40, 40)
         Me.GeneratePlaylistButton.TabIndex = 11
-        Me.GeneratePlaylistButton.Text = "@"
-        Me.GeneratePlaylistButton.UseVisualStyleBackColor = True
+        Me.GeneratePlaylistButton.UseVisualStyleBackColor = False
         '
         'ModifierInputGB
         '
@@ -410,21 +425,21 @@ Partial Class MainInterface
         'RemoveModifierButton
         '
         Me.RemoveModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RemoveModifierButton.Location = New System.Drawing.Point(990, 108)
+        Me.RemoveModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.MinusHQ
+        Me.RemoveModifierButton.Location = New System.Drawing.Point(990, 48)
         Me.RemoveModifierButton.Name = "RemoveModifierButton"
-        Me.RemoveModifierButton.Size = New System.Drawing.Size(39, 35)
+        Me.RemoveModifierButton.Size = New System.Drawing.Size(40, 40)
         Me.RemoveModifierButton.TabIndex = 3
-        Me.RemoveModifierButton.Text = "-"
         Me.RemoveModifierButton.UseVisualStyleBackColor = True
         '
         'AddModifierButton
         '
         Me.AddModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddModifierButton.Location = New System.Drawing.Point(509, 108)
+        Me.AddModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlusHQ
+        Me.AddModifierButton.Location = New System.Drawing.Point(509, 48)
         Me.AddModifierButton.Name = "AddModifierButton"
-        Me.AddModifierButton.Size = New System.Drawing.Size(39, 35)
+        Me.AddModifierButton.Size = New System.Drawing.Size(40, 40)
         Me.AddModifierButton.TabIndex = 2
-        Me.AddModifierButton.Text = "+"
         Me.AddModifierButton.UseVisualStyleBackColor = True
         '
         'ArtistPictureBox
@@ -460,6 +475,17 @@ Partial Class MainInterface
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(488, 226)
         Me.TabControl1.TabIndex = 30
+        '
+        'BiographyTab
+        '
+        Me.BiographyTab.Controls.Add(Me.FullBioTB)
+        Me.BiographyTab.Location = New System.Drawing.Point(4, 22)
+        Me.BiographyTab.Name = "BiographyTab"
+        Me.BiographyTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.BiographyTab.Size = New System.Drawing.Size(480, 200)
+        Me.BiographyTab.TabIndex = 0
+        Me.BiographyTab.Text = "Biography"
+        Me.BiographyTab.UseVisualStyleBackColor = True
         '
         'SimilarArtistsTab
         '
@@ -508,17 +534,6 @@ Partial Class MainInterface
         Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
         Me.TopAlbumsLV.TabIndex = 23
         Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
-        '
-        'BiographyTab
-        '
-        Me.BiographyTab.Controls.Add(Me.FullBioTB)
-        Me.BiographyTab.Location = New System.Drawing.Point(4, 22)
-        Me.BiographyTab.Name = "BiographyTab"
-        Me.BiographyTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.BiographyTab.Size = New System.Drawing.Size(480, 200)
-        Me.BiographyTab.TabIndex = 0
-        Me.BiographyTab.Text = "Biography"
-        Me.BiographyTab.UseVisualStyleBackColor = True
         '
         'TagsTab
         '
@@ -599,6 +614,7 @@ Partial Class MainInterface
         Me.Controls.Add(Me.FilteredPlaylistLabel)
         Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
+        Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.MaximumSize = New System.Drawing.Size(1080, 815)
         Me.MinimumSize = New System.Drawing.Size(1080, 815)
         Me.Name = "MainInterface"
@@ -611,9 +627,9 @@ Partial Class MainInterface
         Me.ModifierInputGB.ResumeLayout(False)
         Me.ModifierInputGB.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
+        Me.BiographyTab.ResumeLayout(False)
         Me.SimilarArtistsTab.ResumeLayout(False)
         Me.TopAlbumsTab.ResumeLayout(False)
-        Me.BiographyTab.ResumeLayout(False)
         Me.TagsTab.ResumeLayout(False)
         Me.TagsTab.PerformLayout()
         Me.ResumeLayout(False)
@@ -669,5 +685,6 @@ Partial Class MainInterface
     Friend WithEvents TopAlbumsLV As System.Windows.Forms.ListView
     Friend WithEvents SimilarArtistsTab As System.Windows.Forms.TabPage
     Friend WithEvents SimilarArtistsLV As System.Windows.Forms.ListView
+    Friend WithEvents SaveButton As System.Windows.Forms.Button
 
 End Class

@@ -210,7 +210,11 @@ Partial Public Class PlaylistManager
             End Set
         End Property
 
-
+        Public ReadOnly Property ModifierKey As String
+            Get
+                Return myModifierKey
+            End Get
+        End Property
 
     End Class
 

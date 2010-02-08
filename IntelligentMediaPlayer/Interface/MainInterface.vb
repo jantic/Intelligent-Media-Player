@@ -372,4 +372,20 @@ Public Class MainInterface
         Dim artist As String = ArtistTextLabel.Text
         System.Diagnostics.Process.Start(GetTorrentzURLForArtistSearch(artist))
     End Sub
+
+
+    Private Sub SaveButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveButton.Click
+        Dim saveDialog As New System.Windows.Forms.SaveFileDialog()
+        saveDialog.InitialDirectory = manager.ModifiersDirectory
+        saveDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
+        saveDialog.FilterIndex = 0
+        saveDialog.RestoreDirectory = True
+
+        If saveDialog.ShowDialog() = DialogResult.OK Then
+            Dim path As String = saveDialog.FileName
+            manager.SaveModiferSequenceAsMetaModifier(saveDialog.FileName)
+        End If
+
+        InitializePlaylistModifierUI() 'to refresh with newly saved modifier
+    End Sub
 End Class

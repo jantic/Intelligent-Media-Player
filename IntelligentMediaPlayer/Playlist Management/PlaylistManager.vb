@@ -33,6 +33,17 @@ Partial Public Class PlaylistManager
         End If
     End Sub
 
+    Public Sub SaveModiferSequenceAsMetaModifier(ByVal path As String)
+        myMetaModifier.SaveAs(path)
+        LoadModifierLiasons(myModifiersDirectory) 'to update view
+    End Sub
+
+    Public ReadOnly Property ModifiersDirectory As String
+        Get
+            Return myModifiersDirectory
+        End Get
+    End Property
+
     Private Sub InitializePlaylistForModification(ByRef player As AxWindowsMediaPlayer)
         If (myMetaModifier.NumberOfComponentModifiers > 0) Then
             If (myMetaModifier.Liason.ModifierAction.Name = "Add") Then

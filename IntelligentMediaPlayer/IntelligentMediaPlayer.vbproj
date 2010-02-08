@@ -186,7 +186,9 @@
   <ItemGroup>
     <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticNewAge.xml" />
     <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticTraditional.xml" />
-    <Content Include="Playlist Modifier Plugins\WMP\WMP_Year.xml" />
+    <Content Include="Playlist Modifier Plugins\WMP\WMP_Year.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Playlist Modifier Plugins\WMP\WMP_AlbumName.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -220,6 +222,10 @@
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\MinusHQ.bmp" />
+    <None Include="Resources\PlusHQ.bmp" />
+    <None Include="Resources\PlaylistHQ.bmp" />
+    <EmbeddedResource Include="Resources\SaveHQ.bmp" />
     <EmbeddedResource Include="Resources\MetaHQ.bmp" />
     <EmbeddedResource Include="Resources\WMPhq.bmp" />
     <EmbeddedResource Include="Resources\LastFMhq.bmp" />

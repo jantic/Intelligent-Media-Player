@@ -24,7 +24,6 @@ Partial Class MainInterface
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainInterface))
         Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
-        Me.PlaylistBox = New System.Windows.Forms.ListBox()
         Me.FilteredPlaylistLabel = New System.Windows.Forms.Label()
         Me.NumberOfItemsLabel = New System.Windows.Forms.Label()
         Me.NumberOfItemsText = New System.Windows.Forms.Label()
@@ -73,6 +72,11 @@ Partial Class MainInterface
         Me.Tag3 = New System.Windows.Forms.Label()
         Me.Tag2 = New System.Windows.Forms.Label()
         Me.Tag1 = New System.Windows.Forms.Label()
+        Me.PlaylistBox = New System.Windows.Forms.ListView()
+        Me.ArtistColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.AlbumColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.TrackColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.YearColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
@@ -91,14 +95,6 @@ Partial Class MainInterface
         Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
         Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(264, 181)
         Me.AxWindowsMediaPlayer1.TabIndex = 0
-        '
-        'PlaylistBox
-        '
-        Me.PlaylistBox.FormattingEnabled = True
-        Me.PlaylistBox.Location = New System.Drawing.Point(12, 222)
-        Me.PlaylistBox.Name = "PlaylistBox"
-        Me.PlaylistBox.Size = New System.Drawing.Size(537, 290)
-        Me.PlaylistBox.TabIndex = 1
         '
         'FilteredPlaylistLabel
         '
@@ -600,11 +596,46 @@ Partial Class MainInterface
         Me.Tag1.TabIndex = 0
         Me.Tag1.Text = "Label1"
         '
+        'PlaylistBox
+        '
+        Me.PlaylistBox.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ArtistColumn, Me.AlbumColumn, Me.TrackColumn, Me.YearColumn})
+        Me.PlaylistBox.FullRowSelect = True
+        Me.PlaylistBox.GridLines = True
+        Me.PlaylistBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.PlaylistBox.HideSelection = False
+        Me.PlaylistBox.Location = New System.Drawing.Point(12, 225)
+        Me.PlaylistBox.MultiSelect = False
+        Me.PlaylistBox.Name = "PlaylistBox"
+        Me.PlaylistBox.Size = New System.Drawing.Size(537, 287)
+        Me.PlaylistBox.TabIndex = 31
+        Me.PlaylistBox.UseCompatibleStateImageBehavior = False
+        Me.PlaylistBox.View = System.Windows.Forms.View.Details
+        '
+        'ArtistColumn
+        '
+        Me.ArtistColumn.Text = "Artist"
+        Me.ArtistColumn.Width = 100
+        '
+        'AlbumColumn
+        '
+        Me.AlbumColumn.Text = "Album"
+        Me.AlbumColumn.Width = 150
+        '
+        'TrackColumn
+        '
+        Me.TrackColumn.Text = "Track"
+        Me.TrackColumn.Width = 213
+        '
+        'YearColumn
+        '
+        Me.YearColumn.Text = "Year"
+        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1064, 777)
+        Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ArtistPictureBox)
         Me.Controls.Add(Me.PlaylistModifierGB)
@@ -612,7 +643,6 @@ Partial Class MainInterface
         Me.Controls.Add(Me.NumberOfItemsText)
         Me.Controls.Add(Me.NumberOfItemsLabel)
         Me.Controls.Add(Me.FilteredPlaylistLabel)
-        Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.MaximumSize = New System.Drawing.Size(1080, 815)
@@ -637,7 +667,6 @@ Partial Class MainInterface
 
     End Sub
     Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
-    Friend WithEvents PlaylistBox As System.Windows.Forms.ListBox
     Friend WithEvents FilteredPlaylistLabel As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsLabel As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsText As System.Windows.Forms.Label
@@ -686,5 +715,10 @@ Partial Class MainInterface
     Friend WithEvents SimilarArtistsTab As System.Windows.Forms.TabPage
     Friend WithEvents SimilarArtistsLV As System.Windows.Forms.ListView
     Friend WithEvents SaveButton As System.Windows.Forms.Button
+    Friend WithEvents PlaylistBox As System.Windows.Forms.ListView
+    Friend WithEvents ArtistColumn As System.Windows.Forms.ColumnHeader
+    Friend WithEvents AlbumColumn As System.Windows.Forms.ColumnHeader
+    Friend WithEvents TrackColumn As System.Windows.Forms.ColumnHeader
+    Friend WithEvents YearColumn As System.Windows.Forms.ColumnHeader
 
 End Class

@@ -4,6 +4,7 @@ Imports System.Threading.Tasks
 Imports System.Runtime.InteropServices
 Imports WMPLib
 Imports AxWMPLib
+Imports System.Windows.Forms
 
 Imports System.Collections.Generic
 Imports System.Text
@@ -116,44 +117,37 @@ Public Class MainInterface
 
     Private Sub FillPlaylistBox()
 
-        'This code is a bit more complicated than it would otherwise be, because we're taking advantage of multicore processing to speed up the processing.
-        'End result:  it takes 40% less time that it would otherwise need to process this on my 4 cores for 75000 songs.  
-
         PlaylistBox.Items.Clear()
-        Dim count As Integer = player.currentPlaylist.count
-
-        Dim mediaList(count) As IWMPMedia
-
-        For index As Integer = 0 To count - 1 Step 1
-            mediaList(index) = player.currentPlaylist.Item(index)
-        Next
-
-        Dim processedPlayList(count - 1) As String '(for some reason, the last one is nothing)
-
         Dim authorAtom As Integer = player.mediaCollection.getMediaAtom("Author")
         Dim albumAtom As Integer = player.mediaCollection.getMediaAtom("Album")
         Dim playlistIndexAtom As Integer = player.mediaCollection.getMediaAtom("PlaylistIndex")
+        Dim yearAtom As Integer = player.mediaCollection.getMediaAtom("ReleaseDateYear")
 
-        Parallel.ForEach(mediaList, Sub(media As IWMPMedia)
-                                        If (Not media Is Nothing) Then
+        Dim myListViewItems(player.currentPlaylist.count - 1) As System.Windows.Forms.ListViewItem
 
-                                            Dim trackName As String = String.Concat(media.getItemInfoByAtom(authorAtom), " - ", media.getItemInfoByAtom(albumAtom), ": ", media.name)
-                                            processedPlayList(media.getItemInfoByAtom(playlistIndexAtom)) = trackName
-                                            'End If
-                                        End If
-                                    End Sub)
+        Parallel.For(0, myListViewItems.Count,
+        Sub(y As Integer)
+            Dim media As IWMPMedia = player.currentPlaylist.Item(y)
+            myListViewItems(y) = New ListViewItem()
+            myListViewItems(y).SubItems(0) = (New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(authorAtom)))
+            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(albumAtom)))
+            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.name))
+            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(yearAtom)))
+        End Sub)
 
-        PlaylistBox.Items.AddRange(processedPlayList)
+        PlaylistBox.Items.AddRange(myListViewItems)
     End Sub
 
     Private Sub PlaylistBox_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlaylistBox.DoubleClick
-        Dim selectedSong As IWMPMedia = player.currentPlaylist.Item(PlaylistBox.SelectedIndex)
+        If (PlaylistBox.SelectedIndices.Count > 0) Then
+            Dim selectedSong As IWMPMedia = player.currentPlaylist.Item(PlaylistBox.SelectedIndices.Item(0))
 
-        Try
-            player.Ctlcontrols.playItem(player.currentPlaylist.Item(PlaylistBox.SelectedIndex))
-        Catch ex As Exception
-            MsgBox(ex.Message())
-        End Try
+            Try
+                player.Ctlcontrols.playItem(player.currentPlaylist.Item(PlaylistBox.SelectedIndices.Item(0)))
+            Catch ex As Exception
+                MsgBox(ex.Message())
+            End Try
+        End If
     End Sub
 
     Private Sub ToggleShuffle()
@@ -175,8 +169,13 @@ Public Class MainInterface
 
         Dim currentIndex As Integer = player.currentMedia.getItemInfo("PlaylistIndex")
 
-        If (currentIndex > 0) Then
-            PlaylistBox.SelectedIndex = currentIndex
+        If (currentIndex >= 0) Then
+            If (currentIndex < PlaylistBox.Items.Count) Then
+                PlaylistBox.Focus()
+                PlaylistBox.Items(currentIndex).Selected = True
+                PlaylistBox.Items(currentIndex).EnsureVisible()
+                PlaylistBox.Items.Item(currentIndex).Focused = True
+            End If
         End If
 
         myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
@@ -388,4 +387,5 @@ Public Class MainInterface
 
         InitializePlaylistModifierUI() 'to refresh with newly saved modifier
     End Sub
+
 End Class

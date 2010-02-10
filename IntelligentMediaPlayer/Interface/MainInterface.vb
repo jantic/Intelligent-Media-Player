@@ -1,4 +1,7 @@
-﻿Imports System
+﻿Option Strict On
+Option Explicit On
+
+Imports System
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports System.Runtime.InteropServices
@@ -10,6 +13,8 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports EnvDTE
 Imports EnvDTE80
+
+
 
 Public Class MainInterface
     Private player As AxWindowsMediaPlayer
@@ -165,9 +170,9 @@ Public Class MainInterface
         AlbumTextLabel.Text = player.currentMedia.getItemInfo("Album")
         TrackTextLabel.Text = player.currentMedia.getItemInfo("Title")
         AlbumYearText.Text = player.currentMedia.getItemInfo("ReleaseDateYear")
-        NumberOfItemsText.Text = player.currentPlaylist.count
+        NumberOfItemsText.Text = player.currentPlaylist.count.ToString
 
-        Dim currentIndex As Integer = player.currentMedia.getItemInfo("PlaylistIndex")
+        Dim currentIndex As Integer = Convert.ToInt32(player.currentMedia.getItemInfo("PlaylistIndex"))
 
         If (currentIndex >= 0) Then
             If (currentIndex < PlaylistBox.Items.Count) Then
@@ -188,7 +193,7 @@ Public Class MainInterface
 
         ' Display the name of the new media item.
 
-        NumberOfItemsText.Text = player.currentPlaylist.count
+        NumberOfItemsText.Text = player.currentPlaylist.count.ToString
     End Sub
 
     Private Sub Initialize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -205,7 +210,7 @@ Public Class MainInterface
             myInputTextBoxes.Add(PlaylistModifierInput2)
             myInputTextBoxes.Add(PlaylistModifierInput3)
 
-            Dim index As UInteger = 0
+            Dim index As Integer = 0
 
             For Each input As PlaylistManager.PlaylistModifierInput In liason.Inputs
                 input.Value = DirectCast(myInputTextBoxes.Item(index), System.Windows.Forms.MaskedTextBox).Text
@@ -283,7 +288,7 @@ Public Class MainInterface
             inputTextBox.Visible = False
         Next
 
-        Dim index As UInteger = 0
+        Dim index As Integer = 0
 
         For Each input As PlaylistManager.PlaylistModifierInput In liason.Inputs
             DirectCast(myInputLabels.Item(index), System.Windows.Forms.Label).Visible = True
@@ -310,7 +315,7 @@ Public Class MainInterface
                     displayText = displayText + input.DisplayName + " - " + input.Value + ";"
                 Next
 
-                displayText = displayText.TrimEnd(";")
+                displayText = displayText.TrimEnd(Convert.ToChar(";"))
                 displayText = displayText + ")"
                 Dim imageName As String = GetIconNameForModifierType(liason.Type)
                 ActivePlaylistModifiersLB.Items.Add(displayText, imageName)

@@ -31,6 +31,7 @@ Partial Public Class PlaylistManager
                     currentPlaylist.appendItem(result.Item(index))
                 Next
             Next
+
         End Sub
 
 

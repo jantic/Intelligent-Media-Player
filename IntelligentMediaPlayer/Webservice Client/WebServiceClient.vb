@@ -152,44 +152,27 @@ Public Class WebServiceClient
     Public Function XMLGetValueAt(ByVal node As XmlNode, ByVal pathQuery As String, ByVal index As UInteger) As String
         Dim valueElement As Xml.XmlElement = Nothing
 
-        Try
-            Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
+        Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
 
-            If (nodes.Count >= index + 1) Then
-                valueElement = nodes.Item(index)
-            Else
-                Return Nothing
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-
-        If (Not valueElement Is Nothing) Then
-            Dim value As String = valueElement.InnerText
-            Return value
+        If (nodes.Count >= index + 1) Then
+            valueElement = nodes.Item(index)
+            Return valueElement.InnerText
+        Else
+            Return Nothing
         End If
-
-        Return Nothing
     End Function
 
     Public Function XMLGetValueAt(ByRef node As XmlNode, ByVal pathQuery As String, ByVal attributeName As String, ByVal attributeValue As String) As String
         Dim valueElement As Xml.XmlElement = Nothing
 
-        Try
-            Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
+        Dim nodes As XmlNodeList = node.SelectNodes(pathQuery)
 
-            For Each element As XmlElement In nodes
-                If (element.GetAttribute(attributeName) = attributeValue) Then
-                    valueElement = element
-                End If
-            Next
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
+        For Each element As XmlElement In nodes
+            If (element.GetAttribute(attributeName) = attributeValue) Then
+                valueElement = element
+                Exit For
+            End If
+        Next
 
         If (Not valueElement Is Nothing) Then
             Dim value As String = valueElement.InnerText

@@ -81,7 +81,7 @@ Partial Public Class MainInterface
                                     For Each album As IAlbumInfo In albums
                                         Dim artist As String = album.Artist.Name
                                         Dim albumName As String = album.Name
-                                        Dim haveAlbum As Boolean = myMusicLibraryStats.DoIHaveThisAlbum(artist, albumName, myParentInterface.player)
+                                        Dim haveAlbum As Boolean = myMusicLibraryStats.DoIHaveThisAlbum(artist, albumName)
                                         Dim textColor As Color = GetTopAlbumsTextColor(haveAlbum)
                                         myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name).ForeColor = textColor
                                     Next

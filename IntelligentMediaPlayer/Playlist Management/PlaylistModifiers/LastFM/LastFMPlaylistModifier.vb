@@ -13,6 +13,7 @@ Partial Public Class PlaylistManager
         Private myCallResultMappings As LastFMOutputMapping()
         Private myCallResultXML As XmlDocument 'cached because otherwise last.fm will kick this program out for too many calls.
         Private myCachedPlaylist As ArrayList = New ArrayList()
+        Private myMusicLibraryStats As New MusicLibraryStats()
 
         Public Sub New(ByVal theLiason As PlaylistModifierUILiason)
             myLiason = New PlaylistModifierUILiason(theLiason)
@@ -32,6 +33,9 @@ Partial Public Class PlaylistManager
                 Dim resultIndex As UInteger = 0
                 Dim attributeLookupArray As New ArrayList()
 
+                Dim artistsInCurrentPlaylist As HashSet(Of String) = LoadArtistsInCurrentPlaylistLookup(currentPlaylist)
+                Dim albumsInCurrentPlaylist As HashSet(Of String) = LoadAlbumsInCurrentPlaylistLookup(currentPlaylist)
+
                 While (True)
 
                     Dim attributeLookup As New Dictionary(Of String, String)
@@ -49,7 +53,9 @@ Partial Public Class PlaylistManager
                         attributeLookup.Add(attributeName, attributeValue)
                     Next
 
-                    attributeLookupArray.Add(attributeLookup)
+                    If (ShouldAddToLookupArray(attributeLookup, artistsInCurrentPlaylist, albumsInCurrentPlaylist)) Then
+                        attributeLookupArray.Add(attributeLookup)
+                    End If
                     resultIndex += 1
                 End While
 
@@ -59,6 +65,52 @@ Partial Public Class PlaylistManager
                 CacheThePlaylist(currentPlaylist)
             End If
         End Sub
+
+        Private Function ShouldAddToLookupArray(ByRef attributeLookup As Dictionary(Of String, String), ByRef artistLookup As HashSet(Of String), _
+                ByRef albumLookup As HashSet(Of String)) As Boolean
+
+            'This is an ugly but very effective optimization for the subtraction and filtering operations.  The difference in my testing on 
+            'subtraction filters:  20 seconds (new) versus 70 seconds, or 30% of the non-optimized time to process.
+
+           If (myLiason.ModifierAction.Name.Trim.ToLower = "subtract" Or myLiason.ModifierAction.Name.Trim.ToLower = "filter") Then
+                If (attributeLookup.Keys.Count = 1) Then
+                    Dim key As String = attributeLookup.Keys(0)
+                    If (key.Trim.ToLower = "artist") Then
+                        Return artistLookup.Contains(attributeLookup.Item(key).Trim.ToLower)
+                    End If
+                ElseIf (attributeLookup.Keys.Count = 2) Then
+                    Dim key1 As String = attributeLookup.Keys(0)
+                    Dim key2 As String = attributeLookup.Keys(1)
+
+                    If (key1 = "Album" And key2 = "Artist") Then
+                        Return ((artistLookup.Contains(attributeLookup.Item(key1).Trim.ToLower) And albumLookup.Contains(attributeLookup.Item(key2).Trim.ToLower)) Or _
+                                (artistLookup.Contains(attributeLookup.Item(key2).Trim.ToLower) And albumLookup.Contains(attributeLookup.Item(key1).Trim.ToLower)))
+                    End If
+                End If
+            End If
+
+            Return True
+        End Function
+
+        Private Function LoadArtistsInCurrentPlaylistLookup(ByRef currentPlaylist As IWMPPlaylist) As HashSet(Of String)
+            Dim lookup As New HashSet(Of String)
+
+            For index As Integer = 0 To currentPlaylist.count - 1 Step 1
+                lookup.Add(currentPlaylist.Item(index).getItemInfo("Artist").Trim.ToLower)
+            Next
+
+            Return lookup
+        End Function
+
+        Private Function LoadAlbumsInCurrentPlaylistLookup(ByRef currentPlaylist As IWMPPlaylist) As HashSet(Of String)
+            Dim lookup As New HashSet(Of String)
+
+            For index As Integer = 0 To currentPlaylist.count - 1 Step 1
+                lookup.Add(currentPlaylist.Item(index).getItemInfo("Album").Trim.ToLower)
+            Next
+
+            Return lookup
+        End Function
 
 
         Private Sub CacheThePlaylist(ByRef currentPlaylist As IWMPPlaylist)

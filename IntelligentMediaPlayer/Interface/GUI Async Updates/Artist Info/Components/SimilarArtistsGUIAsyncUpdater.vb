@@ -91,7 +91,7 @@ Partial Public Class MainInterface
                                     myParentInterface.SimilarArtistsLV.LargeImageList = artistImages
 
                                     For Each artist As IArtistNameFace In similarArtists
-                                        Dim count As UInteger = myMusicLibraryStats.HowManyTracksByArtist(artist.Name, myParentInterface.player)
+                                        Dim count As UInteger = myMusicLibraryStats.HowManyTracksByArtist(artist.Name)
                                         Dim textColor As Color = GetSimilarArtistTextColor(count)
                                         myParentInterface.SimilarArtistsLV.Items.Add(artist.Name, artist.Name).ForeColor = textColor
                                     Next

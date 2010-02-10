@@ -12,6 +12,7 @@ Partial Public Class PlaylistManager
         Meta
     End Enum
 
+
     Private myMetaModifier As MetaPlaylistModifier
     Private myModifiersDirectory As String
     Private myLiasons As PlaylistModifierUILiason()
@@ -83,7 +84,7 @@ Partial Public Class PlaylistManager
         End If
     End Sub
 
-    Public Sub RemoveWorkingModifier(ByVal index As UInteger)
+    Public Sub RemoveWorkingModifier(ByVal index As Integer)
         myMetaModifier.RemoveComponentModifier(index)
     End Sub
 

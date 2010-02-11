@@ -91,7 +91,8 @@ Partial Public Class MainInterface
                                     myParentInterface.SimilarArtistsLV.LargeImageList = artistImages
 
                                     For Each artist As IArtistNameFace In similarArtists
-                                        Dim count As UInteger = myMusicLibraryStats.HowManyTracksByArtist(artist.Name)
+                                        Dim d As New HowManyTracksByArtistsDELEGATE(AddressOf myMusicLibraryStats.HowManyTracksByArtist)
+                                        Dim count As UInteger = myParentInterface.Invoke(d, artist.Name)
                                         Dim textColor As Color = GetSimilarArtistTextColor(count)
                                         myParentInterface.SimilarArtistsLV.Items.Add(artist.Name, artist.Name).ForeColor = textColor
                                     Next
@@ -101,6 +102,9 @@ Partial Public Class MainInterface
                         System.Threading.Thread.Sleep(sleeptime)
                     End While
                 End Sub
+
+                Delegate Function HowManyTracksByArtistsDELEGATE(ByVal artist As String) As UInteger  'needed for thread safety
+
 
                 Private Function GetSimilarArtistTextColor(ByVal numberOfTracks As UInteger)
                     If (numberOfTracks > 0) Then

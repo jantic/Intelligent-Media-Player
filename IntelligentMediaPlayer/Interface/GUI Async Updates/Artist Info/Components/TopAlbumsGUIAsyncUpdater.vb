@@ -81,7 +81,8 @@ Partial Public Class MainInterface
                                     For Each album As IAlbumInfo In albums
                                         Dim artist As String = album.Artist.Name
                                         Dim albumName As String = album.Name
-                                        Dim haveAlbum As Boolean = myMusicLibraryStats.DoIHaveThisAlbum(artist, albumName)
+                                        Dim d As New DoIHaveThisAlbumDELEGATE(AddressOf myMusicLibraryStats.DoIHaveThisAlbum)
+                                        Dim haveAlbum As Boolean = myParentInterface.Invoke(d, artist, albumName) ' for thread safety
                                         Dim textColor As Color = GetTopAlbumsTextColor(haveAlbum)
                                         myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name).ForeColor = textColor
                                     Next
@@ -91,6 +92,8 @@ Partial Public Class MainInterface
                         System.Threading.Thread.Sleep(sleeptime)
                     End While
                 End Sub
+
+                Private Delegate Function DoIHaveThisAlbumDELEGATE(ByVal artist As String, ByVal albumName As String) As Boolean
 
                 Private Function GetTopAlbumImagesSize() As Drawing.Size
                     Dim imageWidth As UInteger = 90

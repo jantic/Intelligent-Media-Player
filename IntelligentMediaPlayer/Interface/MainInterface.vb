@@ -176,7 +176,8 @@ Public Class MainInterface
         ' Display the name of the new media item.
         Dim currentArtist As String = player.currentMedia.getItemInfo("Author")
         ArtistTextLabel.Text = currentArtist
-        AlbumTextLabel.Text = player.currentMedia.getItemInfo("AlbumID")
+        Dim currentAlbum As String = player.currentMedia.getItemInfo("AlbumID")
+        AlbumTextLabel.Text = currentAlbum
         TrackTextLabel.Text = player.currentMedia.getItemInfo("Title")
         AlbumYearText.Text = player.currentMedia.getItemInfo("ReleaseDateYear")
         NumberOfItemsText.Text = player.currentPlaylist.count.ToString
@@ -194,6 +195,7 @@ Public Class MainInterface
         End If
 
         myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
+        myGUIAsyncUpdater.DisplayInfoForAlbum(currentArtist, currentAlbum)
 
     End Sub
 

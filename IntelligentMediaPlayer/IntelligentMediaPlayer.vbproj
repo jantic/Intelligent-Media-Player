@@ -74,6 +74,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\AlbumImageAsyncUpdater.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\GUI Async Updates\Artist Info\AlbumInfoGUIAsyncUpdater.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\GUI Async Updates\Artist Info\Components\ArtistBiographyAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>

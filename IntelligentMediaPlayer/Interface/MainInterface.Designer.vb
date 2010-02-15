@@ -77,6 +77,7 @@ Partial Class MainInterface
         Me.GeneratePlaylistButton = New System.Windows.Forms.Button()
         Me.RemoveModifierButton = New System.Windows.Forms.Button()
         Me.AddModifierButton = New System.Windows.Forms.Button()
+        Me.AlbumPictureBox = New System.Windows.Forms.PictureBox()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
@@ -87,13 +88,14 @@ Partial Class MainInterface
         Me.TopAlbumsTab.SuspendLayout()
         Me.TagsTab.SuspendLayout()
         CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AlbumPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FilteredPlaylistLabel
         '
         Me.FilteredPlaylistLabel.AutoSize = True
         Me.FilteredPlaylistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FilteredPlaylistLabel.Location = New System.Drawing.Point(12, 206)
+        Me.FilteredPlaylistLabel.Location = New System.Drawing.Point(9, 266)
         Me.FilteredPlaylistLabel.Name = "FilteredPlaylistLabel"
         Me.FilteredPlaylistLabel.Size = New System.Drawing.Size(76, 13)
         Me.FilteredPlaylistLabel.TabIndex = 4
@@ -127,9 +129,9 @@ Partial Class MainInterface
         Me.NowPlayingGB.Controls.Add(Me.TagAlbumLabel)
         Me.NowPlayingGB.Controls.Add(Me.TagArtistLabel)
         Me.NowPlayingGB.Controls.Add(Me.ShuffleCheckBox)
-        Me.NowPlayingGB.Location = New System.Drawing.Point(12, 12)
+        Me.NowPlayingGB.Location = New System.Drawing.Point(274, 6)
         Me.NowPlayingGB.Name = "NowPlayingGB"
-        Me.NowPlayingGB.Size = New System.Drawing.Size(265, 181)
+        Me.NowPlayingGB.Size = New System.Drawing.Size(275, 145)
         Me.NowPlayingGB.TabIndex = 20
         Me.NowPlayingGB.TabStop = False
         Me.NowPlayingGB.Text = "Now Playing"
@@ -205,7 +207,7 @@ Partial Class MainInterface
         'ShuffleCheckBox
         '
         Me.ShuffleCheckBox.AutoSize = True
-        Me.ShuffleCheckBox.Location = New System.Drawing.Point(6, 131)
+        Me.ShuffleCheckBox.Location = New System.Drawing.Point(9, 109)
         Me.ShuffleCheckBox.Name = "ShuffleCheckBox"
         Me.ShuffleCheckBox.Size = New System.Drawing.Size(59, 17)
         Me.ShuffleCheckBox.TabIndex = 17
@@ -395,9 +397,9 @@ Partial Class MainInterface
         Me.ArtistPictureBox.ErrorImage = Nothing
         Me.ArtistPictureBox.ImageLocation = ""
         Me.ArtistPictureBox.InitialImage = Nothing
-        Me.ArtistPictureBox.Location = New System.Drawing.Point(562, 12)
+        Me.ArtistPictureBox.Location = New System.Drawing.Point(562, 6)
         Me.ArtistPictureBox.Name = "ArtistPictureBox"
-        Me.ArtistPictureBox.Size = New System.Drawing.Size(488, 267)
+        Me.ArtistPictureBox.Size = New System.Drawing.Size(488, 273)
         Me.ArtistPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.ArtistPictureBox.TabIndex = 22
         Me.ArtistPictureBox.TabStop = False
@@ -553,10 +555,10 @@ Partial Class MainInterface
         Me.PlaylistBox.GridLines = True
         Me.PlaylistBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.PlaylistBox.HideSelection = False
-        Me.PlaylistBox.Location = New System.Drawing.Point(12, 225)
+        Me.PlaylistBox.Location = New System.Drawing.Point(12, 286)
         Me.PlaylistBox.MultiSelect = False
         Me.PlaylistBox.Name = "PlaylistBox"
-        Me.PlaylistBox.Size = New System.Drawing.Size(537, 287)
+        Me.PlaylistBox.Size = New System.Drawing.Size(537, 226)
         Me.PlaylistBox.TabIndex = 31
         Me.PlaylistBox.UseCompatibleStateImageBehavior = False
         Me.PlaylistBox.View = System.Windows.Forms.View.Details
@@ -579,14 +581,15 @@ Partial Class MainInterface
         'YearColumn
         '
         Me.YearColumn.Text = "Year"
+        Me.YearColumn.Width = 49
         '
         'AxWindowsMediaPlayer1
         '
         Me.AxWindowsMediaPlayer1.Enabled = True
-        Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(293, 12)
+        Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(274, 157)
         Me.AxWindowsMediaPlayer1.Name = "AxWindowsMediaPlayer1"
         Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(245, 181)
+        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(275, 105)
         Me.AxWindowsMediaPlayer1.TabIndex = 32
         '
         'SaveButton
@@ -632,12 +635,26 @@ Partial Class MainInterface
         Me.AddModifierButton.TabIndex = 2
         Me.AddModifierButton.UseVisualStyleBackColor = True
         '
+        'AlbumPictureBox
+        '
+        Me.AlbumPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.AlbumPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.AlbumPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.AlbumPictureBox.ErrorImage = Nothing
+        Me.AlbumPictureBox.Location = New System.Drawing.Point(12, 6)
+        Me.AlbumPictureBox.Name = "AlbumPictureBox"
+        Me.AlbumPictureBox.Size = New System.Drawing.Size(256, 256)
+        Me.AlbumPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.AlbumPictureBox.TabIndex = 33
+        Me.AlbumPictureBox.TabStop = False
+        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1064, 777)
+        Me.Controls.Add(Me.AlbumPictureBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.TabControl1)
@@ -667,6 +684,7 @@ Partial Class MainInterface
         Me.TagsTab.ResumeLayout(False)
         Me.TagsTab.PerformLayout()
         CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AlbumPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -725,5 +743,6 @@ Partial Class MainInterface
     Friend WithEvents TrackColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents YearColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
+    Friend WithEvents AlbumPictureBox As System.Windows.Forms.PictureBox
 
 End Class

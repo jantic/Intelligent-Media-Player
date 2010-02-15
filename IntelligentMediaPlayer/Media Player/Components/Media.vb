@@ -16,7 +16,7 @@ Public Class Media
         myReleaseDate = toWrap.getItemInfo("ReleaseDateYear")
         myTrack = toWrap.getItemInfo("Title")
         myName = myTrack
-        myAlbum = toWrap.getItemInfo("AlbumID")
+        myAlbum = toWrap.getItemInfo("Album")
     End Sub
 
     Public Function GetMyWrappedMediaItem() As IWMPMedia

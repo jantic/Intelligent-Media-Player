@@ -18,7 +18,7 @@ Public Class MediaCollection
     End Function
 
     Private Sub New()
-        Dim supportedAttributes() As String = {"author", "albumid", "title", "releasedateyear"}
+        Dim supportedAttributes() As String = {"author", "album", "title", "releasedateyear"}
         InitializeLibraryAndLookups(supportedAttributes)
     End Sub
 

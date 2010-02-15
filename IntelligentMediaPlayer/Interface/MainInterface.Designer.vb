@@ -23,7 +23,6 @@ Partial Class MainInterface
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainInterface))
-        Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
         Me.FilteredPlaylistLabel = New System.Windows.Forms.Label()
         Me.NumberOfItemsLabel = New System.Windows.Forms.Label()
         Me.NumberOfItemsText = New System.Windows.Forms.Label()
@@ -38,14 +37,12 @@ Partial Class MainInterface
         Me.TagArtistLabel = New System.Windows.Forms.Label()
         Me.ShuffleCheckBox = New System.Windows.Forms.CheckBox()
         Me.PlaylistModifierGB = New System.Windows.Forms.GroupBox()
-        Me.SaveButton = New System.Windows.Forms.Button()
         Me.ActivePlaylistModifiersLB = New System.Windows.Forms.ListView()
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AvailablePlaylistModifiersLB = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ActivePlaylistModifiersLabel = New System.Windows.Forms.Label()
         Me.AvailablePlaylistModifiersLabel = New System.Windows.Forms.Label()
-        Me.GeneratePlaylistButton = New System.Windows.Forms.Button()
         Me.ModifierInputGB = New System.Windows.Forms.GroupBox()
         Me.RemoveRb = New System.Windows.Forms.RadioButton()
         Me.AddRB = New System.Windows.Forms.RadioButton()
@@ -56,8 +53,6 @@ Partial Class MainInterface
         Me.PlaylistModifierInput2 = New System.Windows.Forms.MaskedTextBox()
         Me.PlaylistModifierInput3 = New System.Windows.Forms.MaskedTextBox()
         Me.PlaylistModifierInput1 = New System.Windows.Forms.MaskedTextBox()
-        Me.RemoveModifierButton = New System.Windows.Forms.Button()
-        Me.AddModifierButton = New System.Windows.Forms.Button()
         Me.ArtistPictureBox = New System.Windows.Forms.PictureBox()
         Me.FullBioTB = New System.Windows.Forms.WebBrowser()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
@@ -77,24 +72,22 @@ Partial Class MainInterface
         Me.AlbumColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TrackColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.YearColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
+        Me.SaveButton = New System.Windows.Forms.Button()
+        Me.GeneratePlaylistButton = New System.Windows.Forms.Button()
+        Me.RemoveModifierButton = New System.Windows.Forms.Button()
+        Me.AddModifierButton = New System.Windows.Forms.Button()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
+        CType(Me.ArtistPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.BiographyTab.SuspendLayout()
         Me.SimilarArtistsTab.SuspendLayout()
         Me.TopAlbumsTab.SuspendLayout()
         Me.TagsTab.SuspendLayout()
+        CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'AxWindowsMediaPlayer1
-        '
-        Me.AxWindowsMediaPlayer1.Enabled = True
-        Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(285, 12)
-        Me.AxWindowsMediaPlayer1.Name = "AxWindowsMediaPlayer1"
-        Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(264, 181)
-        Me.AxWindowsMediaPlayer1.TabIndex = 0
         '
         'FilteredPlaylistLabel
         '
@@ -237,17 +230,6 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.TabStop = False
         Me.PlaylistModifierGB.Text = "Playlist Modification"
         '
-        'SaveButton
-        '
-        Me.SaveButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SaveButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.SaveHQ
-        Me.SaveButton.Location = New System.Drawing.Point(990, 109)
-        Me.SaveButton.Name = "SaveButton"
-        Me.SaveButton.Size = New System.Drawing.Size(40, 40)
-        Me.SaveButton.TabIndex = 24
-        Me.SaveButton.Text = "-"
-        Me.SaveButton.UseVisualStyleBackColor = True
-        '
         'ActivePlaylistModifiersLB
         '
         Me.ActivePlaylistModifiersLB.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader2})
@@ -306,18 +288,6 @@ Partial Class MainInterface
         Me.AvailablePlaylistModifiersLabel.Size = New System.Drawing.Size(130, 13)
         Me.AvailablePlaylistModifiersLabel.TabIndex = 13
         Me.AvailablePlaylistModifiersLabel.Text = "Available Playlist Modifiers"
-        '
-        'GeneratePlaylistButton
-        '
-        Me.GeneratePlaylistButton.BackColor = System.Drawing.SystemColors.Control
-        Me.GeneratePlaylistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GeneratePlaylistButton.ForeColor = System.Drawing.SystemColors.Control
-        Me.GeneratePlaylistButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlaylistHQ
-        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(990, 173)
-        Me.GeneratePlaylistButton.Name = "GeneratePlaylistButton"
-        Me.GeneratePlaylistButton.Size = New System.Drawing.Size(40, 40)
-        Me.GeneratePlaylistButton.TabIndex = 11
-        Me.GeneratePlaylistButton.UseVisualStyleBackColor = False
         '
         'ModifierInputGB
         '
@@ -418,26 +388,6 @@ Partial Class MainInterface
         Me.PlaylistModifierInput1.Size = New System.Drawing.Size(130, 20)
         Me.PlaylistModifierInput1.TabIndex = 10
         '
-        'RemoveModifierButton
-        '
-        Me.RemoveModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RemoveModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.MinusHQ
-        Me.RemoveModifierButton.Location = New System.Drawing.Point(990, 48)
-        Me.RemoveModifierButton.Name = "RemoveModifierButton"
-        Me.RemoveModifierButton.Size = New System.Drawing.Size(40, 40)
-        Me.RemoveModifierButton.TabIndex = 3
-        Me.RemoveModifierButton.UseVisualStyleBackColor = True
-        '
-        'AddModifierButton
-        '
-        Me.AddModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlusHQ
-        Me.AddModifierButton.Location = New System.Drawing.Point(509, 48)
-        Me.AddModifierButton.Name = "AddModifierButton"
-        Me.AddModifierButton.Size = New System.Drawing.Size(40, 40)
-        Me.AddModifierButton.TabIndex = 2
-        Me.AddModifierButton.UseVisualStyleBackColor = True
-        '
         'ArtistPictureBox
         '
         Me.ArtistPictureBox.BackColor = System.Drawing.SystemColors.Desktop
@@ -445,7 +395,7 @@ Partial Class MainInterface
         Me.ArtistPictureBox.ErrorImage = Nothing
         Me.ArtistPictureBox.ImageLocation = ""
         Me.ArtistPictureBox.InitialImage = Nothing
-        Me.ArtistPictureBox.Location = New System.Drawing.Point(566, 12)
+        Me.ArtistPictureBox.Location = New System.Drawing.Point(562, 12)
         Me.ArtistPictureBox.Name = "ArtistPictureBox"
         Me.ArtistPictureBox.Size = New System.Drawing.Size(488, 267)
         Me.ArtistPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -630,11 +580,65 @@ Partial Class MainInterface
         '
         Me.YearColumn.Text = "Year"
         '
+        'AxWindowsMediaPlayer1
+        '
+        Me.AxWindowsMediaPlayer1.Enabled = True
+        Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(293, 12)
+        Me.AxWindowsMediaPlayer1.Name = "AxWindowsMediaPlayer1"
+        Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
+        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(245, 181)
+        Me.AxWindowsMediaPlayer1.TabIndex = 32
+        '
+        'SaveButton
+        '
+        Me.SaveButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SaveButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.SaveHQ
+        Me.SaveButton.Location = New System.Drawing.Point(990, 109)
+        Me.SaveButton.Name = "SaveButton"
+        Me.SaveButton.Size = New System.Drawing.Size(40, 40)
+        Me.SaveButton.TabIndex = 24
+        Me.SaveButton.Text = "-"
+        Me.SaveButton.UseVisualStyleBackColor = True
+        '
+        'GeneratePlaylistButton
+        '
+        Me.GeneratePlaylistButton.BackColor = System.Drawing.SystemColors.Control
+        Me.GeneratePlaylistButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GeneratePlaylistButton.ForeColor = System.Drawing.SystemColors.Control
+        Me.GeneratePlaylistButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlaylistHQ
+        Me.GeneratePlaylistButton.Location = New System.Drawing.Point(990, 173)
+        Me.GeneratePlaylistButton.Name = "GeneratePlaylistButton"
+        Me.GeneratePlaylistButton.Size = New System.Drawing.Size(40, 40)
+        Me.GeneratePlaylistButton.TabIndex = 11
+        Me.GeneratePlaylistButton.UseVisualStyleBackColor = False
+        '
+        'RemoveModifierButton
+        '
+        Me.RemoveModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RemoveModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.MinusHQ
+        Me.RemoveModifierButton.Location = New System.Drawing.Point(990, 48)
+        Me.RemoveModifierButton.Name = "RemoveModifierButton"
+        Me.RemoveModifierButton.Size = New System.Drawing.Size(40, 40)
+        Me.RemoveModifierButton.TabIndex = 3
+        Me.RemoveModifierButton.UseVisualStyleBackColor = True
+        '
+        'AddModifierButton
+        '
+        Me.AddModifierButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddModifierButton.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.PlusHQ
+        Me.AddModifierButton.Location = New System.Drawing.Point(509, 48)
+        Me.AddModifierButton.Name = "AddModifierButton"
+        Me.AddModifierButton.Size = New System.Drawing.Size(40, 40)
+        Me.AddModifierButton.TabIndex = 2
+        Me.AddModifierButton.UseVisualStyleBackColor = True
+        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1064, 777)
+        Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.Controls.Add(Me.PlaylistBox)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ArtistPictureBox)
@@ -643,7 +647,6 @@ Partial Class MainInterface
         Me.Controls.Add(Me.NumberOfItemsText)
         Me.Controls.Add(Me.NumberOfItemsLabel)
         Me.Controls.Add(Me.FilteredPlaylistLabel)
-        Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.MaximumSize = New System.Drawing.Size(1080, 815)
         Me.MinimumSize = New System.Drawing.Size(1080, 815)
@@ -656,17 +659,18 @@ Partial Class MainInterface
         Me.PlaylistModifierGB.PerformLayout()
         Me.ModifierInputGB.ResumeLayout(False)
         Me.ModifierInputGB.PerformLayout()
+        CType(Me.ArtistPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.BiographyTab.ResumeLayout(False)
         Me.SimilarArtistsTab.ResumeLayout(False)
         Me.TopAlbumsTab.ResumeLayout(False)
         Me.TagsTab.ResumeLayout(False)
         Me.TagsTab.PerformLayout()
+        CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
     Friend WithEvents FilteredPlaylistLabel As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsLabel As System.Windows.Forms.Label
     Friend WithEvents NumberOfItemsText As System.Windows.Forms.Label
@@ -720,5 +724,6 @@ Partial Class MainInterface
     Friend WithEvents AlbumColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents TrackColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents YearColumn As System.Windows.Forms.ColumnHeader
+    Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
 
 End Class

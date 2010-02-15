@@ -26,7 +26,7 @@ xsi:noNamespaceSchemaLocation="..\..\Playlist Management\PlaylistModifiers\Playl
       <AttributeMappings>
         <Mapping>
           <ID>1</ID>
-          <WMP_Attribute>Album</WMP_Attribute>
+          <WMP_Attribute>AlbumID</WMP_Attribute>
           <InputID>1</InputID>
         </Mapping>
       </AttributeMappings>

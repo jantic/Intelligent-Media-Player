@@ -5,3 +5,8 @@ bin
 *.cache
 *~
 *.swp
+/IntelligentMediaPlayer.psess
+/IntelligentMediaPlayer/Resources/~VC9A87.tmp
+/IntelligentMediaPlayer100211(1).vsp
+/IntelligentMediaPlayer100211.vsp
+/Thumbs.db

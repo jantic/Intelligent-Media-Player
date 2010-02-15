@@ -43,6 +43,8 @@ Public Class WebServiceClient
             End If
         End If
 
+
+
         Dim myCallResultXML As XmlDocument = New XmlDocument()
 
         If (timeOfPreviousCall = Nothing) Then
@@ -83,16 +85,19 @@ Public Class WebServiceClient
     End Function
 
     Private Function CacheThisImage(ByVal url As String) As Boolean
-        Dim cachedImagedPath As String = GenerateFilePathFromImageURL(url)
-        Dim imageClient As System.Net.WebClient = New System.Net.WebClient
+        If (Not url Is Nothing And Not url = "") Then
+            Dim cachedImagedPath As String = GenerateFilePathFromImageURL(url)
+            Dim imageClient As System.Net.WebClient = New System.Net.WebClient
 
-        Try
-            imageClient.DownloadFile(url, cachedImagedPath)
-        Catch ex As Exception
-            Return False
-        End Try
+            Try
+                imageClient.DownloadFile(url, cachedImagedPath)
+            Catch ex As Exception
+                Return False
+            End Try
 
-        Return True
+            Return True
+        End If
+        Return False
     End Function
 
     Private Sub New()

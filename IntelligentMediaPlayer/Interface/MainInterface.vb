@@ -5,10 +5,7 @@ Imports System
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports System.Runtime.InteropServices
-Imports WMPLib
-Imports AxWMPLib
 Imports System.Windows.Forms
-
 Imports System.Collections.Generic
 Imports System.Text
 Imports EnvDTE
@@ -17,7 +14,7 @@ Imports EnvDTE80
 
 
 Public Class MainInterface
-    Private player As AxWindowsMediaPlayer
+    Private player As MusicPlayer
     Private manager As PlaylistManager
     Private myMessageFilter As MessageFilter
     Private myDTE As EnvDTE80.DTE2
@@ -60,21 +57,32 @@ Public Class MainInterface
     End Sub
 
     Private Sub InitializePlayer()
-        player = AxWindowsMediaPlayer1
+        Try
+            player = New MusicPlayer(AxWindowsMediaPlayer1)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Sub InitializePlaylist()
-        manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\Playlist Modifier Plugins")
-
-        PlaylistBox.Items.Clear()
-        manager.GeneratePlaylist(player)
-        FillPlaylistBox()
+        Try
+            manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\Playlist Modifier Plugins")
+            PlaylistBox.Items.Clear()
+            manager.GeneratePlaylist(player)
+            FillPlaylistBox()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Sub InitializePlaylistModifierUI()
-        AvailablePlaylistModifiersLB.Items.Clear()
-        PopulateModifiersListsWithIcons()
-        FillAvailableModifierListBox(manager.Liasons)
+        Try
+            AvailablePlaylistModifiersLB.Items.Clear()
+            PopulateModifiersListsWithIcons()
+            FillAvailableModifierListBox(manager.Liasons)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Sub PopulateModifiersListsWithIcons()
@@ -123,21 +131,22 @@ Public Class MainInterface
     Private Sub FillPlaylistBox()
 
         PlaylistBox.Items.Clear()
-        Dim authorAtom As Integer = player.mediaCollection.getMediaAtom("Author")
-        Dim albumAtom As Integer = player.mediaCollection.getMediaAtom("Album")
-        Dim playlistIndexAtom As Integer = player.mediaCollection.getMediaAtom("PlaylistIndex")
-        Dim yearAtom As Integer = player.mediaCollection.getMediaAtom("ReleaseDateYear")
 
         Dim myListViewItems(player.currentPlaylist.count - 1) As System.Windows.Forms.ListViewItem
 
         Parallel.For(0, myListViewItems.Count,
         Sub(y As Integer)
-            Dim media As IWMPMedia = player.currentPlaylist.Item(y)
-            myListViewItems(y) = New ListViewItem()
-            myListViewItems(y).SubItems(0) = (New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(authorAtom)))
-            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(albumAtom)))
-            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.name))
-            myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfoByAtom(yearAtom)))
+
+            Try
+                Dim media As Media = player.currentPlaylist.Item(y)
+                myListViewItems(y) = New ListViewItem()
+                myListViewItems(y).SubItems(0) = (New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("Author")))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("AlbumID")))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.name))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("ReleaseDateYear")))
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
         End Sub)
 
         PlaylistBox.Items.AddRange(myListViewItems)
@@ -145,10 +154,10 @@ Public Class MainInterface
 
     Private Sub PlaylistBox_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlaylistBox.DoubleClick
         If (PlaylistBox.SelectedIndices.Count > 0) Then
-            Dim selectedSong As IWMPMedia = player.currentPlaylist.Item(PlaylistBox.SelectedIndices.Item(0))
+            Dim selectedSong As Media = player.currentPlaylist.Item(PlaylistBox.SelectedIndices.Item(0))
 
             Try
-                player.Ctlcontrols.playItem(player.currentPlaylist.Item(PlaylistBox.SelectedIndices.Item(0)))
+                player.controls.playItem(selectedSong)
             Catch ex As Exception
                 MsgBox(ex.Message())
             End Try
@@ -156,7 +165,7 @@ Public Class MainInterface
     End Sub
 
     Private Sub ToggleShuffle()
-        player.settings.setMode("shuffle", ShuffleCheckBox.Checked)
+        player.ToggleShuffle(ShuffleCheckBox.Checked)
     End Sub
 
     Private Sub ShuffleCheckBox_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShuffleCheckBox.CheckedChanged
@@ -165,14 +174,15 @@ Public Class MainInterface
 
     Private Sub player_CurrentItemChange(ByVal sender As Object, ByVal e As AxWMPLib._WMPOCXEvents_CurrentItemChangeEvent) Handles AxWindowsMediaPlayer1.CurrentItemChange
         ' Display the name of the new media item.
-        Dim currentArtist As String = player.currentMedia.getItemInfo("Artist")
+        Dim currentArtist As String = player.currentMedia.getItemInfo("Author")
         ArtistTextLabel.Text = currentArtist
-        AlbumTextLabel.Text = player.currentMedia.getItemInfo("Album")
+        AlbumTextLabel.Text = player.currentMedia.getItemInfo("AlbumID")
         TrackTextLabel.Text = player.currentMedia.getItemInfo("Title")
         AlbumYearText.Text = player.currentMedia.getItemInfo("ReleaseDateYear")
         NumberOfItemsText.Text = player.currentPlaylist.count.ToString
 
-        Dim currentIndex As Integer = Convert.ToInt32(player.currentMedia.getItemInfo("PlaylistIndex"))
+        Dim currentIndex As Integer = player.CurrentMediaIndex
+
 
         If (currentIndex >= 0) Then
             If (currentIndex < PlaylistBox.Items.Count) Then
@@ -326,9 +336,9 @@ Public Class MainInterface
 
 
     Private Sub GeneratePlaylistButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GeneratePlaylistButton.Click
-        player.Ctlcontrols.stop()
+        player.controls.stop()
         'leaving shuffle on during this process slows things down big time.  
-        player.settings.setMode("shuffle", False)
+        player.ToggleShuffle(False)
 
         manager.GeneratePlaylist(player)
 
@@ -393,4 +403,9 @@ Public Class MainInterface
         InitializePlaylistModifierUI() 'to refresh with newly saved modifier
     End Sub
 
+
+
+    Private Sub PlayButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        player.controls.play()
+    End Sub
 End Class

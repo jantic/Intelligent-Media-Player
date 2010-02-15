@@ -1,5 +1,4 @@
-﻿Imports AxWMPLib
-Imports WMPLib
+﻿
 Imports System.Threading
 Imports System.Threading.Tasks
 
@@ -14,19 +13,19 @@ Partial Public Class PlaylistManager
 
         End Sub
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, ByRef attributeLookupArray() As Dictionary(Of String, String)) Implements IModifierAction.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, ByRef attributeLookupArray() As Dictionary(Of String, String)) Implements IModifierAction.ModifyPlaylist
 
             For Each attributeLookup As Dictionary(Of String, String) In attributeLookupArray
-                Dim query As WMPLib.IWMPQuery = mediaCollection.createQuery()
+                Dim query As New MediaCollection.Query
 
                 For Each attributeName As String In attributeLookup.Keys().ToArray()
                     query.addCondition(attributeName, "Equals", attributeLookup.Item(attributeName))
                 Next
 
-                Dim result As IWMPPlaylist = mediaCollection.getPlaylistByQuery(query, "audio", "", False)
+                Dim result As Playlist = mediaCollection.GetPlaylistByQuery(query)
 
 
-                Dim resultMediaLookup As New Dictionary(Of String, IWMPMedia)
+                Dim resultMediaLookup As New Dictionary(Of String, Media)
 
                 For x As Integer = 0 To result.count - 1 Step 1
                     Dim key As String = GenerateMediaHashKey(result.Item(x))
@@ -42,7 +41,7 @@ Partial Public Class PlaylistManager
                         Exit For
                     End If
 
-                    Dim currentItem As IWMPMedia = currentPlaylist.Item(y)
+                    Dim currentItem As Media = currentPlaylist.Item(y)
 
                     If (resultMediaLookup.ContainsKey(GenerateMediaHashKey(currentItem))) Then
                         currentPlaylist.removeItem(currentItem)
@@ -54,11 +53,11 @@ Partial Public Class PlaylistManager
         End Sub
 
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, ByRef modifyingPlaylist As IWMPPlaylist) Implements IModifierAction.ModifyPlaylist
-            Dim quickMediaLookup As Dictionary(Of String, IWMPMedia) = New Dictionary(Of String, IWMPMedia) 'for proper, fast subtraction
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, ByRef modifyingPlaylist As Playlist) Implements IModifierAction.ModifyPlaylist
+            Dim quickMediaLookup As Dictionary(Of String, Media) = New Dictionary(Of String, Media) 'for proper, fast subtraction
 
             For index As Integer = 0 To modifyingPlaylist.count - 1 Step 1
-                Dim mediaItem As IWMPMedia = modifyingPlaylist.Item(index)
+                Dim mediaItem As Media = modifyingPlaylist.Item(index)
                 Dim key As String = GenerateMediaHashKey(mediaItem)
                 If (Not quickMediaLookup.ContainsKey(key)) Then
                     quickMediaLookup.Add(key, mediaItem)
@@ -70,7 +69,7 @@ Partial Public Class PlaylistManager
                     Exit For
                 End If
 
-                Dim item As IWMPMedia = currentPlaylist.Item(y)
+                Dim item As Media = currentPlaylist.Item(y)
                 Dim key As String = GenerateMediaHashKey(item)
 
                 If (Not (quickMediaLookup.ContainsKey(key))) Then

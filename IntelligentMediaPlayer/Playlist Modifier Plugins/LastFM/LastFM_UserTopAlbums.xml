@@ -38,12 +38,12 @@ xsi:noNamespaceSchemaLocation="..\..\Playlist Management\PlaylistModifiers\Playl
         <Outputs>
           <Output>
             <ID>1</ID>
-            <WMP_Attribute>Album</WMP_Attribute>
+            <WMP_Attribute>AlbumID</WMP_Attribute>
             <xPath>//topalbums/album/name</xPath>
           </Output>
           <Output>
             <ID>2</ID>
-            <WMP_Attribute>Artist</WMP_Attribute>
+            <WMP_Attribute>Author</WMP_Attribute>
             <xPath>//topalbums/album/artist/name</xPath>
           </Output>
         </Outputs>

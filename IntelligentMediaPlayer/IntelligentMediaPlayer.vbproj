@@ -28,7 +28,9 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>IntelligentMediaPlayer.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -38,7 +40,9 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>IntelligentMediaPlayer.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -96,6 +100,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\MessageFilter.vb" />
+    <Compile Include="Media Player\Components\MediaCollection.vb" />
+    <Compile Include="Media Player\Components\Media.vb" />
+    <Compile Include="Media Player\Components\PlayerControls.vb" />
+    <Compile Include="Media Player\Components\Playlist.vb" />
+    <Compile Include="Media Player\Components\Query.vb" />
+    <Compile Include="Media Player\MusicPlayer.vb" />
     <Compile Include="Music Library Statistics\MusicLibraryStats.vb" />
     <Compile Include="Music Info\Album Info\IAlbumInfo.vb" />
     <Compile Include="Music Info\Artist Info\IArtistInfo.vb" />
@@ -137,6 +147,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Interface\MainInterface.resx">
       <DependentUpon>MainInterface.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -169,6 +180,15 @@
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="WMPLib">
       <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -186,6 +206,7 @@
   <ItemGroup>
     <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticNewAge.xml" />
     <Content Include="Playlist Modifier Plugins\Meta Modifiers\CelticTraditional.xml" />
+    <Content Include="Playlist Modifier Plugins\Meta Modifiers\favorites.xml" />
     <Content Include="Playlist Modifier Plugins\WMP\WMP_Year.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -222,6 +243,7 @@
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\PlayButton.bmp" />
     <None Include="Resources\MinusHQ.bmp" />
     <None Include="Resources\PlusHQ.bmp" />
     <None Include="Resources\PlaylistHQ.bmp" />

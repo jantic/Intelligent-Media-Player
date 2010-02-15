@@ -54,7 +54,7 @@ Partial Public Class MainInterface
                             If (Not (artist.LargePictureLocation Is Nothing Or artist.LargePictureLocation = "")) Then
                                 Try
                                     artistPicture = Image.FromFile(artist.LargePictureLocation)
-                                Catch
+                                Catch ex As Exception
                                     artistPicture = GetDefaultArtistImage()
                                 End Try
                             Else

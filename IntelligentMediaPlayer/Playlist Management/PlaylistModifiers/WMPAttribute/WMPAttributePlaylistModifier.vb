@@ -1,6 +1,4 @@
-﻿Imports WMPLib
-Imports AxWMPLib
-Imports System.Xml
+﻿Imports System.Xml
 Imports System.Xml.XPath
 
 Partial Public Class PlaylistManager
@@ -24,7 +22,7 @@ Partial Public Class PlaylistManager
             End Get
         End Property
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
 
             If (UseCachedResults And Not (myCachedPlaylist.Count > 0)) Then
                 ApplyCachedPlaylist(currentPlaylist)
@@ -55,7 +53,7 @@ Partial Public Class PlaylistManager
         End Property
 
 
-        Private Sub CacheThePlaylist(ByRef currentPlaylist As IWMPPlaylist)
+        Private Sub CacheThePlaylist(ByRef currentPlaylist As Playlist)
             myCachedPlaylist.Clear()
 
             For index As Integer = 0 To currentPlaylist.count - 1 Step 1
@@ -63,11 +61,11 @@ Partial Public Class PlaylistManager
             Next
         End Sub
 
-        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As IWMPPlaylist)
+        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As Playlist)
 
             If (myCachedPlaylist.Count > 0) Then
                 currentPlaylist.clear()
-                For Each mediaItem As IWMPMedia In myCachedPlaylist
+                For Each mediaItem As Media In myCachedPlaylist
                     currentPlaylist.appendItem(mediaItem)
                 Next
             End If

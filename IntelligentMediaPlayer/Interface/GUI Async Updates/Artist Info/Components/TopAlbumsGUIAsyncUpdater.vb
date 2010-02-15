@@ -28,7 +28,7 @@ Partial Public Class MainInterface
                     myParentInterface.TopAlbumsLV.Clear()
                 End Sub
 
-                Private Function RetrieveTopAlbumImages(ByVal albums As IAlbumInfo())
+                Private Function RetrieveTopAlbumImages(ByVal albums As IAlbumInfo()) As ImageList
                     Dim albumImages As ImageList = Nothing
 
                     If (Not albums Is Nothing) Then

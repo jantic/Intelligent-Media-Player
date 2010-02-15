@@ -1,6 +1,4 @@
-﻿Imports WMPLib
-Imports AxWMPLib
-Imports System.Xml
+﻿Imports System.Xml
 Imports System.Xml.XPath
 
 Partial Public Class PlaylistManager
@@ -23,7 +21,7 @@ Partial Public Class PlaylistManager
         End Sub
 
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
 
             If (UseCachedResults And Not (myCachedPlaylist.Count = 0)) Then
                 ApplyCachedPlaylist(currentPlaylist)
@@ -75,14 +73,14 @@ Partial Public Class PlaylistManager
            If (myLiason.ModifierAction.Name.Trim.ToLower = "subtract" Or myLiason.ModifierAction.Name.Trim.ToLower = "filter") Then
                 If (attributeLookup.Keys.Count = 1) Then
                     Dim key As String = attributeLookup.Keys(0)
-                    If (key.Trim.ToLower = "artist") Then
+                    If (key.Trim.ToLower = "author") Then
                         Return artistLookup.Contains(attributeLookup.Item(key).Trim.ToLower)
                     End If
                 ElseIf (attributeLookup.Keys.Count = 2) Then
                     Dim key1 As String = attributeLookup.Keys(0)
                     Dim key2 As String = attributeLookup.Keys(1)
 
-                    If (key1 = "Album" And key2 = "Artist") Then
+                    If (key1 = "AlbumID" And key2 = "Author") Then
                         Return ((artistLookup.Contains(attributeLookup.Item(key1).Trim.ToLower) And albumLookup.Contains(attributeLookup.Item(key2).Trim.ToLower)) Or _
                                 (artistLookup.Contains(attributeLookup.Item(key2).Trim.ToLower) And albumLookup.Contains(attributeLookup.Item(key1).Trim.ToLower)))
                     End If
@@ -92,28 +90,28 @@ Partial Public Class PlaylistManager
             Return True
         End Function
 
-        Private Function LoadArtistsInCurrentPlaylistLookup(ByRef currentPlaylist As IWMPPlaylist) As HashSet(Of String)
+        Private Function LoadArtistsInCurrentPlaylistLookup(ByRef currentPlaylist As Playlist) As HashSet(Of String)
             Dim lookup As New HashSet(Of String)
 
             For index As Integer = 0 To currentPlaylist.count - 1 Step 1
-                lookup.Add(currentPlaylist.Item(index).getItemInfo("Artist").Trim.ToLower)
+                lookup.Add(currentPlaylist.Item(index).getItemInfo("Author").Trim.ToLower)
             Next
 
             Return lookup
         End Function
 
-        Private Function LoadAlbumsInCurrentPlaylistLookup(ByRef currentPlaylist As IWMPPlaylist) As HashSet(Of String)
+        Private Function LoadAlbumsInCurrentPlaylistLookup(ByRef currentPlaylist As Playlist) As HashSet(Of String)
             Dim lookup As New HashSet(Of String)
 
             For index As Integer = 0 To currentPlaylist.count - 1 Step 1
-                lookup.Add(currentPlaylist.Item(index).getItemInfo("Album").Trim.ToLower)
+                lookup.Add(currentPlaylist.Item(index).getItemInfo("AlbumID").Trim.ToLower)
             Next
 
             Return lookup
         End Function
 
 
-        Private Sub CacheThePlaylist(ByRef currentPlaylist As IWMPPlaylist)
+        Private Sub CacheThePlaylist(ByRef currentPlaylist As Playlist)
             myCachedPlaylist.Clear()
 
             For index As Integer = 0 To currentPlaylist.count - 1 Step 1
@@ -121,11 +119,11 @@ Partial Public Class PlaylistManager
             Next
         End Sub
 
-        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As IWMPPlaylist)
+        Private Sub ApplyCachedPlaylist(ByRef currentPlaylist As Playlist)
 
             If (myCachedPlaylist.Count > 0) Then
                 currentPlaylist.clear()
-                For Each mediaItem As IWMPMedia In myCachedPlaylist
+                For Each mediaItem As Media In myCachedPlaylist
                     currentPlaylist.appendItem(mediaItem)
                 Next
             End If

@@ -1,6 +1,4 @@
-﻿Imports WMPLib
-Imports AxWMPLib
-Imports System.IO
+﻿Imports System.IO
 Imports System.Xml
 Imports System.Xml.XPath
 
@@ -24,9 +22,12 @@ Partial Public Class PlaylistManager
         LoadModifierLiasons(myModifiersDirectory)
     End Sub
 
-    Public Sub GeneratePlaylist(ByRef player As AxWindowsMediaPlayer)
+    Public Sub GeneratePlaylist(ByRef player As MusicPlayer)
         InitializePlaylistForModification(player)
-        myMetaModifier.ModifyPlaylist(player.currentPlaylist, player.mediaCollection, True)
+
+        If (myMetaModifier.NumberOfComponentModifiers > 0) Then
+            myMetaModifier.ModifyPlaylist(player.currentPlaylist, player.MediaLibrary, True)
+        End If
 
         'Only go through the trouble if current playlist is a reasonable size (<10000).  Otherwise, this takes way too long.
         If (player.currentPlaylist.count < 10000) Then
@@ -45,22 +46,22 @@ Partial Public Class PlaylistManager
         End Get
     End Property
 
-    Private Sub InitializePlaylistForModification(ByRef player As AxWindowsMediaPlayer)
+    Private Sub InitializePlaylistForModification(ByRef player As MusicPlayer)
         If (myMetaModifier.NumberOfComponentModifiers > 0) Then
             If (myMetaModifier.Liason.ModifierAction.Name = "Add") Then
                 player.currentPlaylist.clear()
             ElseIf ((myMetaModifier.Liason.ModifierAction.Name = "Subtract" Or (myMetaModifier.Liason.ModifierAction.Name = "Filter") And _
                      player.currentPlaylist.count = 0)) Then
-                player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
+                player.currentPlaylist = New Playlist(MediaCollection.GetMediaCollection.AllMediaItems)
             End If
         Else
-            player.currentPlaylist = player.mediaCollection.getByAttribute("MediaType", "audio")
+            player.currentPlaylist = New Playlist(MediaCollection.GetMediaCollection.AllMediaItems)
         End If
     End Sub
 
-    Private Sub RemoveDuplicates(ByRef player As AxWindowsMediaPlayer)
+    Private Sub RemoveDuplicates(ByRef player As MusicPlayer)
 
-        Dim nonDuplicatedList As Dictionary(Of String, IWMPMedia) = New Dictionary(Of String, IWMPMedia)
+        Dim nonDuplicatedList As Dictionary(Of String, Media) = New Dictionary(Of String, Media)
 
         For x As Integer = 0 To player.currentPlaylist.count - 1 Step 1
             Dim key As String = PlaylistManager.GenerateMediaHashKey(player.currentPlaylist.Item(x))
@@ -69,13 +70,7 @@ Partial Public Class PlaylistManager
                 nonDuplicatedList.Add(key, player.currentPlaylist.Item(x))
             End If
         Next
-
-        player.currentPlaylist.clear()
-
-        For Each mediaItem As IWMPMedia In nonDuplicatedList.Values.ToArray()
-            player.currentPlaylist.appendItem(mediaItem)
-        Next
-
+        player.currentPlaylist = New Playlist(nonDuplicatedList.Values.ToArray())
     End Sub
 
     Public Sub AddWorkingModifier(ByVal liason As PlaylistModifierUILiason)
@@ -113,8 +108,8 @@ Partial Public Class PlaylistManager
     End Sub
 
 
-    Private Shared Function GenerateMediaHashKey(ByRef media As IWMPMedia)
-        Return media.getItemInfo("Artist") + media.getItemInfo("Title") + media.getItemInfo("Album")
+    Private Shared Function GenerateMediaHashKey(ByRef media As Media)
+        Return media.getItemInfo("Author") + media.getItemInfo("Title") + media.getItemInfo("AlbumID")
     End Function
 
 End Class

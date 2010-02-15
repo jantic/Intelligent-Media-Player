@@ -149,13 +149,15 @@ Partial Public Class LastFMArtistInfo
     End Property
 
     Private Sub RetrieveAndStoreArtistInfoFromWebservice()
-        Dim artistInfoURL As String = myTemplateArtistInfoURL.Replace("[Artist]", myName)
-        myArtistInfoResultXML = WebServiceClient.GetClient.RetrieveResult(artistInfoURL)
+        If (Not myName Is Nothing And Not myName = "") Then
+            Dim artistInfoURL As String = myTemplateArtistInfoURL.Replace("[Artist]", myName)
+            myArtistInfoResultXML = WebServiceClient.GetClient.RetrieveResult(artistInfoURL)
+        End If
 
     End Sub
 
     Private Sub RetrieveAndStoreTopAlbumsInfoFromWebService()
-        If (myTopAlbumsResultXML Is Nothing) Then
+        If (myTopAlbumsResultXML Is Nothing And Not myName Is Nothing And Not myName = "") Then
             Dim topAlbumInfoURL As String = myTemplateTopAlbumsURL.Replace("[Artist]", myName)
             myTopAlbumsResultXML = WebServiceClient.GetClient.RetrieveResult(topAlbumInfoURL)
         End If

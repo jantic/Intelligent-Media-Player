@@ -1,13 +1,8 @@
-﻿Imports AxWMPLib
-Imports WMPLib
-Imports System.Threading
+﻿Imports System.Threading
 Imports System.Windows
 
 
 Public Class MusicLibraryStats
-
-    Private mediaPlayerCore As New WMPLib.WindowsMediaPlayerClass
-
 
     Public Sub New()
 
@@ -16,11 +11,11 @@ Public Class MusicLibraryStats
     Public Function HowManyTracksByArtist(ByVal artist As String) As UInteger
         Dim count As UInteger = 0
 
-        Dim mc As WMPLib.IWMPMediaCollection2 = mediaPlayerCore.mediaCollection
-        Dim query As WMPLib.IWMPQuery = mc.createQuery()
-        Dim attributeName As String = "Artist"
+        Dim mc As MediaCollection = MediaCollection.GetMediaCollection()
+        Dim query As New MediaCollection.Query()
+        Dim attributeName As String = "author"
         query.addCondition(attributeName, "Equals", artist)
-        Dim result As IWMPPlaylist = mc.getPlaylistByQuery(query, "audio", "", False)
+        Dim result As Playlist = mc.GetPlaylistByQuery(query)
         count = result.count
 
         Return count
@@ -29,29 +24,29 @@ Public Class MusicLibraryStats
     Public Function DoIHaveThisAlbum(ByVal artist As String, ByVal album As String) As Boolean
         Dim count As UInteger = 0
 
-        Dim mc As WMPLib.IWMPMediaCollection2 = mediaPlayerCore.mediaCollection
-        Dim query As WMPLib.IWMPQuery = mc.createQuery()
-        Dim artistAttributeName As String = "Artist"
+        Dim mc As MediaCollection = MediaCollection.GetMediaCollection()
+        Dim query As New MediaCollection.Query()
+        Dim artistAttributeName As String = "author"
         query.addCondition(artistAttributeName, "Equals", artist)
-        Dim albumQuery As WMPLib.IWMPQuery = mc.createQuery()
-        Dim albumAttributeName As String = "Album"
+        Dim albumQuery As New MediaCollection.Query()
+        Dim albumAttributeName As String = "albumid"
         query.addCondition(albumAttributeName, "Equals", album)
-        Dim result As IWMPPlaylist = mc.getPlaylistByQuery(query, "audio", "", False)
+        Dim result As Playlist = mc.GetPlaylistByQuery(query)
         count = result.count
 
         Return (count > 0)
     End Function
 
     Public Function NumberOfMatchesInLibrary(ByVal attributeLookup As Dictionary(Of String, String)) As Integer
-        Dim mc As WMPLib.IWMPMediaCollection2 = mediaPlayerCore.mediaCollection
-        Dim query As WMPLib.IWMPQuery = mc.createQuery()
+        Dim mc As MediaCollection = MediaCollection.GetMediaCollection()
+        Dim query As New MediaCollection.Query()
 
         For Each attributeName As String In attributeLookup.Keys
             Dim attributeValue As String = attributeLookup.Item(attributeName)
             query.addCondition(attributeName, "Equals", attributeValue)
         Next
 
-        Dim result As IWMPPlaylist = mc.getPlaylistByQuery(query, "audio", "", False)
+        Dim result As Playlist = mc.getPlaylistByQuery(query)
         Return result.count
     End Function
 

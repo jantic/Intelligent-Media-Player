@@ -1,6 +1,4 @@
-﻿Imports WMPLib
-Imports AxWMPLib
-Imports System.Xml
+﻿Imports System.Xml
 Imports System.Xml.XPath
 Imports System.IO
 
@@ -33,19 +31,10 @@ Partial Public Class PlaylistManager
         End Sub
 
 
-        Public Sub ModifyPlaylist(ByRef currentPlaylist As IWMPPlaylist, ByRef mediaCollection As IWMPMediaCollection2, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
+        Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
             If (myComponentModifiers.Count > 0) Then
-                Dim mediaPlayerCore As New WMPLib.WindowsMediaPlayerClass
-                Dim tempPlaylistName As String = "temp"
-                Dim tempPlaylist As IWMPPlaylist = Nothing
-                Dim tempPlaylistMatches As IWMPPlaylistArray = mediaPlayerCore.playlistCollection.getByName("temp")
 
-                If (tempPlaylistMatches.count > 0) Then
-                    tempPlaylist = tempPlaylistMatches.Item(0)
-                    tempPlaylist.clear()
-                Else
-                    tempPlaylist = mediaPlayerCore.newPlaylist(tempPlaylistName)
-                End If
+                Dim tempPlaylist As New Playlist
 
                 For index As Integer = 0 To currentPlaylist.count - 1 Step 1
                     tempPlaylist.appendItem(currentPlaylist.Item(index))

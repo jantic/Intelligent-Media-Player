@@ -60,15 +60,15 @@ Partial Class MainInterface
         Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
         Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
         Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
+        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.TagsTab = New System.Windows.Forms.TabPage()
+        Me.ArtistTagsLV = New System.Windows.Forms.ListView()
         Me.PlaylistBox = New System.Windows.Forms.ListView()
         Me.ArtistColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AlbumColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TrackColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.YearColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
-        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
-        Me.ArtistTagsLV = New System.Windows.Forms.ListView()
         Me.ArtistImageLoadingPB = New System.Windows.Forms.PictureBox()
         Me.AlbumImageLoadingPB = New System.Windows.Forms.PictureBox()
         Me.AlbumPictureBox = New System.Windows.Forms.PictureBox()
@@ -487,6 +487,21 @@ Partial Class MainInterface
         Me.TopAlbumsTab.Text = "Top Albums"
         Me.TopAlbumsTab.UseVisualStyleBackColor = True
         '
+        'TopAlbumsLV
+        '
+        Me.TopAlbumsLV.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TopAlbumsLV.FullRowSelect = True
+        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.TopAlbumsLV.HideSelection = False
+        Me.TopAlbumsLV.Location = New System.Drawing.Point(0, 0)
+        Me.TopAlbumsLV.MultiSelect = False
+        Me.TopAlbumsLV.Name = "TopAlbumsLV"
+        Me.TopAlbumsLV.RightToLeftLayout = True
+        Me.TopAlbumsLV.ShowGroups = False
+        Me.TopAlbumsLV.Size = New System.Drawing.Size(481, 201)
+        Me.TopAlbumsLV.TabIndex = 23
+        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
+        '
         'TagsTab
         '
         Me.TagsTab.Controls.Add(Me.TagsLoadingPB)
@@ -498,6 +513,20 @@ Partial Class MainInterface
         Me.TagsTab.TabIndex = 1
         Me.TagsTab.Text = "Tags"
         Me.TagsTab.UseVisualStyleBackColor = True
+        '
+        'ArtistTagsLV
+        '
+        Me.ArtistTagsLV.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid
+        Me.ArtistTagsLV.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ArtistTagsLV.LabelWrap = False
+        Me.ArtistTagsLV.Location = New System.Drawing.Point(0, 0)
+        Me.ArtistTagsLV.Name = "ArtistTagsLV"
+        Me.ArtistTagsLV.Scrollable = False
+        Me.ArtistTagsLV.Size = New System.Drawing.Size(481, 201)
+        Me.ArtistTagsLV.TabIndex = 0
+        Me.ArtistTagsLV.TileSize = New System.Drawing.Size(328, 40)
+        Me.ArtistTagsLV.UseCompatibleStateImageBehavior = False
+        Me.ArtistTagsLV.View = System.Windows.Forms.View.Tile
         '
         'PlaylistBox
         '
@@ -542,35 +571,6 @@ Partial Class MainInterface
         Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
         Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(275, 105)
         Me.AxWindowsMediaPlayer1.TabIndex = 32
-        '
-        'TopAlbumsLV
-        '
-        Me.TopAlbumsLV.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TopAlbumsLV.FullRowSelect = True
-        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.TopAlbumsLV.HideSelection = False
-        Me.TopAlbumsLV.Location = New System.Drawing.Point(0, 0)
-        Me.TopAlbumsLV.MultiSelect = False
-        Me.TopAlbumsLV.Name = "TopAlbumsLV"
-        Me.TopAlbumsLV.RightToLeftLayout = True
-        Me.TopAlbumsLV.ShowGroups = False
-        Me.TopAlbumsLV.Size = New System.Drawing.Size(481, 201)
-        Me.TopAlbumsLV.TabIndex = 23
-        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
-        '
-        'ArtistTagsLV
-        '
-        Me.ArtistTagsLV.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid
-        Me.ArtistTagsLV.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ArtistTagsLV.LabelWrap = False
-        Me.ArtistTagsLV.Location = New System.Drawing.Point(0, 0)
-        Me.ArtistTagsLV.Name = "ArtistTagsLV"
-        Me.ArtistTagsLV.Scrollable = False
-        Me.ArtistTagsLV.Size = New System.Drawing.Size(481, 201)
-        Me.ArtistTagsLV.TabIndex = 0
-        Me.ArtistTagsLV.TileSize = New System.Drawing.Size(328, 40)
-        Me.ArtistTagsLV.UseCompatibleStateImageBehavior = False
-        Me.ArtistTagsLV.View = System.Windows.Forms.View.Tile
         '
         'ArtistImageLoadingPB
         '

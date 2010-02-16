@@ -249,6 +249,7 @@
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\WMPhq.png" />
     <None Include="Resources\playlist_loader.gif" />
     <None Include="Resources\media_player_loader.gif" />
     <None Include="Resources\loader5.gif" />

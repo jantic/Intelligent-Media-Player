@@ -88,6 +88,8 @@ Public Class MainInterface
     Private Sub PopulateModifiersListsWithIcons()
         Try
             Dim imageListSmall As New ImageList()
+            imageListSmall.ImageSize = New Drawing.Size(20, 20)
+            imageListSmall.ColorDepth = ColorDepth.Depth32Bit
             Dim LastFMIcon As System.Drawing.Bitmap = GetIconImage("LastFMhq.bmp")
             imageListSmall.Images.Add(GetIconNameForModifierType(PlaylistManager.ModifierType.LastFM), LastFMIcon)
             Dim WMPIcon As System.Drawing.Bitmap = GetIconImage("WMPhq.bmp")
@@ -112,7 +114,7 @@ Public Class MainInterface
     Private Function GetIconImage(ByVal imageName As String) As System.Drawing.Bitmap
         'Dim res() As String = GetType(MainInterface).Assembly.GetManifestResourceNames()
         Dim lookUpName As String = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "." + imageName
-        Return New System.Drawing.Bitmap(GetType(MainInterface).Assembly.GetManifestResourceStream(lookUpName))
+        Return New System.Drawing.Bitmap(GetType(MainInterface).Assembly.GetManifestResourceStream(lookUpName), True)
     End Function
 
     Private Function GetIconNameForModifierType(ByRef modType As PlaylistManager.ModifierType) As String

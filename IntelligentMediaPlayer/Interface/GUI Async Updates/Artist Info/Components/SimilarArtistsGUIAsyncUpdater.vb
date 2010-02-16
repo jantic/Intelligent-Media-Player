@@ -80,6 +80,7 @@ Partial Public Class MainInterface
                         If (Not artistInfo Is Nothing) Then
 
                             ClearSimilarArtistsUI()
+                            myParentInterface.SimilarArtistsLoadingPB.BringToFront()
 
                             If (Not artistInfo Is Nothing) Then
                                 Dim similarArtists As IArtistNameFace() = artistInfo.SimilarArtists()
@@ -98,6 +99,7 @@ Partial Public Class MainInterface
                                     Next
                                 End If
                             End If
+                            myParentInterface.SimilarArtistsLV.BringToFront()
                         End If
                         System.Threading.Thread.Sleep(sleeptime)
                     End While

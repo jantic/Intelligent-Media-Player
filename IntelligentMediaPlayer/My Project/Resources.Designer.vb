@@ -67,6 +67,41 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property loader5() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loader5", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property loading() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loading", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property loading2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loading2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property loading3() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loading3", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property media_player_loader() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("media_player_loader", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property MetaHQ() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("MetaHQ", resourceCulture)
@@ -84,6 +119,13 @@ Namespace My.Resources
         Friend ReadOnly Property PlayButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("PlayButton", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property playlist_loader() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("playlist_loader", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

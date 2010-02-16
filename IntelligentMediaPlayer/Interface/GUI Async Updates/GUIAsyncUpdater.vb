@@ -18,5 +18,6 @@ Partial Public Class MainInterface
         Public Sub DisplayInfoForAlbum(ByVal artistName As String, ByVal albumName As String)
             myAlbumInfoUpdater.AddAlbumToQueue(albumName, artistName)
         End Sub
+
     End Class
 End Class

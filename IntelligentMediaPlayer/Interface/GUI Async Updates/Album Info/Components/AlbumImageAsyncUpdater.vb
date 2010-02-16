@@ -28,7 +28,9 @@
                         End While
 
                         If (Not albumInfo Is Nothing) Then
+                            myParentInterface.AlbumImageLoadingPB.BringToFront()
                             myParentInterface.AlbumPictureBox.ImageLocation = albumInfo.LargePictureLocation
+                            myParentInterface.AlbumPictureBox.BringToFront()
                         End If
                         System.Threading.Thread.Sleep(sleeptime)
                     End While

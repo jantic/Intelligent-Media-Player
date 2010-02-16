@@ -19,6 +19,7 @@
 
             Public Sub AddAlbumToQueue(ByVal albumName As String, ByVal artistName As String)
                 If (albumName.Trim.ToLower <> previousAlbum.Trim.ToLower) Then
+                    myParentInterface.AlbumImageLoadingPB.BringToFront()
                     myAlbumQueue.Enqueue(artistName + ";" + albumName)
                 End If
 

@@ -17,21 +17,7 @@
                 End Sub
 
                 Private Sub ClearArtistTagsUI()
-                    Dim tagLabels As ArrayList = New ArrayList()
-
-                    tagLabels.Add(myParentInterface.Tag1)
-                    tagLabels.Add(myParentInterface.Tag2)
-                    tagLabels.Add(myParentInterface.Tag3)
-                    tagLabels.Add(myParentInterface.Tag4)
-                    tagLabels.Add(myParentInterface.Tag5)
-
-                    Dim index As UInteger = 0
-
-                    'initialize to be invisible
-                    For Each tagLabel As Label In tagLabels
-                        tagLabel.Text = ""
-                        tagLabel.Visible = False
-                    Next
+                    myParentInterface.ArtistTagsLV.Clear()
                 End Sub
 
                 Private Sub UpdateTags()
@@ -44,34 +30,19 @@
 
                         If (Not artistInfo Is Nothing) Then
                             ClearArtistTagsUI()
+                            myParentInterface.TagsLoadingPB.BringToFront()
                             Dim tags As String() = artistInfo.Tags()
-
-                            Dim tagLabels As ArrayList = New ArrayList()
-
-                            tagLabels.Add(myParentInterface.Tag1)
-                            tagLabels.Add(myParentInterface.Tag2)
-                            tagLabels.Add(myParentInterface.Tag3)
-                            tagLabels.Add(myParentInterface.Tag4)
-                            tagLabels.Add(myParentInterface.Tag5)
-
                             Dim index As UInteger = 0
 
                             If (myTagsArtistInfoQueue.Count = 0) Then 'don't waste time adding tags to UI if new artist has since been added.
-
-
                                 If (Not tags Is Nothing) Then
 
-                                    For Each tagLabel As Label In tagLabels
-                                        If (index >= tags.Count) Then
-                                            Exit For
-                                        End If
-
-                                        tagLabel.Text = tags(index)
-                                        tagLabel.Visible = True
-                                        index += 1
+                                    For Each tag As String In tags
+                                        myParentInterface.ArtistTagsLV.Items.Add(tag)
                                     Next
                                 End If
                             End If
+                            myParentInterface.ArtistTagsLV.BringToFront()
                         End If
                         System.Threading.Thread.Sleep(sleeptime)
                     End While

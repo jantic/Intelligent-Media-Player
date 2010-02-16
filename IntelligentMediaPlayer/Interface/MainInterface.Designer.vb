@@ -60,24 +60,26 @@ Partial Class MainInterface
         Me.SimilarArtistsTab = New System.Windows.Forms.TabPage()
         Me.SimilarArtistsLV = New System.Windows.Forms.ListView()
         Me.TopAlbumsTab = New System.Windows.Forms.TabPage()
-        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
         Me.TagsTab = New System.Windows.Forms.TabPage()
-        Me.Tag5 = New System.Windows.Forms.Label()
-        Me.Tag4 = New System.Windows.Forms.Label()
-        Me.Tag3 = New System.Windows.Forms.Label()
-        Me.Tag2 = New System.Windows.Forms.Label()
-        Me.Tag1 = New System.Windows.Forms.Label()
         Me.PlaylistBox = New System.Windows.Forms.ListView()
         Me.ArtistColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AlbumColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TrackColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.YearColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
+        Me.TopAlbumsLV = New System.Windows.Forms.ListView()
+        Me.ArtistTagsLV = New System.Windows.Forms.ListView()
+        Me.ArtistImageLoadingPB = New System.Windows.Forms.PictureBox()
+        Me.AlbumImageLoadingPB = New System.Windows.Forms.PictureBox()
+        Me.AlbumPictureBox = New System.Windows.Forms.PictureBox()
+        Me.BiographyLoadingPB = New System.Windows.Forms.PictureBox()
+        Me.SimilarArtistsLoadingPB = New System.Windows.Forms.PictureBox()
+        Me.TopAlbumsLoadingPB = New System.Windows.Forms.PictureBox()
+        Me.TagsLoadingPB = New System.Windows.Forms.PictureBox()
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.GeneratePlaylistButton = New System.Windows.Forms.Button()
         Me.RemoveModifierButton = New System.Windows.Forms.Button()
         Me.AddModifierButton = New System.Windows.Forms.Button()
-        Me.AlbumPictureBox = New System.Windows.Forms.PictureBox()
         Me.NowPlayingGB.SuspendLayout()
         Me.PlaylistModifierGB.SuspendLayout()
         Me.ModifierInputGB.SuspendLayout()
@@ -88,7 +90,13 @@ Partial Class MainInterface
         Me.TopAlbumsTab.SuspendLayout()
         Me.TagsTab.SuspendLayout()
         CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ArtistImageLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AlbumImageLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AlbumPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BiographyLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SimilarArtistsLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TopAlbumsLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TagsLoadingPB, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FilteredPlaylistLabel
@@ -350,6 +358,7 @@ Partial Class MainInterface
         Me.Input3Label.Size = New System.Drawing.Size(40, 13)
         Me.Input3Label.TabIndex = 15
         Me.Input3Label.Text = "Input 3"
+        Me.Input3Label.Visible = False
         '
         'Input2Label
         '
@@ -359,6 +368,7 @@ Partial Class MainInterface
         Me.Input2Label.Size = New System.Drawing.Size(40, 13)
         Me.Input2Label.TabIndex = 14
         Me.Input2Label.Text = "Input 2"
+        Me.Input2Label.Visible = False
         '
         'Input1Label
         '
@@ -368,6 +378,7 @@ Partial Class MainInterface
         Me.Input1Label.Size = New System.Drawing.Size(40, 13)
         Me.Input1Label.TabIndex = 13
         Me.Input1Label.Text = "Input 1"
+        Me.Input1Label.Visible = False
         '
         'PlaylistModifierInput2
         '
@@ -375,6 +386,7 @@ Partial Class MainInterface
         Me.PlaylistModifierInput2.Name = "PlaylistModifierInput2"
         Me.PlaylistModifierInput2.Size = New System.Drawing.Size(130, 20)
         Me.PlaylistModifierInput2.TabIndex = 12
+        Me.PlaylistModifierInput2.Visible = False
         '
         'PlaylistModifierInput3
         '
@@ -382,6 +394,7 @@ Partial Class MainInterface
         Me.PlaylistModifierInput3.Name = "PlaylistModifierInput3"
         Me.PlaylistModifierInput3.Size = New System.Drawing.Size(130, 20)
         Me.PlaylistModifierInput3.TabIndex = 11
+        Me.PlaylistModifierInput3.Visible = False
         '
         'PlaylistModifierInput1
         '
@@ -389,6 +402,7 @@ Partial Class MainInterface
         Me.PlaylistModifierInput1.Name = "PlaylistModifierInput1"
         Me.PlaylistModifierInput1.Size = New System.Drawing.Size(130, 20)
         Me.PlaylistModifierInput1.TabIndex = 10
+        Me.PlaylistModifierInput1.Visible = False
         '
         'ArtistPictureBox
         '
@@ -418,135 +432,72 @@ Partial Class MainInterface
         Me.TabControl1.Controls.Add(Me.SimilarArtistsTab)
         Me.TabControl1.Controls.Add(Me.TopAlbumsTab)
         Me.TabControl1.Controls.Add(Me.TagsTab)
-        Me.TabControl1.Location = New System.Drawing.Point(566, 286)
+        Me.TabControl1.Location = New System.Drawing.Point(566, 285)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(488, 226)
+        Me.TabControl1.Size = New System.Drawing.Size(488, 227)
         Me.TabControl1.TabIndex = 30
         '
         'BiographyTab
         '
+        Me.BiographyTab.Controls.Add(Me.BiographyLoadingPB)
         Me.BiographyTab.Controls.Add(Me.FullBioTB)
         Me.BiographyTab.Location = New System.Drawing.Point(4, 22)
         Me.BiographyTab.Name = "BiographyTab"
         Me.BiographyTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.BiographyTab.Size = New System.Drawing.Size(480, 200)
+        Me.BiographyTab.Size = New System.Drawing.Size(480, 201)
         Me.BiographyTab.TabIndex = 0
         Me.BiographyTab.Text = "Biography"
         Me.BiographyTab.UseVisualStyleBackColor = True
         '
         'SimilarArtistsTab
         '
+        Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistsLoadingPB)
         Me.SimilarArtistsTab.Controls.Add(Me.SimilarArtistsLV)
         Me.SimilarArtistsTab.Location = New System.Drawing.Point(4, 22)
         Me.SimilarArtistsTab.Name = "SimilarArtistsTab"
-        Me.SimilarArtistsTab.Size = New System.Drawing.Size(480, 200)
+        Me.SimilarArtistsTab.Size = New System.Drawing.Size(480, 201)
         Me.SimilarArtistsTab.TabIndex = 2
         Me.SimilarArtistsTab.Text = "Simlar Artists"
         Me.SimilarArtistsTab.UseVisualStyleBackColor = True
         '
         'SimilarArtistsLV
         '
+        Me.SimilarArtistsLV.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.SimilarArtistsLV.FullRowSelect = True
         Me.SimilarArtistsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
         Me.SimilarArtistsLV.HideSelection = False
-        Me.SimilarArtistsLV.Location = New System.Drawing.Point(3, 3)
+        Me.SimilarArtistsLV.Location = New System.Drawing.Point(0, 0)
         Me.SimilarArtistsLV.MultiSelect = False
         Me.SimilarArtistsLV.Name = "SimilarArtistsLV"
         Me.SimilarArtistsLV.RightToLeftLayout = True
         Me.SimilarArtistsLV.ShowGroups = False
-        Me.SimilarArtistsLV.Size = New System.Drawing.Size(474, 194)
+        Me.SimilarArtistsLV.Size = New System.Drawing.Size(481, 201)
         Me.SimilarArtistsLV.TabIndex = 24
         Me.SimilarArtistsLV.UseCompatibleStateImageBehavior = False
         '
         'TopAlbumsTab
         '
         Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLV)
+        Me.TopAlbumsTab.Controls.Add(Me.TopAlbumsLoadingPB)
         Me.TopAlbumsTab.Location = New System.Drawing.Point(4, 22)
         Me.TopAlbumsTab.Name = "TopAlbumsTab"
-        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 200)
+        Me.TopAlbumsTab.Size = New System.Drawing.Size(480, 201)
         Me.TopAlbumsTab.TabIndex = 3
         Me.TopAlbumsTab.Text = "Top Albums"
         Me.TopAlbumsTab.UseVisualStyleBackColor = True
         '
-        'TopAlbumsLV
-        '
-        Me.TopAlbumsLV.FullRowSelect = True
-        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.TopAlbumsLV.HideSelection = False
-        Me.TopAlbumsLV.Location = New System.Drawing.Point(3, 3)
-        Me.TopAlbumsLV.MultiSelect = False
-        Me.TopAlbumsLV.Name = "TopAlbumsLV"
-        Me.TopAlbumsLV.RightToLeftLayout = True
-        Me.TopAlbumsLV.ShowGroups = False
-        Me.TopAlbumsLV.Size = New System.Drawing.Size(474, 194)
-        Me.TopAlbumsLV.TabIndex = 23
-        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
-        '
         'TagsTab
         '
-        Me.TagsTab.Controls.Add(Me.Tag5)
-        Me.TagsTab.Controls.Add(Me.Tag4)
-        Me.TagsTab.Controls.Add(Me.Tag3)
-        Me.TagsTab.Controls.Add(Me.Tag2)
-        Me.TagsTab.Controls.Add(Me.Tag1)
+        Me.TagsTab.Controls.Add(Me.TagsLoadingPB)
+        Me.TagsTab.Controls.Add(Me.ArtistTagsLV)
         Me.TagsTab.Location = New System.Drawing.Point(4, 22)
         Me.TagsTab.Name = "TagsTab"
         Me.TagsTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.TagsTab.Size = New System.Drawing.Size(480, 200)
+        Me.TagsTab.Size = New System.Drawing.Size(480, 201)
         Me.TagsTab.TabIndex = 1
         Me.TagsTab.Text = "Tags"
         Me.TagsTab.UseVisualStyleBackColor = True
-        '
-        'Tag5
-        '
-        Me.Tag5.AutoSize = True
-        Me.Tag5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tag5.Location = New System.Drawing.Point(6, 143)
-        Me.Tag5.Name = "Tag5"
-        Me.Tag5.Size = New System.Drawing.Size(57, 20)
-        Me.Tag5.TabIndex = 4
-        Me.Tag5.Text = "Label2"
-        '
-        'Tag4
-        '
-        Me.Tag4.AutoSize = True
-        Me.Tag4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tag4.Location = New System.Drawing.Point(7, 113)
-        Me.Tag4.Name = "Tag4"
-        Me.Tag4.Size = New System.Drawing.Size(57, 20)
-        Me.Tag4.TabIndex = 3
-        Me.Tag4.Text = "Label1"
-        '
-        'Tag3
-        '
-        Me.Tag3.AutoSize = True
-        Me.Tag3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tag3.Location = New System.Drawing.Point(6, 82)
-        Me.Tag3.Name = "Tag3"
-        Me.Tag3.Size = New System.Drawing.Size(57, 20)
-        Me.Tag3.TabIndex = 2
-        Me.Tag3.Text = "Label1"
-        '
-        'Tag2
-        '
-        Me.Tag2.AutoSize = True
-        Me.Tag2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tag2.Location = New System.Drawing.Point(7, 52)
-        Me.Tag2.Name = "Tag2"
-        Me.Tag2.Size = New System.Drawing.Size(57, 20)
-        Me.Tag2.TabIndex = 1
-        Me.Tag2.Text = "Label1"
-        '
-        'Tag1
-        '
-        Me.Tag1.AutoSize = True
-        Me.Tag1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tag1.Location = New System.Drawing.Point(7, 20)
-        Me.Tag1.Name = "Tag1"
-        Me.Tag1.Size = New System.Drawing.Size(57, 20)
-        Me.Tag1.TabIndex = 0
-        Me.Tag1.Text = "Label1"
         '
         'PlaylistBox
         '
@@ -592,6 +543,123 @@ Partial Class MainInterface
         Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(275, 105)
         Me.AxWindowsMediaPlayer1.TabIndex = 32
         '
+        'TopAlbumsLV
+        '
+        Me.TopAlbumsLV.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TopAlbumsLV.FullRowSelect = True
+        Me.TopAlbumsLV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.TopAlbumsLV.HideSelection = False
+        Me.TopAlbumsLV.Location = New System.Drawing.Point(0, 0)
+        Me.TopAlbumsLV.MultiSelect = False
+        Me.TopAlbumsLV.Name = "TopAlbumsLV"
+        Me.TopAlbumsLV.RightToLeftLayout = True
+        Me.TopAlbumsLV.ShowGroups = False
+        Me.TopAlbumsLV.Size = New System.Drawing.Size(481, 201)
+        Me.TopAlbumsLV.TabIndex = 23
+        Me.TopAlbumsLV.UseCompatibleStateImageBehavior = False
+        '
+        'ArtistTagsLV
+        '
+        Me.ArtistTagsLV.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid
+        Me.ArtistTagsLV.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ArtistTagsLV.LabelWrap = False
+        Me.ArtistTagsLV.Location = New System.Drawing.Point(0, 0)
+        Me.ArtistTagsLV.Name = "ArtistTagsLV"
+        Me.ArtistTagsLV.Scrollable = False
+        Me.ArtistTagsLV.Size = New System.Drawing.Size(481, 201)
+        Me.ArtistTagsLV.TabIndex = 0
+        Me.ArtistTagsLV.TileSize = New System.Drawing.Size(328, 40)
+        Me.ArtistTagsLV.UseCompatibleStateImageBehavior = False
+        Me.ArtistTagsLV.View = System.Windows.Forms.View.Tile
+        '
+        'ArtistImageLoadingPB
+        '
+        Me.ArtistImageLoadingPB.BackColor = System.Drawing.Color.Black
+        Me.ArtistImageLoadingPB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.ArtistImageLoadingPB.ErrorImage = Nothing
+        Me.ArtistImageLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loader5
+        Me.ArtistImageLoadingPB.InitialImage = Nothing
+        Me.ArtistImageLoadingPB.Location = New System.Drawing.Point(562, 6)
+        Me.ArtistImageLoadingPB.Name = "ArtistImageLoadingPB"
+        Me.ArtistImageLoadingPB.Size = New System.Drawing.Size(488, 273)
+        Me.ArtistImageLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.ArtistImageLoadingPB.TabIndex = 35
+        Me.ArtistImageLoadingPB.TabStop = False
+        '
+        'AlbumImageLoadingPB
+        '
+        Me.AlbumImageLoadingPB.BackColor = System.Drawing.Color.Black
+        Me.AlbumImageLoadingPB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.AlbumImageLoadingPB.ErrorImage = Nothing
+        Me.AlbumImageLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loader5
+        Me.AlbumImageLoadingPB.InitialImage = Nothing
+        Me.AlbumImageLoadingPB.Location = New System.Drawing.Point(12, 6)
+        Me.AlbumImageLoadingPB.Name = "AlbumImageLoadingPB"
+        Me.AlbumImageLoadingPB.Size = New System.Drawing.Size(256, 256)
+        Me.AlbumImageLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.AlbumImageLoadingPB.TabIndex = 34
+        Me.AlbumImageLoadingPB.TabStop = False
+        '
+        'AlbumPictureBox
+        '
+        Me.AlbumPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.AlbumPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.AlbumPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.AlbumPictureBox.ErrorImage = Nothing
+        Me.AlbumPictureBox.Location = New System.Drawing.Point(12, 6)
+        Me.AlbumPictureBox.Name = "AlbumPictureBox"
+        Me.AlbumPictureBox.Size = New System.Drawing.Size(256, 256)
+        Me.AlbumPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.AlbumPictureBox.TabIndex = 33
+        Me.AlbumPictureBox.TabStop = False
+        '
+        'BiographyLoadingPB
+        '
+        Me.BiographyLoadingPB.ErrorImage = Nothing
+        Me.BiographyLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loading3
+        Me.BiographyLoadingPB.InitialImage = Nothing
+        Me.BiographyLoadingPB.Location = New System.Drawing.Point(0, 0)
+        Me.BiographyLoadingPB.Name = "BiographyLoadingPB"
+        Me.BiographyLoadingPB.Size = New System.Drawing.Size(481, 201)
+        Me.BiographyLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.BiographyLoadingPB.TabIndex = 30
+        Me.BiographyLoadingPB.TabStop = False
+        '
+        'SimilarArtistsLoadingPB
+        '
+        Me.SimilarArtistsLoadingPB.ErrorImage = Nothing
+        Me.SimilarArtistsLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loading3
+        Me.SimilarArtistsLoadingPB.InitialImage = Nothing
+        Me.SimilarArtistsLoadingPB.Location = New System.Drawing.Point(0, 0)
+        Me.SimilarArtistsLoadingPB.Name = "SimilarArtistsLoadingPB"
+        Me.SimilarArtistsLoadingPB.Size = New System.Drawing.Size(481, 201)
+        Me.SimilarArtistsLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.SimilarArtistsLoadingPB.TabIndex = 25
+        Me.SimilarArtistsLoadingPB.TabStop = False
+        '
+        'TopAlbumsLoadingPB
+        '
+        Me.TopAlbumsLoadingPB.ErrorImage = Nothing
+        Me.TopAlbumsLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loading3
+        Me.TopAlbumsLoadingPB.Location = New System.Drawing.Point(0, 0)
+        Me.TopAlbumsLoadingPB.Name = "TopAlbumsLoadingPB"
+        Me.TopAlbumsLoadingPB.Size = New System.Drawing.Size(481, 201)
+        Me.TopAlbumsLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.TopAlbumsLoadingPB.TabIndex = 24
+        Me.TopAlbumsLoadingPB.TabStop = False
+        '
+        'TagsLoadingPB
+        '
+        Me.TagsLoadingPB.ErrorImage = Nothing
+        Me.TagsLoadingPB.Image = Global.IntelligentMediaPlayer.My.Resources.Resources.loading3
+        Me.TagsLoadingPB.InitialImage = Nothing
+        Me.TagsLoadingPB.Location = New System.Drawing.Point(0, 0)
+        Me.TagsLoadingPB.Name = "TagsLoadingPB"
+        Me.TagsLoadingPB.Size = New System.Drawing.Size(481, 201)
+        Me.TagsLoadingPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.TagsLoadingPB.TabIndex = 31
+        Me.TagsLoadingPB.TabStop = False
+        '
         'SaveButton
         '
         Me.SaveButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -635,25 +703,14 @@ Partial Class MainInterface
         Me.AddModifierButton.TabIndex = 2
         Me.AddModifierButton.UseVisualStyleBackColor = True
         '
-        'AlbumPictureBox
-        '
-        Me.AlbumPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.AlbumPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.AlbumPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.AlbumPictureBox.ErrorImage = Nothing
-        Me.AlbumPictureBox.Location = New System.Drawing.Point(12, 6)
-        Me.AlbumPictureBox.Name = "AlbumPictureBox"
-        Me.AlbumPictureBox.Size = New System.Drawing.Size(256, 256)
-        Me.AlbumPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.AlbumPictureBox.TabIndex = 33
-        Me.AlbumPictureBox.TabStop = False
-        '
         'MainInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1064, 777)
+        Me.Controls.Add(Me.ArtistImageLoadingPB)
+        Me.Controls.Add(Me.AlbumImageLoadingPB)
         Me.Controls.Add(Me.AlbumPictureBox)
         Me.Controls.Add(Me.AxWindowsMediaPlayer1)
         Me.Controls.Add(Me.PlaylistBox)
@@ -682,9 +739,14 @@ Partial Class MainInterface
         Me.SimilarArtistsTab.ResumeLayout(False)
         Me.TopAlbumsTab.ResumeLayout(False)
         Me.TagsTab.ResumeLayout(False)
-        Me.TagsTab.PerformLayout()
         CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ArtistImageLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AlbumImageLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.AlbumPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BiographyLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SimilarArtistsLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TopAlbumsLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TagsLoadingPB, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -727,11 +789,6 @@ Partial Class MainInterface
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents BiographyTab As System.Windows.Forms.TabPage
     Friend WithEvents TagsTab As System.Windows.Forms.TabPage
-    Friend WithEvents Tag5 As System.Windows.Forms.Label
-    Friend WithEvents Tag4 As System.Windows.Forms.Label
-    Friend WithEvents Tag3 As System.Windows.Forms.Label
-    Friend WithEvents Tag2 As System.Windows.Forms.Label
-    Friend WithEvents Tag1 As System.Windows.Forms.Label
     Friend WithEvents TopAlbumsTab As System.Windows.Forms.TabPage
     Friend WithEvents TopAlbumsLV As System.Windows.Forms.ListView
     Friend WithEvents SimilarArtistsTab As System.Windows.Forms.TabPage
@@ -744,5 +801,12 @@ Partial Class MainInterface
     Friend WithEvents YearColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents AxWindowsMediaPlayer1 As AxWMPLib.AxWindowsMediaPlayer
     Friend WithEvents AlbumPictureBox As System.Windows.Forms.PictureBox
+    Friend WithEvents TopAlbumsLoadingPB As System.Windows.Forms.PictureBox
+    Friend WithEvents BiographyLoadingPB As System.Windows.Forms.PictureBox
+    Friend WithEvents SimilarArtistsLoadingPB As System.Windows.Forms.PictureBox
+    Friend WithEvents ArtistTagsLV As System.Windows.Forms.ListView
+    Friend WithEvents TagsLoadingPB As System.Windows.Forms.PictureBox
+    Friend WithEvents AlbumImageLoadingPB As System.Windows.Forms.PictureBox
+    Friend WithEvents ArtistImageLoadingPB As System.Windows.Forms.PictureBox
 
 End Class

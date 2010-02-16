@@ -74,10 +74,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\GUI Async Updates\Artist Info\Components\AlbumImageAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Album Info\Components\AlbumImageAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\GUI Async Updates\Artist Info\AlbumInfoGUIAsyncUpdater.vb">
+    <Compile Include="Interface\GUI Async Updates\Album Info\AlbumInfoGUIAsyncUpdater.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\GUI Async Updates\Artist Info\Components\ArtistBiographyAsyncUpdater.vb">
@@ -249,6 +249,12 @@
     <Content Include="Playlist Modifier Plugins\LastFM\LastFM_SimilarArtists.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\playlist_loader.gif" />
+    <None Include="Resources\media_player_loader.gif" />
+    <None Include="Resources\loader5.gif" />
+    <None Include="Resources\109.gif" />
+    <None Include="Resources\loading.gif" />
+    <None Include="Resources\loading2.gif" />
     <None Include="Resources\PlayButton.bmp" />
     <None Include="Resources\MinusHQ.bmp" />
     <None Include="Resources\PlusHQ.bmp" />

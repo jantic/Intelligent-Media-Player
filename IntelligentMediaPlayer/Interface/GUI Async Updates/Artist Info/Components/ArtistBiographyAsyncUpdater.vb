@@ -28,6 +28,8 @@
                         End While
 
                         If (Not artistInfo Is Nothing) Then
+                            myParentInterface.BiographyLoadingPB.BringToFront()
+                            myParentInterface.ArtistImageLoadingPB.BringToFront()
 
                             myParentInterface.ArtistPictureBox.ImageLocation = artistInfo.PictureLocation
 
@@ -37,7 +39,11 @@
                             Else
                                 UpdateControlsWithArtistInfo(artistInfo)
                             End If
+
+                            myParentInterface.FullBioTB.BringToFront()
+                            myParentInterface.ArtistPictureBox.BringToFront()
                         End If
+
                         System.Threading.Thread.Sleep(sleeptime)
                     End While
                 End Sub

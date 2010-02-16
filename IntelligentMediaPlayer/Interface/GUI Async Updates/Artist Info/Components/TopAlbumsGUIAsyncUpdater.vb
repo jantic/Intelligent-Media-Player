@@ -72,6 +72,8 @@ Partial Public Class MainInterface
 
                             If (Not albums Is Nothing) Then
 
+                                myParentInterface.TopAlbumsLoadingPB.BringToFront()
+
                                 Dim albumImages As ImageList = RetrieveTopAlbumImages(albums)
 
                                 If (myTopAlbumsArtistInfoQueue.Count = 0) Then ' don't waste time adding images for albums if a new artist has been added.
@@ -87,6 +89,7 @@ Partial Public Class MainInterface
                                         myParentInterface.TopAlbumsLV.Items.Add(album.Name, album.Name).ForeColor = textColor
                                     Next
                                 End If
+                                myParentInterface.TopAlbumsLV.BringToFront()
                             End If
                         End If
                         System.Threading.Thread.Sleep(sleeptime)

@@ -69,7 +69,7 @@ Public Class MainInterface
             manager = New PlaylistManager("C:\Users\Jason\Documents\Visual Studio 2010\Projects\IntelligentMediaPlayer\IntelligentMediaPlayer\Playlist Modifier Plugins")
             PlaylistBox.Items.Clear()
             manager.GeneratePlaylist(player)
-            FillPlaylistBox()
+            FillPlaylistBox(player.currentPlaylist)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -128,29 +128,7 @@ Public Class MainInterface
         End Select
     End Function
 
-    Private Sub FillPlaylistBox()
 
-        PlaylistBox.Items.Clear()
-
-        Dim myListViewItems(player.currentPlaylist.count - 1) As System.Windows.Forms.ListViewItem
-
-        Parallel.For(0, myListViewItems.Count,
-        Sub(y As Integer)
-
-            Try
-                Dim media As Media = player.currentPlaylist.Item(y)
-                myListViewItems(y) = New ListViewItem()
-                myListViewItems(y).SubItems(0) = (New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("Author")))
-                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("AlbumID")))
-                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.name))
-                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("ReleaseDateYear")))
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
-        End Sub)
-
-        PlaylistBox.Items.AddRange(myListViewItems)
-    End Sub
 
     Private Sub PlaylistBox_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlaylistBox.DoubleClick
         If (PlaylistBox.SelectedIndices.Count > 0) Then
@@ -194,9 +172,8 @@ Public Class MainInterface
             End If
         End If
 
-        myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
         myGUIAsyncUpdater.DisplayInfoForAlbum(currentArtist, currentAlbum)
-
+        myGUIAsyncUpdater.DisplayInfoForArtist(currentArtist)
     End Sub
 
 
@@ -345,7 +322,30 @@ Public Class MainInterface
         manager.GeneratePlaylist(player)
 
         ToggleShuffle()
-        FillPlaylistBox()
+        FillPlaylistBox(player.currentPlaylist)
+    End Sub
+
+    Private Sub FillPlaylistBox(ByVal currentPlaylist As Playlist)
+
+        PlaylistBox.Items.Clear()
+
+        Dim myListViewItems(currentPlaylist.count - 1) As System.Windows.Forms.ListViewItem
+
+        Parallel.For(0, myListViewItems.Count,
+        Sub(y As Integer)
+            Try
+                Dim media As Media = currentPlaylist.Item(y)
+                myListViewItems(y) = New ListViewItem()
+                myListViewItems(y).SubItems(0) = (New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("Author")))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("AlbumID")))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.name))
+                myListViewItems(y).SubItems.Add(New ListViewItem.ListViewSubItem(myListViewItems(y), media.getItemInfo("ReleaseDateYear")))
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        End Sub)
+
+        PlaylistBox.Items.AddRange(myListViewItems)
     End Sub
 
 
@@ -406,8 +406,4 @@ Public Class MainInterface
     End Sub
 
 
-
-    Private Sub PlayButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        player.controls.play()
-    End Sub
 End Class

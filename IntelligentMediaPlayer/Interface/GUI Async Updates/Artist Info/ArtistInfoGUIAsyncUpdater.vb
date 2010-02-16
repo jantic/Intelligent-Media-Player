@@ -23,6 +23,12 @@
 
             Public Sub AddArtistNameToQueue(ByVal artistName As String)
                 If (artistName.Trim.ToLower <> previousArtist.Trim.ToLower) Then
+                    myParentInterface.BiographyLoadingPB.BringToFront()
+                    myParentInterface.ArtistImageLoadingPB.BringToFront()
+                    myParentInterface.TopAlbumsLoadingPB.BringToFront()
+                    myParentInterface.SimilarArtistsLoadingPB.BringToFront()
+                    myParentInterface.TagsLoadingPB.BringToFront()
+
                     myArtistNameQueue.Enqueue(artistName)
                 End If
 

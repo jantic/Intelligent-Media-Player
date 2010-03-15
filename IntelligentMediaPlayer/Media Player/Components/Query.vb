@@ -74,14 +74,12 @@ Partial Public Class MediaCollection
                 myValue = value.Trim.ToLower
             End Sub
 
-            Private Function TranslateToOperation(ByVal operatorName As String)
-                Select Case operatorName.ToLower.Trim
-                    Case "equals"
-                        Return Operation.Equals
-                    Case "notequal"
-                        Return Operation.NotEqual
-                End Select
-                Return Operation.Equals
+            Private Function TranslateToOperation(ByVal operatorName As String) As Operation
+                For Each value As Operation In System.Enum.GetValues(GetType(Operation))
+                    If (value.ToString().Trim.ToLower = operatorName.Trim.ToLower) Then Return value
+                Next
+
+                Return Nothing
             End Function
 
             Public ReadOnly Property AttributeName As String

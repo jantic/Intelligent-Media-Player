@@ -118,16 +118,7 @@ Public Class MainInterface
     End Function
 
     Private Function GetIconNameForModifierType(ByRef modType As PlaylistManager.ModifierType) As String
-        Select Case (modType)
-            Case PlaylistManager.ModifierType.LastFM
-                Return "LastFM"
-            Case PlaylistManager.ModifierType.WMPAttribute
-                Return "WMPAttribute"
-            Case PlaylistManager.ModifierType.Meta
-                Return "Meta"
-            Case Else
-                Return "WMPAttribute"
-        End Select
+        Return modType.ToString()
     End Function
 
 

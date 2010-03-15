@@ -24,7 +24,7 @@ Partial Public Class PlaylistManager
 
         Public Sub ModifyPlaylist(ByRef currentPlaylist As Playlist, ByRef mediaCollection As MediaCollection, Optional ByVal UseCachedResults As Boolean = False) Implements IPlaylistModifier.ModifyPlaylist
 
-            If (UseCachedResults And Not (myCachedPlaylist.Count > 0)) Then
+            If (UseCachedResults And Not (myCachedPlaylist.Count = 0)) Then
                 ApplyCachedPlaylist(currentPlaylist)
             Else
                 Dim attributeLookupArray As New ArrayList()

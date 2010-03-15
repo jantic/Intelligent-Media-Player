@@ -144,14 +144,9 @@ Partial Public Class PlaylistManager
         End Property
 
         Private Function TranslateModifierType(ByVal typeName As String) As ModifierType
-            If (typeName = "WMPAttribute") Then
-                Return ModifierType.WMPAttribute
-            ElseIf (typeName = "LastFM") Then
-                Return ModifierType.LastFM
-            ElseIf (typeName = "Meta") Then
-                Return ModifierType.Meta
-            End If
-
+            For Each value As ModifierType In System.Enum.GetValues(GetType(ModifierType))
+                If (value.ToString.Trim.ToLower = typeName.Trim.ToLower) Then Return value
+            Next
             Return Nothing
         End Function
 

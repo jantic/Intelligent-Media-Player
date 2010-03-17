@@ -106,16 +106,28 @@ Public Class WebServiceClient
 
     Private Sub InitializeCache()
         If (Not Directory.Exists(resultsCacheDirectory)) Then
-            Directory.CreateDirectory(resultsCacheDirectory)
+            Try
+                Directory.CreateDirectory(resultsCacheDirectory)
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
         End If
 
         If (Not Directory.Exists(imageCacheDirectory)) Then
-            Directory.CreateDirectory(imageCacheDirectory)
+            Try
+                Directory.CreateDirectory(imageCacheDirectory)
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
         End If
 
-        Dim cachedResultsFilePaths As String() = Directory.GetFiles(resultsCacheDirectory, "*.xml", SearchOption.AllDirectories)
+        Try
+            Dim cachedResultsFilePaths As String() = Directory.GetFiles(resultsCacheDirectory, "*.xml", SearchOption.AllDirectories)
+            PopulateCachedResultsLookup(cachedResultsFilePaths)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
-        PopulateCachedResultsLookup(cachedResultsFilePaths)
     End Sub
 
     Private Sub PopulateCachedResultsLookup(ByVal filePaths As String())
